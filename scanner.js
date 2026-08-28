@@ -36,11 +36,60 @@ function isProductRole(title) {
   return PRODUCT_KEYWORDS.some(keyword => lower.includes(keyword));
 }
 
+async function isJobUrlLive(url) {
+  if (!url) return false;
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 6000);
+    const res = await fetch(url, {
+      signal: controller.signal,
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+      },
+      redirect: 'follow'
+    });
+    clearTimeout(timeout);
+    if (!res.ok) return false;
+    const text = await res.text();
+    const lower = text.toLowerCase();
+    const closedPhrases = [
+      'this job is no longer available',
+      'this position has been filled',
+      'job posting has expired',
+      'this requisition is closed',
+      'position is no longer open',
+      'job no longer exists',
+      'this opening is closed',
+      'posting has expired'
+    ];
+    if (closedPhrases.some(p => lower.includes(p))) return false;
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
+
 async function scanCompany(company) {
   const result = {
     ...company,
     last_checked: new Date().toISOString()
   };
+
+  // If company has manual or verified curated roles and no automated ATS API, verify their live status
+  if (company.active_product_roles && company.active_product_roles.length > 0 && (!company.ats_type || company.ats_type === 'custom' || company.ats_type === 'manual')) {
+    const liveRoles = [];
+    for (const role of company.active_product_roles) {
+      const isLive = await isJobUrlLive(role.url);
+      if (isLive) {
+        liveRoles.push(role);
+      } else {
+        console.log(`🗑️ Removed expired/closed manual role: ${role.title} at ${company.name}`);
+      }
+    }
+    result.active_product_roles = liveRoles;
+    result.product_roles_count = liveRoles.length;
+    return result;
+  }
 
   try {
     // 1. SmartRecruiters API Handler (e.g. Version 1, Totalmobile)
