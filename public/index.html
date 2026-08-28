@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-950 text-slate-100">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Northern Ireland Tech Radar | Ecosystem & Careers Tracker</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0fdf4',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+              900: '#14532d',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Custom scrollbars */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    
+    .rotate-90 {
+      transform: rotate(90deg);
+    }
+  </style>
+</head>
+<body class="h-full flex flex-col antialiased selection:bg-emerald-500 selection:text-white">
+
+  <!-- Top Navigation (Widescreen Optimized) -->
+  <header class="border-b border-slate-800 bg-slate-900/90 backdrop-blur sticky top-0 z-40">
+    <div class="max-w-[1700px] mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <div class="flex items-center space-x-4">
+        <!-- Target / Crosshairs Logo Icon (Enlarged) -->
+        <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-emerald-500 via-teal-400 to-emerald-300 flex items-center justify-center shadow-xl shadow-emerald-500/30 text-slate-950 border border-emerald-300/50">
+          <i class="fa-solid fa-crosshairs text-slate-950 text-[32px] font-black"></i>
+        </div>
+        <div>
+          <h1 class="font-extrabold text-xl text-slate-50 tracking-tight flex items-center gap-3">
+            <span>Northern Ireland Tech Radar</span>
+            <span class="inline-flex items-center gap-1.5 text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-3 py-1 rounded-full font-bold shadow-sm">
+              <i class="fa-solid fa-bullseye text-[11px] text-emerald-400"></i>
+              <span>Active Target Tracker</span>
+            </span>
+          </h1>
+          <p class="text-sm text-slate-400">Directory & Automated Product Role Intelligence across Northern Ireland</p>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-3">
+        <button id="scanBtn" onclick="triggerScan()" class="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-sm font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/25 transition-all">
+          <i class="fa-solid fa-arrows-rotate text-sm" id="scanIcon"></i>
+          <span>Scan for Open Product Roles</span>
+        </button>
+        <button onclick="openAddModal()" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-all">
+          <i class="fa-solid fa-plus text-sm"></i>
+          <span>Add Company</span>
+        </button>
+        <button onclick="exportCSV()" class="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-sm font-medium bg-slate-900 hover:bg-slate-800 text-slate-400 border border-slate-800 transition-all">
+          <i class="fa-solid fa-download"></i>
+          <span>Export CSV</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container (Widescreen Optimized) -->
+  <main class="flex-1 max-w-[1700px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+
+    <!-- KPI Metric Cards -->
+    <div class="grid grid-cols-2 sm:grid-cols-5 gap-4">
+      <div class="bg-slate-900/70 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between">
+        <div class="text-sm font-semibold text-slate-400">Total NI Tech Companies</div>
+        <div class="text-3xl font-extrabold text-slate-100 mt-2" id="statTotal">0</div>
+        <div class="text-xs text-slate-500 mt-1">Tracked across Northern Ireland</div>
+      </div>
+      <div class="bg-slate-900/70 border border-emerald-900/40 rounded-2xl p-5 flex flex-col justify-between">
+        <div class="text-sm font-semibold text-emerald-400 flex items-center justify-between">
+          <span>Live Product Roles</span>
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+        </div>
+        <div class="text-3xl font-extrabold text-emerald-400 mt-2" id="statProductRoles">0</div>
+        <div class="text-xs text-emerald-500/80 mt-1">VP, Director, Group & Senior PMs</div>
+      </div>
+      <div class="bg-slate-900/70 border border-amber-900/30 rounded-2xl p-5 flex flex-col justify-between">
+        <div class="text-sm font-semibold text-amber-400 flex items-center justify-between">
+          <span>Starred Favourites</span>
+          <i class="fa-solid fa-star text-xs text-amber-400"></i>
+        </div>
+        <div class="text-3xl font-extrabold text-amber-400 mt-2" id="statFavourites">0</div>
+        <div class="text-xs text-amber-500/80 mt-1">Shortlisted companies</div>
+      </div>
+      <div class="bg-slate-900/70 border border-blue-900/30 rounded-2xl p-5 flex flex-col justify-between">
+        <div class="text-sm font-semibold text-blue-400">Applied in Pipeline</div>
+        <div class="text-3xl font-extrabold text-blue-400 mt-2" id="statApplied">0</div>
+        <div class="text-xs text-blue-500/80 mt-1">Active tracked applications</div>
+      </div>
+      <div class="bg-slate-900/70 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between">
+        <div class="text-sm font-semibold text-slate-400">Scaleups & Startups (1 - 100)</div>
+        <div class="text-3xl font-extrabold text-sky-400 mt-2" id="statScaleups">0</div>
+        <div class="text-xs text-slate-500 mt-1">Indigenous innovators</div>
+      </div>
+    </div>
+
+    <!-- Filter & Search Toolbar -->
+    <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-lg">
+      <div class="flex flex-col lg:flex-row gap-4 items-center justify-between">
+        <!-- Search input -->
+        <div class="relative flex-1 w-full">
+          <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-500 text-base"></i>
+          <input 
+            type="text" 
+            id="searchInput" 
+            placeholder="Search by company name, products, leadership, technology, or keywords..." 
+            class="w-full pl-12 pr-4 py-3 bg-slate-950 border border-slate-800 rounded-xl text-base text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all"
+            oninput="applyFilters()"
+          />
+        </div>
+
+        <!-- Quick Filter Toggles -->
+        <div class="flex flex-wrap items-center gap-3">
+          <!-- Starred Favourites Toggle -->
+          <label class="flex items-center gap-2 cursor-pointer bg-slate-950/80 border border-slate-800 px-3.5 py-3 rounded-xl text-sm font-medium text-amber-300 hover:border-slate-700 select-none whitespace-nowrap">
+            <input type="checkbox" id="toggleFavouritesOnly" class="rounded border-slate-700 bg-slate-900 text-amber-500 focus:ring-amber-500 h-4 w-4" onchange="applyFilters()">
+            <span class="flex items-center gap-1.5"><i class="fa-solid fa-star text-amber-400 text-xs"></i> Favourites Only</span>
+          </label>
+          <!-- Product Roles Toggle -->
+          <label class="flex items-center gap-2 cursor-pointer bg-slate-950/80 border border-slate-800 px-3.5 py-3 rounded-xl text-sm font-medium text-slate-200 hover:border-slate-700 select-none whitespace-nowrap">
+            <input type="checkbox" id="toggleProductOnly" class="rounded border-slate-700 bg-slate-900 text-emerald-500 focus:ring-emerald-500 h-4 w-4" onchange="applyFilters()">
+            <span>🔥 Live Product Roles</span>
+          </label>
+          <!-- Pipeline Applications Toggle -->
+          <label class="flex items-center gap-2 cursor-pointer bg-slate-950/80 border border-slate-800 px-3.5 py-3 rounded-xl text-sm font-medium text-blue-300 hover:border-slate-700 select-none whitespace-nowrap">
+            <input type="checkbox" id="toggleAppliedOnly" class="rounded border-slate-700 bg-slate-900 text-blue-500 focus:ring-blue-500 h-4 w-4" onchange="applyFilters()">
+            <span>📋 My Applications</span>
+          </label>
+        </div>
+
+        <!-- View Switcher -->
+        <div class="flex bg-slate-950 border border-slate-800 rounded-xl p-1.5">
+          <button id="viewTableBtn" onclick="switchView('table')" class="px-3.5 py-1.5 text-sm rounded-lg font-semibold bg-slate-800 text-slate-100 transition-all">
+            <i class="fa-solid fa-list mr-1.5"></i> Table
+          </button>
+          <button id="viewGridBtn" onclick="switchView('grid')" class="px-3.5 py-1.5 text-sm rounded-lg font-semibold text-slate-400 hover:text-slate-200 transition-all">
+            <i class="fa-solid fa-border-all mr-1.5"></i> Grid
+          </button>
+        </div>
+      </div>
+
+      <!-- Dropdown Filter Row -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3 border-t border-slate-800/80">
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Scale Tier</label>
+          <select id="filterScale" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-emerald-500" onchange="applyFilters()">
+            <option value="ALL">All Scale Tiers</option>
+            <option value="Startup">Startup (1-20)</option>
+            <option value="Scaleup">Scaleup (20-100)</option>
+            <option value="Mid-Market">Mid-Market (100-500)</option>
+            <option value="Large Enterprise">Large Enterprise / FDI (500+)</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Industry / Sector</label>
+          <select id="filterIndustry" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-emerald-500" onchange="applyFilters()">
+            <option value="ALL">All Industries</option>
+            <option value="Cybersecurity">Cybersecurity & DevTools</option>
+            <option value="Enterprise B2B SaaS">Enterprise B2B SaaS</option>
+            <option value="FinTech">FinTech, Trading & RegTech</option>
+            <option value="HealthTech">HealthTech & Life Sciences</option>
+            <option value="Data">Data, AI & Analytics</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Funding / Ownership</label>
+          <select id="filterFunding" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-emerald-500" onchange="applyFilters()">
+            <option value="ALL">All Ownership Types</option>
+            <option value="Bootstrapped">Bootstrapped / Private</option>
+            <option value="VC-backed">VC-backed</option>
+            <option value="PE-backed">PE-backed</option>
+            <option value="Publicly Listed">Publicly Listed / Corporate</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Location</label>
+          <select id="filterLocation" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-emerald-500" onchange="applyFilters()">
+            <option value="ALL">All NI Locations</option>
+            <option value="Belfast">Belfast</option>
+            <option value="Derry">Derry / Londonderry</option>
+            <option value="Lisburn">Lisburn</option>
+            <option value="Newry">Newry</option>
+            <option value="Ballymena">Ballymena</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Table Content Area -->
+    <div id="tableContainer" class="bg-slate-900/70 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl">
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm border-collapse">
+          <thead>
+            <tr class="border-b border-slate-800 bg-slate-950/90 text-slate-400 font-bold uppercase tracking-wider text-xs">
+              <th class="py-4 px-3 w-10 text-center"></th>
+              <th class="py-4 px-3 w-10 text-center"><i class="fa-solid fa-star text-amber-400/60"></i></th>
+              <th class="py-4 px-5">Company</th>
+              <th class="py-4 px-5">Sector & Domain</th>
+              <th class="py-4 px-5">Scale Tier</th>
+              <th class="py-4 px-5">Ownership</th>
+              <th class="py-4 px-5">Location</th>
+              <th class="py-4 px-5 text-center">Live Product Roles</th>
+              <th class="py-4 px-5 text-right">Links</th>
+            </tr>
+          </thead>
+          <tbody id="companyTableBody" class="divide-y divide-slate-800/60 text-slate-200 font-normal">
+            <!-- Rendered dynamically with expandable rows -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Grid Content Area -->
+    <div id="gridContainer" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <!-- Grid Cards Rendered dynamically -->
+    </div>
+
+    <!-- Empty State -->
+    <div id="emptyState" class="hidden text-center py-20 bg-slate-900/30 border border-dashed border-slate-800 rounded-2xl">
+      <i class="fa-solid fa-crosshairs text-5xl text-slate-700 mb-3"></i>
+      <h3 class="text-base font-bold text-slate-300">No matching companies found</h3>
+      <p class="text-sm text-slate-500 mt-1">Try adjusting your filters, search terms, or favourites toggle.</p>
+    </div>
+
+  </main>
+
+  <!-- Role Details Modal / Drawer -->
+  <div id="roleModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-2xl w-full p-6 shadow-2xl space-y-5">
+      <div class="flex items-start justify-between border-b border-slate-800 pb-4">
+        <div>
+          <h3 class="text-xl font-bold text-slate-100 flex items-center gap-2" id="modalCompanyName"></h3>
+          <p class="text-sm text-slate-400 mt-1" id="modalCompanySector"></p>
+        </div>
+        <button onclick="closeRoleModal()" class="text-slate-400 hover:text-slate-200 p-1.5">
+          <i class="fa-solid fa-xmark text-xl"></i>
+        </button>
+      </div>
+
+      <div class="space-y-3 max-h-96 overflow-y-auto pr-1" id="modalRolesList">
+        <!-- Roles dynamically populated -->
+      </div>
+
+      <div class="pt-4 border-t border-slate-800 flex justify-between items-center">
+        <a id="modalCareersLink" href="#" target="_blank" class="text-sm font-semibold text-emerald-400 hover:text-emerald-300 flex items-center gap-1.5">
+          <span>View Full Careers Portal</span>
+          <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+        </a>
+        <button onclick="closeRoleModal()" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-sm font-semibold text-slate-200 rounded-xl">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Company Modal -->
+  <div id="addModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-xl w-full p-6 shadow-2xl space-y-4">
+      <div class="flex items-start justify-between border-b border-slate-800 pb-3">
+        <h3 class="text-lg font-bold text-slate-100">Add NI Tech Company</h3>
+        <button onclick="closeAddModal()" class="text-slate-400 hover:text-slate-200 p-1">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <form id="addCompanyForm" onsubmit="submitNewCompany(event)" class="space-y-4 text-sm">
+        <div>
+          <label class="block font-medium text-slate-300 mb-1.5">Company Name *</label>
+          <input type="text" id="addName" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-200" placeholder="e.g. Acme Tech">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-medium text-slate-300 mb-1.5">Website URL *</label>
+            <input type="url" id="addWebsite" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-200" placeholder="https://example.com">
+          </div>
+          <div>
+            <label class="block font-medium text-slate-300 mb-1.5">Careers URL *</label>
+            <input type="url" id="addCareersUrl" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-200" placeholder="https://example.com/careers">
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-medium text-slate-300 mb-1.5">Industry Sector</label>
+            <select id="addIndustry" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-200">
+              <option value="Cybersecurity & DevTools">Cybersecurity & DevTools</option>
+              <option value="Enterprise B2B SaaS">Enterprise B2B SaaS</option>
+              <option value="FinTech & Capital Markets">FinTech & Capital Markets</option>
+              <option value="HealthTech & Life Sciences">HealthTech & Life Sciences</option>
+              <option value="Data, AI & Analytics">Data, AI & Analytics</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-medium text-slate-300 mb-1.5">Scale Tier</label>
+            <select id="addScaleTier" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-200">
+              <option value="Startup (1-20)">Startup (1-20)</option>
+              <option value="Scaleup (20-100)">Scaleup (20-100)</option>
+              <option value="Mid-Market (100-500)">Mid-Market (100-500)</option>
+              <option value="Large Enterprise / FDI Hub (500+)">Large Enterprise / FDI Hub (500+)</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-medium text-slate-300 mb-1.5">Funding / Ownership</label>
+            <select id="addFunding" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-200">
+              <option value="Bootstrapped / Private">Bootstrapped / Private</option>
+              <option value="VC-backed">VC-backed</option>
+              <option value="PE-backed">PE-backed</option>
+              <option value="Publicly Listed / Corporate">Publicly Listed / Corporate</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-medium text-slate-300 mb-1.5">Location (NI Town/City)</label>
+            <input type="text" id="addLocation" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-200" placeholder="e.g. Belfast">
+          </div>
+        </div>
+        <div>
+          <label class="block font-medium text-slate-300 mb-1.5">About the Company</label>
+          <textarea id="addDescription" rows="3" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-200" placeholder="Brief summary of what they build and do..."></textarea>
+        </div>
+
+        <div class="pt-4 border-t border-slate-800 flex justify-end gap-3">
+          <button type="button" onclick="closeAddModal()" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl font-medium">Cancel</button>
+          <button type="submit" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl shadow-md shadow-emerald-600/20">Save Company</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- JavaScript Client -->
+  <script>
+    let allCompanies = [];
+    let currentView = 'table';
+    let expandedRows = new Set();
+    let favourites = new Set(JSON.parse(localStorage.getItem('ni_tech_radar_favourites') || '[]'));
+
+    async function loadCompanies() {
+      try {
+        const res = await fetch('/api/companies');
+        if (!res.ok) throw new Error('Failed to fetch data');
+        allCompanies = await res.json();
+        updateKPIs();
+        applyFilters();
+      } catch (err) {
+        console.error('Error loading companies:', err);
+      }
+    }
+
+    function toggleFavourite(id, event) {
+      if (event) event.stopPropagation();
+      if (favourites.has(id)) {
+        favourites.delete(id);
+      } else {
+        favourites.add(id);
+      }
+      localStorage.setItem('ni_tech_radar_favourites', JSON.stringify(Array.from(favourites)));
+      updateKPIs();
+      applyFilters();
+    }
+
+    function updateKPIs() {
+      document.getElementById('statTotal').innerText = allCompanies.length;
+      const productRoles = allCompanies.reduce((acc, c) => acc + (c.product_roles_count || 0), 0);
+      document.getElementById('statProductRoles').innerText = productRoles;
+      document.getElementById('statFavourites').innerText = favourites.size;
+      const appliedCount = allCompanies.filter(c => c.tracked_applications && c.tracked_applications.length > 0).length;
+      document.getElementById('statApplied').innerText = appliedCount;
+      const scaleups = allCompanies.filter(c => c.scale_tier && (c.scale_tier.includes('Startup') || c.scale_tier.includes('Scaleup'))).length;
+      document.getElementById('statScaleups').innerText = scaleups;
+    }
+
+    function getScaleBadgeClass(scale) {
+      if (!scale) return 'bg-slate-800 text-slate-300 border-slate-700';
+      if (scale.includes('Startup')) return 'bg-sky-500/10 text-sky-400 border-sky-500/20';
+      if (scale.includes('Scaleup')) return 'bg-blue-500/10 text-blue-400 border-blue-500/20';
+      if (scale.includes('Mid-Market')) return 'bg-purple-500/10 text-purple-400 border-purple-500/20';
+      return 'bg-amber-500/10 text-amber-400 border-amber-500/20';
+    }
+
+    function getPipelineStageBadge(stage) {
+      if (!stage) return '';
+      const s = stage.toLowerCase();
+      if (s === 'applied') {
+        return '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40"><i class="fa-solid fa-check text-[9px]"></i> Applied</span>';
+      }
+      if (s === 'rejected') {
+        return '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-rose-500/20 text-rose-400 border border-rose-500/40"><i class="fa-solid fa-ban text-[9px]"></i> Rejected</span>';
+      }
+      if (s.includes('phone') || s.includes('screen') || s.includes('panel') || s.includes('interview')) {
+        return '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/40 animate-pulse"><i class="fa-solid fa-user-tie text-[9px]"></i> Interviewing</span>';
+      }
+      if (s.includes('ghosted') || s.includes('closed')) {
+        return '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-slate-800 text-slate-400 border border-slate-700">Closed</span>';
+      }
+      return `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-blue-500/20 text-blue-400 border border-blue-500/40">${stage}</span>`;
+    }
+
+    function toggleRow(id) {
+      const detailsRow = document.getElementById(`details-${id}`);
+      const chevron = document.getElementById(`chevron-${id}`);
+      if (!detailsRow) return;
+
+      if (expandedRows.has(id)) {
+        expandedRows.delete(id);
+        detailsRow.classList.add('hidden');
+        if (chevron) chevron.classList.remove('rotate-90');
+      } else {
+        expandedRows.add(id);
+        detailsRow.classList.remove('hidden');
+        if (chevron) chevron.classList.add('rotate-90');
+      }
+    }
+
+    function applyFilters() {
+      const search = document.getElementById('searchInput').value.toLowerCase().trim();
+      const scale = document.getElementById('filterScale').value;
+      const industry = document.getElementById('filterIndustry').value;
+      const funding = document.getElementById('filterFunding').value;
+      const location = document.getElementById('filterLocation').value;
+      const productOnly = document.getElementById('toggleProductOnly').checked;
+      const appliedOnly = document.getElementById('toggleAppliedOnly').checked;
+      const favouritesOnly = document.getElementById('toggleFavouritesOnly').checked;
+
+      const filtered = allCompanies.filter(c => {
+        // Favourites filter
+        if (favouritesOnly && !favourites.has(c.id)) return false;
+
+        // Search filter
+        if (search) {
+          const matchName = c.name.toLowerCase().includes(search);
+          const matchDesc = (c.description || '').toLowerCase().includes(search);
+          const matchIndustry = (c.industry || '').toLowerCase().includes(search);
+          const matchPeople = (c.key_people || '').toLowerCase().includes(search);
+          const matchProducts = (c.key_products || []).join(' ').toLowerCase().includes(search);
+          if (!matchName && !matchDesc && !matchIndustry && !matchPeople && !matchProducts) return false;
+        }
+
+        // Dropdown filters
+        if (scale !== 'ALL' && !c.scale_tier.toLowerCase().includes(scale.toLowerCase())) return false;
+        if (industry !== 'ALL' && !c.industry.toLowerCase().includes(industry.toLowerCase())) return false;
+        if (funding !== 'ALL' && !c.funding_type.toLowerCase().includes(funding.toLowerCase())) return false;
+        if (location !== 'ALL' && !c.location.toLowerCase().includes(location.toLowerCase())) return false;
+
+        // Active Product Roles filter
+        if (productOnly && (!c.product_roles_count || c.product_roles_count === 0)) return false;
+
+        // Applied in Pipeline filter
+        if (appliedOnly && (!c.tracked_applications || c.tracked_applications.length === 0)) return false;
+
+        return true;
+      });
+
+      render(filtered);
+    }
+
+    function render(companies) {
+      const tbody = document.getElementById('companyTableBody');
+      const grid = document.getElementById('gridContainer');
+      const emptyState = document.getElementById('emptyState');
+
+      if (companies.length === 0) {
+        tbody.innerHTML = '';
+        grid.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+
+      // Table Render with Expandable Rows & Favourite Stars
+      tbody.innerHTML = companies.map(c => {
+        const isExpanded = expandedRows.has(c.id);
+        const isFav = favourites.has(c.id);
+        const hasProductRoles = (c.product_roles_count || 0) > 0;
+        const trackedApps = c.tracked_applications || [];
+        const latestApp = trackedApps.length > 0 ? trackedApps[0] : null;
+
+        return `
+          <!-- Main Row -->
+          <tr class="hover:bg-slate-800/40 transition-colors cursor-pointer border-t border-slate-800/60 select-none ${isFav ? 'bg-amber-950/10' : ''}" onclick="toggleRow('${c.id}')">
+            <!-- Chevron Toggle -->
+            <td class="py-4 px-3 text-center">
+              <button type="button" class="text-slate-500 hover:text-slate-300 transition-transform">
+                <i id="chevron-${c.id}" class="fa-solid fa-chevron-right text-xs transition-transform ${isExpanded ? 'rotate-90' : ''}"></i>
+              </button>
+            </td>
+
+            <!-- Favourite Star Icon -->
+            <td class="py-4 px-3 text-center" onclick="event.stopPropagation()">
+              <button onclick="toggleFavourite('${c.id}', event)" class="p-1 text-slate-600 hover:text-amber-400 transition-colors group" title="${isFav ? 'Remove from favourites' : 'Add to favourites'}">
+                <i class="${isFav ? 'fa-solid fa-star text-amber-400' : 'fa-regular fa-star text-slate-500 group-hover:text-amber-400/80'} text-sm transition-transform active:scale-125"></i>
+              </button>
+            </td>
+
+            <!-- Company Name & Snippet -->
+            <td class="py-4 px-5">
+              <div class="font-bold text-base text-slate-100 flex items-center gap-2">
+                <span>${c.name}</span>
+                <a href="${c.website}" target="_blank" onclick="event.stopPropagation()" class="text-slate-500 hover:text-emerald-400 text-xs" title="Open website">
+                  <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </a>
+                ${latestApp ? getPipelineStageBadge(latestApp.current_stage) : ''}
+              </div>
+              <div class="text-xs text-slate-400 line-clamp-1 max-w-sm mt-0.5">${c.description || ''}</div>
+            </td>
+
+            <!-- Sector & Domain -->
+            <td class="py-4 px-5">
+              <span class="inline-block bg-slate-800 text-slate-200 text-xs px-2.5 py-1 rounded-lg font-medium">${c.industry}</span>
+              <div class="text-xs text-slate-500 mt-1">${c.sub_sector || ''}</div>
+            </td>
+
+            <!-- Scale Tier -->
+            <td class="py-4 px-5">
+              <span class="inline-block border px-2.5 py-1 rounded-lg text-xs font-semibold ${getScaleBadgeClass(c.scale_tier)}">${c.scale_tier}</span>
+              <div class="text-xs text-slate-500 mt-1">${c.headcount_estimate || ''} team</div>
+            </td>
+
+            <!-- Ownership -->
+            <td class="py-4 px-5">
+              <span class="text-sm text-slate-300 font-medium">${c.funding_type || 'Private'}</span>
+            </td>
+
+            <!-- Location -->
+            <td class="py-4 px-5">
+              <div class="text-sm text-slate-200 font-medium flex items-center gap-1.5">
+                <i class="fa-solid fa-location-dot text-slate-500 text-xs"></i>
+                ${c.location}
+              </div>
+            </td>
+
+            <!-- Live Product Roles Column -->
+            <td class="py-4 px-5 text-center">
+              ${hasProductRoles ? `
+                <button onclick="event.stopPropagation(); viewCompanyRoles('${c.id}')" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold hover:bg-emerald-500/20 transition-all text-xs">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                  ${c.product_roles_count} Product Role${c.product_roles_count > 1 ? 's' : ''}
+                </button>
+              ` : `
+                <span class="inline-block px-2.5 py-1 rounded-full bg-slate-900 text-slate-500 text-xs font-medium border border-slate-800">0 Open</span>
+              `}
+            </td>
+
+            <!-- Actions -->
+            <td class="py-4 px-5 text-right whitespace-nowrap" onclick="event.stopPropagation()">
+              <a href="${c.careers_url}" target="_blank" class="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-400 hover:text-emerald-300 bg-emerald-950/40 border border-emerald-800/50 px-3.5 py-1.5 rounded-lg hover:bg-emerald-900/40 transition-colors">
+                <span>Careers</span>
+                <i class="fa-solid fa-chevron-right text-[10px]"></i>
+              </a>
+            </td>
+          </tr>
+
+          <!-- Expandable Details Row -->
+          <tr id="details-${c.id}" class="${isExpanded ? '' : 'hidden'} bg-slate-950/90 border-b border-slate-800">
+            <td colspan="9" class="p-6">
+              <div class="bg-slate-900/90 border border-slate-800/90 rounded-2xl p-6 space-y-5 shadow-inner">
+                
+                <!-- Pipeline Banner (If already applied or rejected) -->
+                ${trackedApps.length > 0 ? `
+                  <div class="p-4 rounded-xl border ${trackedApps[0].current_stage.toLowerCase() === 'rejected' ? 'bg-rose-950/40 border-rose-800/60 text-rose-200' : 'bg-emerald-950/40 border-emerald-800/60 text-emerald-200'} flex items-start justify-between">
+                    <div>
+                      <div class="flex items-center gap-2 font-bold text-sm">
+                        <i class="fa-solid ${trackedApps[0].current_stage.toLowerCase() === 'rejected' ? 'fa-ban text-rose-400' : 'fa-clipboard-check text-emerald-400'}"></i>
+                        <span>Tracked Application: ${trackedApps[0].role_title}</span>
+                        ${getPipelineStageBadge(trackedApps[0].current_stage)}
+                      </div>
+                      <p class="text-xs text-slate-300 mt-1">
+                        Applied: <strong>${trackedApps[0].date_applied || 'Recorded'}</strong>
+                        ${trackedApps[0].current_stage.toLowerCase() === 'rejected' ? ' • <span class="text-rose-300">Rejection on file. Do not duplicate cold applications.</span>' : ' • <span class="text-emerald-300">Active in pipeline.</span>'}
+                      </p>
+                    </div>
+                    <span class="text-[11px] font-mono text-slate-400 bg-slate-900 px-2.5 py-1 rounded border border-slate-800">
+                      ${trackedApps[0].folder}
+                    </span>
+                  </div>
+                ` : ''}
+
+                <!-- About & Description -->
+                <div>
+                  <h4 class="text-xs font-bold uppercase tracking-wider text-emerald-400 mb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-circle-info"></i> About ${c.name}
+                  </h4>
+                  <p class="text-sm text-slate-200 leading-relaxed">${c.description || 'No detailed overview available yet.'}</p>
+                </div>
+
+                <!-- Products, Leadership & Location Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t border-slate-800/60 text-sm">
+                  <div>
+                    <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Key Products & Technology</span>
+                    <p class="text-slate-200 font-medium">${(c.key_products && c.key_products.length > 0) ? c.key_products.join(', ') : 'Proprietary platform architecture'}</p>
+                  </div>
+                  <div>
+                    <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Leadership & Key People</span>
+                    <p class="text-slate-200 font-medium">${c.key_people || 'Executive leadership team'}</p>
+                  </div>
+                  <div>
+                    <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">NI Base & Address</span>
+                    <p class="text-slate-200 font-medium">${c.address || c.location + ', Northern Ireland'}</p>
+                  </div>
+                </div>
+
+                <!-- Live Product Roles inside Accordion -->
+                ${hasProductRoles ? `
+                  <div class="pt-4 border-t border-slate-800/60">
+                    <h5 class="text-xs font-bold uppercase tracking-wider text-emerald-400 mb-3 flex items-center gap-2">
+                      <i class="fa-solid fa-briefcase"></i> Active Product Management Openings (${c.product_roles_count})
+                    </h5>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      ${c.active_product_roles.map(r => {
+                        const isThisRoleApplied = trackedApps.some(app => app.role_title.toLowerCase().includes('principal') || app.role_title.toLowerCase() === r.title.toLowerCase());
+                        return `
+                          <div class="p-4 bg-slate-950 border border-slate-800 rounded-xl flex items-center justify-between hover:border-slate-700 transition-all">
+                            <div>
+                              <div class="font-bold text-sm text-slate-100 flex items-center gap-2">
+                                <span>${r.title}</span>
+                                ${isThisRoleApplied ? '<span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-bold">Applied</span>' : ''}
+                              </div>
+                              <div class="text-xs text-slate-400 mt-1">
+                                <i class="fa-solid fa-location-dot text-slate-500 mr-1"></i> ${r.location}
+                                ${r.date_posted ? ` • <span class="text-slate-500">Posted ${r.date_posted}</span>` : ''}
+                              </div>
+                            </div>
+                            <a href="${r.url}" target="_blank" class="px-3.5 py-2 ${isThisRoleApplied ? 'bg-slate-800 hover:bg-slate-700 text-emerald-300' : 'bg-emerald-600 hover:bg-emerald-500 text-white'} rounded-lg text-xs font-bold shadow-sm shadow-emerald-600/20 whitespace-nowrap">
+                              ${isThisRoleApplied ? 'View Submission' : 'Apply Direct'}
+                            </a>
+                          </div>
+                        `;
+                      }).join('')}
+                    </div>
+                  </div>
+                ` : `
+                  <div class="pt-2 flex items-center justify-between text-xs text-slate-400">
+                    <span>No active product leadership roles currently flagged. Check their full careers portal for engineering and general vacancies.</span>
+                    <a href="${c.careers_url}" target="_blank" class="text-emerald-400 hover:underline font-medium">Visit Careers Portal &rarr;</a>
+                  </div>
+                `}
+
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      // Grid Render with Star Icons
+      grid.innerHTML = companies.map(c => {
+        const isFav = favourites.has(c.id);
+        const trackedApps = c.tracked_applications || [];
+        const latestApp = trackedApps.length > 0 ? trackedApps[0] : null;
+
+        return `
+          <div class="bg-slate-900 border ${isFav ? 'border-amber-500/40 bg-amber-950/10' : 'border-slate-800'} rounded-2xl p-6 hover:border-slate-700 transition-all flex flex-col justify-between space-y-4 shadow-lg relative">
+            <div>
+              <div class="flex items-start justify-between">
+                <div>
+                  <h4 class="font-bold text-lg text-slate-100 flex items-center gap-2">
+                    <a href="${c.website}" target="_blank" class="hover:text-emerald-400 transition-colors">${c.name}</a>
+                    ${latestApp ? getPipelineStageBadge(latestApp.current_stage) : ''}
+                  </h4>
+                  <p class="text-xs text-slate-400 flex items-center gap-1.5 mt-1">
+                    <i class="fa-solid fa-location-dot text-slate-500 text-xs"></i>
+                    ${c.location} • <span class="text-slate-400 font-medium">${c.funding_type}</span>
+                  </p>
+                </div>
+                <div class="flex items-center gap-2">
+                  <button onclick="toggleFavourite('${c.id}', event)" class="text-slate-600 hover:text-amber-400 p-1">
+                    <i class="${isFav ? 'fa-solid fa-star text-amber-400' : 'fa-regular fa-star text-slate-500'} text-base"></i>
+                  </button>
+                  <span class="border px-3 py-1 rounded-lg text-xs font-semibold ${getScaleBadgeClass(c.scale_tier)}">${c.scale_tier.split(' ')[0]}</span>
+                </div>
+              </div>
+              <p class="text-sm text-slate-300 mt-4 line-clamp-3 leading-relaxed">${c.description || ''}</p>
+            </div>
+
+            <div class="pt-4 border-t border-slate-800 flex items-center justify-between">
+              <div>
+                ${(c.product_roles_count || 0) > 0 ? `
+                  <button onclick="viewCompanyRoles('${c.id}')" class="text-xs font-bold text-emerald-400 hover:underline flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    ${c.product_roles_count} Active PM Role${c.product_roles_count > 1 ? 's' : ''}
+                  </button>
+                ` : `
+                  <span class="text-xs text-slate-500 font-medium">0 Product Roles</span>
+                `}
+              </div>
+              <a href="${c.careers_url}" target="_blank" class="text-xs font-bold text-slate-300 hover:text-emerald-400 flex items-center gap-1.5">
+                Careers <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+              </a>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function switchView(view) {
+      currentView = view;
+      const table = document.getElementById('tableContainer');
+      const grid = document.getElementById('gridContainer');
+      const tBtn = document.getElementById('viewTableBtn');
+      const gBtn = document.getElementById('viewGridBtn');
+
+      if (view === 'table') {
+        table.classList.remove('hidden');
+        grid.classList.add('hidden');
+        tBtn.className = 'px-3.5 py-1.5 text-sm rounded-lg font-semibold bg-slate-800 text-slate-100 transition-all';
+        gBtn.className = 'px-3.5 py-1.5 text-sm rounded-lg font-semibold text-slate-400 hover:text-slate-200 transition-all';
+      } else {
+        table.classList.add('hidden');
+        grid.classList.remove('hidden');
+        gBtn.className = 'px-3.5 py-1.5 text-sm rounded-lg font-semibold bg-slate-800 text-slate-100 transition-all';
+        tBtn.className = 'px-3.5 py-1.5 text-sm rounded-lg font-semibold text-slate-400 hover:text-slate-200 transition-all';
+      }
+    }
+
+    function viewCompanyRoles(id) {
+      const company = allCompanies.find(c => c.id === id);
+      if (!company) return;
+
+      document.getElementById('modalCompanyName').innerText = company.name;
+      document.getElementById('modalCompanySector').innerText = `${company.industry} • ${company.location}`;
+      document.getElementById('modalCareersLink').href = company.careers_url;
+
+      const rolesList = document.getElementById('modalRolesList');
+      if (!company.active_product_roles || company.active_product_roles.length === 0) {
+        rolesList.innerHTML = `
+          <div class="text-center py-10 text-slate-400 text-sm">
+            No active product management roles detected at this moment. Check their careers portal directly.
+          </div>
+        `;
+      } else {
+        rolesList.innerHTML = company.active_product_roles.map(r => `
+          <div class="p-4 bg-slate-950 border border-slate-800 rounded-xl flex items-center justify-between hover:border-slate-700 transition-all">
+            <div>
+              <h5 class="text-sm font-bold text-slate-100">${r.title}</h5>
+              <p class="text-xs text-slate-400 mt-1">
+                <i class="fa-solid fa-location-dot text-slate-500 mr-1 text-xs"></i> ${r.location}
+                ${r.date_posted ? ` • <span class="text-slate-500">Posted ${r.date_posted}</span>` : ''}
+              </p>
+            </div>
+            <a href="${r.url}" target="_blank" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold whitespace-nowrap shadow-sm shadow-emerald-600/20">
+              Apply Direct
+            </a>
+          </div>
+        `).join('');
+      }
+
+      document.getElementById('roleModal').classList.remove('hidden');
+    }
+
+    function closeRoleModal() {
+      document.getElementById('roleModal').classList.add('hidden');
+    }
+
+    function openAddModal() {
+      document.getElementById('addModal').classList.remove('hidden');
+    }
+
+    function closeAddModal() {
+      document.getElementById('addModal').classList.add('hidden');
+    }
+
+    async function submitNewCompany(e) {
+      e.preventDefault();
+      const newCo = {
+        id: document.getElementById('addName').value.toLowerCase().replace(/[^a-z0-9]/g, '-'),
+        name: document.getElementById('addName').value,
+        website: document.getElementById('addWebsite').value,
+        careers_url: document.getElementById('addCareersUrl').value,
+        industry: document.getElementById('addIndustry').value,
+        scale_tier: document.getElementById('addScaleTier').value,
+        funding_type: document.getElementById('addFunding').value,
+        location: document.getElementById('addLocation').value,
+        description: document.getElementById('addDescription').value
+      };
+
+      try {
+        const res = await fetch('/api/companies', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(newCo)
+        });
+        if (!res.ok) throw new Error('Failed to add company');
+        closeAddModal();
+        await loadCompanies();
+      } catch (err) {
+        alert('Error adding company: ' + err.message);
+      }
+    }
+
+    async function triggerScan() {
+      const icon = document.getElementById('scanIcon');
+      icon.classList.add('animate-spin');
+      try {
+        const res = await fetch('/api/scan', { method: 'POST' });
+        const data = await res.json();
+        allCompanies = data.data;
+        updateKPIs();
+        applyFilters();
+      } catch (err) {
+        console.error('Scan error:', err);
+      } finally {
+        icon.classList.remove('animate-spin');
+      }
+    }
+
+    function exportCSV() {
+      if (!allCompanies || allCompanies.length === 0) return;
+      const headers = ['Name', 'Industry', 'Scale Tier', 'Funding Type', 'Location', 'Website', 'Careers URL', 'Product Roles Count', 'Application Status', 'Is Favourite'];
+      const rows = allCompanies.map(c => {
+        const appStatus = c.tracked_applications && c.tracked_applications.length > 0 ? c.tracked_applications[0].current_stage : 'None';
+        const isFav = favourites.has(c.id) ? 'Yes' : 'No';
+        return [
+          `"${c.name}"`,
+          `"${c.industry}"`,
+          `"${c.scale_tier}"`,
+          `"${c.funding_type}"`,
+          `"${c.location}"`,
+          `"${c.website}"`,
+          `"${c.careers_url}"`,
+          c.product_roles_count || 0,
+          `"${appStatus}"`,
+          `"${isFav}"`
+        ];
+      });
+      const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement('a');
+      link.setAttribute('href', encodedUri);
+      link.setAttribute('download', `ni_tech_radar_${new Date().toISOString().split('T')[0]}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // Initialize on load
+    loadCompanies();
+  </script>
+</body>
+</html>

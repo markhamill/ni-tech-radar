@@ -1,0 +1,13 @@
+{
+  "name": "ni-tech-radar",
+  "version": "1.0.0",
+  "description": "Local Northern Ireland Technology Ecosystem & Careers Dashboard",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "scan": "node scanner.js"
+  },
+  "keywords": ["northern-ireland", "tech-radar", "job-tracker", "careers"],
+  "author": "",
+  "license": "MIT"
+}
