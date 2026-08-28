@@ -111,7 +111,7 @@ All company intelligence is stored in clean JSON format at [`data/companies.json
 ```
 
 ### Example Regional Data Sources & Registries
-You can seed or expand [`data/companies.json`](data/companies.json) with company data from public ecosystem sources:
+You can seed or expand [`data/companies.json`](data/companies.json) with company data from public ecosystem sources e.g.
 * **[TechIreland](https://techireland.org/)** (e.g. filter by Northern Ireland startups, scaleups, and FDI hubs).
 * **[Catalyst Community](https://wearecatalyst.org/)** (e.g. tenants across Belfast Titanic Quarter, Derry/Londonderry, and Ballymena).
 * **[Software NI](https://softwareni.co.uk/)** (e.g. official Northern Ireland software industry member directory).
