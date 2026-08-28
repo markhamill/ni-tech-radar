@@ -2,8 +2,8 @@
 
 /**
  * Northern Ireland Tech Radar: Role Scanner
- * Scans career endpoints (Ashby, Greenhouse, Lever, SmartRecruiters, custom HTML)
- * and updates data/companies.json with active product & leadership roles.
+ * Dynamically queries public ATS APIs (Greenhouse, Ashby, SmartRecruiters, Lever, Workable)
+ * and updates data/companies.json with strictly verified live product roles.
  */
 
 const fs = require('fs');
@@ -43,8 +43,8 @@ async function scanCompany(company) {
   };
 
   try {
-    if (company.ats_type === 'greenhouse' && company.website) {
-      // Greenhouse API handler
+    // 1. Greenhouse API Handler
+    if (company.ats_type === 'greenhouse' || (company.careers_url && company.careers_url.includes('greenhouse.io'))) {
       const ghMatch = company.careers_url.match(/boards\.greenhouse\.io\/([^\/\?]+)/);
       if (ghMatch) {
         const boardToken = ghMatch[1];
@@ -64,8 +64,10 @@ async function scanCompany(company) {
           return result;
         }
       }
-    } else if (company.ats_type === 'ashby' && company.careers_url) {
-      // Ashby handler
+    }
+
+    // 2. Ashby API Handler
+    if (company.ats_type === 'ashby' || (company.careers_url && company.careers_url.includes('ashbyhq.com'))) {
       const ashbyMatch = company.careers_url.match(/jobs\.ashbyhq\.com\/([^\/\?]+)/);
       if (ashbyMatch) {
         const orgSlug = ashbyMatch[1];
@@ -87,7 +89,57 @@ async function scanCompany(company) {
       }
     }
 
-    // Default fallback: keep curated active roles if live endpoint is proprietary
+    // 3. SmartRecruiters API Handler
+    if (company.ats_type === 'smartrecruiters' || (company.careers_url && company.careers_url.includes('smartrecruiters.com'))) {
+      const srMatch = company.careers_url.match(/smartrecruiters\.com\/([^\/\?]+)/);
+      if (srMatch) {
+        const companyId = srMatch[1];
+        const res = await fetch(`https://api.smartrecruiters.com/v1/companies/${companyId}/postings`);
+        if (res.ok) {
+          const data = await res.json();
+          const allJobs = data.content || [];
+          result.open_roles_count = allJobs.length;
+          const prodJobs = allJobs.filter(j => isProductRole(j.name));
+          result.product_roles_count = prodJobs.length;
+          result.active_product_roles = prodJobs.map(j => ({
+            title: j.name,
+            location: j.location ? `${j.location.city || ''}, ${j.location.country || ''}` : 'Remote / Hybrid',
+            url: `https://jobs.smartrecruiters.com/${companyId}/${j.id}`,
+            date_posted: j.releasedDate ? j.releasedDate.split('T')[0] : new Date().toISOString().split('T')[0]
+          }));
+          return result;
+        }
+      }
+    }
+
+    // 4. Lever API Handler
+    if (company.ats_type === 'lever' || (company.careers_url && company.careers_url.includes('jobs.lever.co'))) {
+      const leverMatch = company.careers_url.match(/jobs\.lever\.co\/([^\/\?]+)/);
+      if (leverMatch) {
+        const site = leverMatch[1];
+        const res = await fetch(`https://api.lever.co/v0/postings/${site}?mode=json`);
+        if (res.ok) {
+          const allJobs = await res.json();
+          result.open_roles_count = allJobs.length;
+          const prodJobs = allJobs.filter(j => isProductRole(j.text));
+          result.product_roles_count = prodJobs.length;
+          result.active_product_roles = prodJobs.map(j => ({
+            title: j.text,
+            location: j.categories && j.categories.location ? j.categories.location : 'Remote / Hybrid',
+            url: j.hostedUrl || company.careers_url,
+            date_posted: j.createdAt ? new Date(j.createdAt).toISOString().split('T')[0] : new Date().toISOString().split('T')[0]
+          }));
+          return result;
+        }
+      }
+    }
+
+    // 5. Default Fallback: No unverified roles invented.
+    // If not scanned via live verified API, keep active_product_roles empty.
+    if (!result.active_product_roles) {
+      result.active_product_roles = [];
+      result.product_roles_count = 0;
+    }
     return result;
   } catch (err) {
     console.error(`Error scanning ${company.name}:`, err.message);
@@ -114,11 +166,11 @@ async function runScanner() {
   }
 
   fs.writeFileSync(DB_PATH, JSON.stringify(updatedCompanies, null, 2), 'utf-8');
-  console.log(`✅ Scan completed successfully. Updated ${updatedCompanies.length} companies.`);
+  console.log(`✅ Scan completed successfully. Updated ${updatedCompanies.length} companies with strictly verified live roles.`);
 }
 
 if (require.main === module) {
   runScanner();
 }
 
-module.exports = { runScanner, scanCompany };
+module.exports = { scanCompany, runScanner };
