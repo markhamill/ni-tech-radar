@@ -60,22 +60,36 @@
         </div>
       </div>
 
-      <div class="flex items-center space-x-3">
-        <!-- Local-only scan button -->
-        <button id="scanBtn" onclick="triggerScan()" class="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-sm font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/25 transition-all">
-          <i class="fa-solid fa-arrows-rotate text-sm" id="scanIcon"></i>
-          <span>Scan for Open Product Roles</span>
-        </button>
-        <!-- Local-only add company button -->
-        <button id="addBtn" onclick="openAddModal()" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-all">
-          <i class="fa-solid fa-plus text-sm"></i>
-          <span>Add Company</span>
-        </button>
+      <div class="flex items-start space-x-3">
+        <!-- Deployed-only Last Updated Label -->
+        <div id="deployedUpdatedLabel" class="hidden text-xs text-slate-400 flex items-center gap-1.5 bg-slate-900 border border-slate-800 px-3.5 py-2.5 rounded-xl font-medium shadow-sm">
+          <i class="fa-regular fa-calendar-check text-emerald-400 text-xs"></i>
+          <span id="staticUpdatedText">Catalogue updated: Recently</span>
+        </div>
+
         <!-- Public export button -->
-        <button onclick="exportCSV()" class="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-sm font-medium bg-slate-900 hover:bg-slate-800 text-slate-400 border border-slate-800 transition-all">
-          <i class="fa-solid fa-download"></i>
+        <button onclick="exportCSV()" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 transition-all shadow-sm">
+          <i class="fa-solid fa-download text-xs text-slate-400"></i>
           <span>Export CSV</span>
         </button>
+
+        <!-- Local-only add company button -->
+        <button id="addBtn" onclick="openAddModal()" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-all shadow-sm">
+          <i class="fa-solid fa-plus text-xs text-slate-300"></i>
+          <span>Add Company</span>
+        </button>
+
+        <!-- Local-only scan button & timestamp wrapper (Outside Right Edge) -->
+        <div id="scanBtnWrap" class="flex flex-col items-end">
+          <button id="scanBtn" onclick="triggerScan()" class="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-sm font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/25 transition-all">
+            <i class="fa-solid fa-arrows-rotate text-sm" id="scanIcon"></i>
+            <span>Scan for Open Product Roles</span>
+          </button>
+          <span id="lastScannedText" class="text-[11px] text-slate-400 mt-1.5 font-medium flex items-center gap-1">
+            <i class="fa-regular fa-clock text-[10px] text-slate-500"></i>
+            <span>Last scanned: Never</span>
+          </span>
+        </div>
       </div>
     </div>
   </header>
@@ -395,6 +409,52 @@
       return `https://www.linkedin.com/jobs/search/?keywords=${encodeURIComponent('"' + cleanName + '"')}&location=United%20Kingdom`;
     }
 
+    function formatLastUpdated(dateStr) {
+      if (!dateStr) return 'Recently';
+      try {
+        const d = new Date(dateStr);
+        if (isNaN(d.getTime())) return 'Recently';
+        const now = new Date();
+        const isToday = d.toDateString() === now.toDateString();
+        const timeStr = d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+        if (isToday) {
+          return `Today at ${timeStr}`;
+        }
+        const datePart = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+        return `${datePart} at ${timeStr}`;
+      } catch (e) {
+        return 'Recently';
+      }
+    }
+
+    function getLatestCompanyTimestamp() {
+      let latest = null;
+      for (const c of allCompanies) {
+        if (c.last_checked) {
+          const d = new Date(c.last_checked);
+          if (!latest || d > latest) latest = d;
+        }
+      }
+      return latest ? latest.toISOString() : null;
+    }
+
+    function updateScanTimestamps() {
+      const lastScannedText = document.getElementById('lastScannedText');
+      const staticUpdatedText = document.getElementById('staticUpdatedText');
+
+      if (isLocal) {
+        const saved = localStorage.getItem('ni_tech_radar_last_scan') || getLatestCompanyTimestamp();
+        if (lastScannedText) {
+          lastScannedText.innerHTML = `<i class="fa-regular fa-clock text-[10px] text-slate-500"></i><span>Last scanned: ${saved ? formatLastUpdated(saved) : 'Never'}</span>`;
+        }
+      } else {
+        const latest = getLatestCompanyTimestamp();
+        if (staticUpdatedText) {
+          staticUpdatedText.innerText = `Catalogue updated: ${latest ? formatLastUpdated(latest) : 'Recently'}`;
+        }
+      }
+    }
+
     let allCompanies = [];
     let currentView = 'table';
     let expandedRows = new Set();
@@ -402,7 +462,8 @@
 
     // Configure UI based on deployment environment
     function setupEnvironmentUI() {
-      const scanBtn = document.getElementById('scanBtn');
+      const scanWrap = document.getElementById('scanBtnWrap');
+      const deployedUpdatedLabel = document.getElementById('deployedUpdatedLabel');
       const addBtn = document.getElementById('addBtn');
       const favCard = document.getElementById('statFavouritesCard');
       const appCard = document.getElementById('statAppliedCard');
@@ -414,7 +475,8 @@
 
       if (!isLocal) {
         // Hide server-dependent and private tracking elements in deployed state
-        if (scanBtn) scanBtn.classList.add('hidden');
+        if (scanWrap) scanWrap.classList.add('hidden');
+        if (deployedUpdatedLabel) deployedUpdatedLabel.classList.remove('hidden');
         if (addBtn) addBtn.classList.add('hidden');
         if (favCard) favCard.classList.add('hidden');
         if (appCard) appCard.classList.add('hidden');
@@ -432,6 +494,8 @@
           modeBadge.innerHTML = '<i class="fa-solid fa-globe text-[11px] text-emerald-400"></i><span>Public Tech Directory</span>';
         }
       } else {
+        if (scanWrap) scanWrap.classList.remove('hidden');
+        if (deployedUpdatedLabel) deployedUpdatedLabel.classList.add('hidden');
         if (modeBadge) {
           modeBadge.innerHTML = '<i class="fa-solid fa-bullseye text-[11px] text-emerald-400"></i><span>Active Target Tracker (Local)</span>';
         }
@@ -460,6 +524,7 @@
         if (!res.ok) throw new Error('Failed to load companies data');
         allCompanies = await res.json();
         updateKPIs();
+        updateScanTimestamps();
         applyFilters();
       } catch (err) {
         console.error('Error loading companies:', err);
@@ -972,18 +1037,37 @@
 
     async function triggerScan() {
       if (!isLocal) return;
-      const icon = document.getElementById('scanIcon');
-      icon.classList.add('animate-spin');
+      const scanBtn = document.getElementById('scanBtn');
+      if (!scanBtn || scanBtn.disabled) return;
+
+      const originalHtml = scanBtn.innerHTML;
+      scanBtn.disabled = true;
+      scanBtn.classList.add('opacity-80', 'cursor-wait');
+      scanBtn.innerHTML = '<i class="fa-solid fa-arrows-rotate animate-spin text-sm"></i><span>Scanning 114 Portals...</span>';
+
       try {
         const res = await fetch('/api/scan', { method: 'POST' });
+        if (!res.ok) {
+          throw new Error(`Server returned HTTP ${res.status}`);
+        }
         const data = await res.json();
-        allCompanies = data.data;
-        updateKPIs();
-        applyFilters();
+        if (data.data && Array.isArray(data.data)) {
+          allCompanies = data.data;
+          const nowIso = new Date().toISOString();
+          localStorage.setItem('ni_tech_radar_last_scan', nowIso);
+          updateKPIs();
+          updateScanTimestamps();
+          applyFilters();
+          const count = allCompanies.reduce((acc, c) => acc + (c.product_roles_count || 0), 0);
+          console.log(`Scan successful. Found ${count} live verified product roles.`);
+        }
       } catch (err) {
         console.error('Scan error:', err);
+        alert('Scan Error: Could not connect to local Node backend.\n\nMake sure the local server is running by executing:\n  npm start\nin your terminal (http://localhost:3333).');
       } finally {
-        icon.classList.remove('animate-spin');
+        scanBtn.disabled = false;
+        scanBtn.classList.remove('opacity-80', 'cursor-wait');
+        scanBtn.innerHTML = originalHtml;
       }
     }
 

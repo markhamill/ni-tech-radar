@@ -280,9 +280,11 @@ async function runScanner() {
   console.log(`Loaded ${companies.length} companies from database.`);
 
   const updatedCompanies = [];
-  for (const company of companies) {
-    const updated = await scanCompany(company);
-    updatedCompanies.push(updated);
+  const BATCH_SIZE = 10;
+  for (let i = 0; i < companies.length; i += BATCH_SIZE) {
+    const chunk = companies.slice(i, i + BATCH_SIZE);
+    const results = await Promise.all(chunk.map(c => scanCompany(c)));
+    updatedCompanies.push(...results);
   }
 
   fs.writeFileSync(DB_PATH, JSON.stringify(updatedCompanies, null, 2), 'utf-8');
