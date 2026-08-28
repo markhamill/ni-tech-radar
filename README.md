@@ -117,6 +117,8 @@ You can seed or expand [`data/companies.json`](data/companies.json) with company
 * **[Software NI](https://softwareni.co.uk/)** (e.g. official Northern Ireland software industry member directory).
 * **[FinTech NI](https://www.fintechni.org.uk/)** (e.g. capital markets, trading tech, and regtech map).
 
+Or ask your coding agent or AI tool to find new sources relevant to your own search preferences, and import them into data/companies.json.
+
 ---
 
 ## 🔄 Live Application Status Tracking & Built-in Failsafe
