@@ -17,20 +17,51 @@ Built for senior professionals, candidates, and founders who want an unvarnished
 
 ---
 
+## 🤖 Or Just Get Your AI Agent to Do It
+
+If you use an AI coding assistant (such as **Google Antigravity CLI**, **Claude Code**, **Codex**, or **Cursor**), you can let your agent handle the entire setup, scanning, or customization for you:
+
+```bash
+cd ni-tech-radar
+agy   # or: claude, codex, etc.
+```
+
+**Copy & paste this prompt into your agent:**
+> *"Read README.md, AGENTS.md, and the codebase. Install any prerequisites if needed, verify the database schema, start the local dashboard server, and give me the localhost link to view it in my browser."*
+
+---
+
 ## 🚀 Quick Start & Local Setup
 
-### Prerequisites
-* [Node.js](https://nodejs.org/) v18.0.0 or higher.
+### Prerequisites: Installing Node.js
+This tool requires **Node.js v18.0.0 or higher** (no external npm packages required):
+* **macOS (Homebrew):**
+  ```bash
+  brew install node
+  ```
+* **Windows:**
+  Download the LTS installer from [nodejs.org](https://nodejs.org) or run via terminal:
+  ```powershell
+  winget install OpenJS.NodeJS.LTS
+  ```
+* **Linux (Ubuntu / Debian):**
+  ```bash
+  sudo apt update && sudo apt install nodejs npm
+  ```
+* **Version Check:**
+  ```bash
+  node -v
+  ```
 
 ### 1. Launch the Dashboard
-Clone the repository and run:
+Clone or download the repository, navigate to the folder, and run:
 ```bash
 cd ni-tech-radar
 npm start
 # or directly:
 node server.js
 ```
-Open your browser at: **`http://localhost:3333`**
+Open your browser at: **`http://localhost:3333`** (or whichever port is displayed in your terminal output. You can also specify a custom port with `PORT=3000 npm start`).
 
 ### 2. Run the Role Scanner
 To scan and refresh live job openings across career endpoints:
@@ -79,12 +110,12 @@ All company intelligence is stored in clean JSON format at [`data/companies.json
 }
 ```
 
-### Supported Data Sources & Registries
-You can seed or expand [`data/companies.json`](data/companies.json) with company data from:
-* **[TechIreland](https://techireland.org/)** (Filter by Northern Ireland startups, scaleups, and FDI hubs).
-* **[Catalyst Community](https://wearecatalyst.org/)** (Tenants across Belfast Titanic Quarter, Derry/Londonderry, and Ballymena).
-* **[Software NI](https://softwareni.co.uk/)** (Official Northern Ireland software industry member directory).
-* **[FinTech NI](https://www.fintechni.org.uk/)** (Capital markets, trading tech, and regtech map).
+### Example Regional Data Sources & Registries
+You can seed or expand [`data/companies.json`](data/companies.json) with company data from public ecosystem sources:
+* **[TechIreland](https://techireland.org/)** (e.g. filter by Northern Ireland startups, scaleups, and FDI hubs).
+* **[Catalyst Community](https://wearecatalyst.org/)** (e.g. tenants across Belfast Titanic Quarter, Derry/Londonderry, and Ballymena).
+* **[Software NI](https://softwareni.co.uk/)** (e.g. official Northern Ireland software industry member directory).
+* **[FinTech NI](https://www.fintechni.org.uk/)** (e.g. capital markets, trading tech, and regtech map).
 
 ---
 
