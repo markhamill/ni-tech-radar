@@ -8,8 +8,8 @@
     "industry": "Cybersecurity & DevTools",
     "sub_sector": "Software Supply Chain Security & Package Management",
     "scale_tier": "Scaleup (20-100)",
-    "headcount_estimate": "60-80",
-    "funding_type": "VC-backed (Series A)",
+    "headcount_estimate": "70-90",
+    "funding_type": "VC-backed (Insight Partners / MMC)",
     "location": "Belfast",
     "address": "4th Floor, High Street, Belfast",
     "description": "Cloud-native universal package management and software supply chain security platform for modern DevOps teams.",
@@ -17,8 +17,8 @@
       "Cloudsmith Universal Package Management",
       "Software Supply Chain Trust Engine"
     ],
-    "key_people": "Glenn Bilby (CEO), Alan Carson (Co-Founder)",
-    "last_checked": "2026-08-28T11:25:10.205Z",
+    "key_people": "Glenn Weinstein (CEO), Alan Carson & Lee Skillen (Co-Founders)",
+    "last_checked": "2026-08-28T11:30:40.987Z",
     "open_roles_count": 5,
     "product_roles_count": 2,
     "active_product_roles": [
@@ -57,7 +57,7 @@
       "Connect Platform"
     ],
     "key_people": "Phil Race (CEO), Chrissi Jackson (Chief Product Officer)",
-    "last_checked": "2026-08-28T11:25:10.206Z",
+    "last_checked": "2026-08-28T11:30:40.989Z",
     "open_roles_count": 8,
     "product_roles_count": 1,
     "active_product_roles": [
@@ -126,8 +126,8 @@
       "Waves Adaptive Learning",
       "Stream LXP"
     ],
-    "key_people": "Ben Betts (CEO), Louise McElvaney (People Director)",
-    "last_checked": "2026-08-28T11:25:10.206Z",
+    "key_people": "Benoit de La Tour (CEO), Louise McElvaney (People Director)",
+    "last_checked": "2026-08-28T11:30:40.989Z",
     "open_roles_count": 12,
     "product_roles_count": 1,
     "active_product_roles": [
@@ -190,7 +190,7 @@
       "InsightConnect (SOAR)"
     ],
     "key_people": "Wael Mohamed (CEO), Corey Thomas (Executive Chairman), Belfast Engineering Leads",
-    "last_checked": "2026-08-28T11:25:10.206Z",
+    "last_checked": "2026-08-28T11:30:40.989Z",
     "open_roles_count": 14,
     "product_roles_count": 1,
     "active_product_roles": [
@@ -383,8 +383,8 @@
       "Kx Real-Time Streaming Analytics",
       "Kx Insights"
     ],
-    "key_people": "Seamus Keating (CEO), Ashok Reddy (CEO of KX)",
-    "last_checked": "2026-08-28T11:25:10.207Z",
+    "key_people": "Ashok Reddy (CEO of KX), Seamus Keating (CEO of FD Technologies)",
+    "last_checked": "2026-08-28T11:30:40.989Z",
     "open_roles_count": 15,
     "product_roles_count": 2,
     "active_product_roles": [
@@ -453,18 +453,18 @@
     "industry": "Cybersecurity & DevTools",
     "sub_sector": "Security Awareness Training & Compliance Automation",
     "scale_tier": "Mid-Market (100-500)",
-    "headcount_estimate": "200+ (Derry HQ & Belfast)",
-    "funding_type": "PE-backed (Tenzing)",
+    "headcount_estimate": "250+ (Derry HQ & Belfast)",
+    "funding_type": "PE-backed (Keensight Capital)",
     "location": "Derry",
     "address": "North West Regional Science Park, Fort George, Derry",
-    "description": "Cybersecurity automation and staff compliance platform providing simulated phishing campaigns, privacy management (GDPR), and interactive cybersecurity e-learning.",
+    "description": "Leading European human risk management and cybersecurity compliance platform providing automated security awareness training, simulated phishing, and privacy governance (backed by Keensight Capital).",
     "key_products": [
       "MetaPhish",
       "MetaLearning",
       "MetaPrivacy Governance Suite"
     ],
-    "key_people": "James O'Kane (CEO), Robbie O'Brien (Founder)",
-    "last_checked": "2026-08-28T11:25:10.207Z",
+    "key_people": "James Mackay (CEO), Robert O'Brien (Founder & Chief Evangelist)",
+    "last_checked": "2026-08-28T11:30:40.989Z",
     "open_roles_count": 9,
     "product_roles_count": 1,
     "active_product_roles": [
@@ -856,15 +856,15 @@
     "sub_sector": "GRC, Quality & Enterprise Risk Management",
     "scale_tier": "Startup (1-20)",
     "headcount_estimate": "20-30",
-    "funding_type": "VC-backed (BGF, First Derivatives)",
+    "funding_type": "Corporate Subsidiary (Nulogy)",
     "location": "Belfast",
     "address": "Cathedral Quarter, Belfast",
-    "description": "Enterprise Risk Management and GRC software platform simplifying compliance audits, supplier risk assessments, and quality governance.",
+    "description": "Enterprise Risk Management, GRC, and quality assurance software platform for manufacturing and regulated industries (acquired by Nulogy).",
     "key_products": [
       "AuditComply Risk & Audit Platform"
     ],
-    "key_people": "Kevin Donaghy (CEO)",
-    "last_checked": "2026-08-28T11:25:10.207Z",
+    "key_people": "Kevin Donaghy (Founder & Executive Leadership)",
+    "last_checked": "2026-08-28T11:30:40.989Z",
     "open_roles_count": 2,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -1077,8 +1077,8 @@
       "API Security Platform",
       "Advanced Bot Protection"
     ],
-    "key_people": "Pam Murphy (CEO Imperva)",
-    "last_checked": "2026-08-28T11:25:10.207Z",
+    "key_people": "Pam Murphy (CEO Imperva), Belfast Site Leadership",
+    "last_checked": "2026-08-28T11:30:40.989Z",
     "open_roles_count": 8,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -1172,17 +1172,17 @@
     "sub_sector": "Wireless Collaboration & Screen Sharing Software",
     "scale_tier": "Scaleup (20-100)",
     "headcount_estimate": "35-50",
-    "funding_type": "VC-backed (Kernel Capital / BGF)",
+    "funding_type": "Corporate Subsidiary (Volaris Group / Constellation Software)",
     "location": "Belfast",
     "address": "Belfast City Centre",
-    "description": "Wireless presentation, interactive whiteboard, and screen sharing software embedded across enterprise meeting rooms and educational hardware worldwide.",
+    "description": "Wireless presentation, interactive meeting room collaboration, and screen sharing software platform embedded across hardware globally (acquired by Volaris Group).",
     "key_products": [
       "Montage Screen Sharing",
       "Broadcast Live Presenting",
       "Launcher"
     ],
-    "key_people": "Paul Brown (CEO), Luke McSorley (CTO)",
-    "last_checked": "2026-08-28T11:25:10.207Z",
+    "key_people": "Ed Morgan (CEO), Luke McSorley (CTO)",
+    "last_checked": "2026-08-28T11:30:40.989Z",
     "open_roles_count": 2,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -1338,7 +1338,7 @@
     "sub_sector": "Infrastructure as Code & Configuration Automation",
     "scale_tier": "Mid-Market (100-500)",
     "headcount_estimate": "500+ (Belfast Hub: 80+)",
-    "funding_type": "PE-backed (Francisco Partners / Clearlake)",
+    "funding_type": "Corporate Subsidiary (Perforce Software / Francisco Partners)",
     "location": "Belfast",
     "address": "Bedford Street, Belfast",
     "description": "Pioneering infrastructure automation and DevOps configuration management software platform powering hybrid cloud infrastructure for tens of thousands of enterprises.",
@@ -1348,7 +1348,7 @@
       "Puppet Bolt"
     ],
     "key_people": "Jim Ryan (CEO Perforce), Belfast Site Leadership",
-    "last_checked": "2026-08-28T11:25:10.207Z",
+    "last_checked": "2026-08-28T11:30:40.989Z",
     "open_roles_count": 6,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -1395,8 +1395,8 @@
       "Magnite Streaming SSP",
       "SpotX Video Ad Server"
     ],
-    "key_people": "Michael Barrett (CEO Magnite)",
-    "last_checked": "2026-08-28T11:25:10.208Z",
+    "key_people": "Michael Barrett (CEO Magnite), Belfast Engineering Leads",
+    "last_checked": "2026-08-28T11:30:40.989Z",
     "open_roles_count": 5,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -1505,7 +1505,7 @@
     "sub_sector": "MDR, Cloud Security SOC & Threat Detection",
     "scale_tier": "Mid-Market (100-500)",
     "headcount_estimate": "1,000+ (NI Hub: 80+)",
-    "funding_type": "PE-backed (Fortra / HGGC)",
+    "funding_type": "Corporate Subsidiary (Fortra / HGGC)",
     "location": "Belfast",
     "address": "City Quays 2, Belfast Harbour",
     "description": "Managed Detection and Response (MDR) cybersecurity company providing automated cloud threat detection, network intrusion monitoring, and 24/7 SOC operations.",
@@ -1513,8 +1513,8 @@
       "Alert Logic MDR Platform",
       "Cloud Insight"
     ],
-    "key_people": "Fortra Executive Leadership",
-    "last_checked": "2026-08-28T11:25:10.208Z",
+    "key_people": "Fortra Executive Leadership, Belfast Engineering Leads",
+    "last_checked": "2026-08-28T11:30:40.989Z",
     "open_roles_count": 6,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -1568,8 +1568,8 @@
       "zLink Mobile Telemetry",
       "Intelesens Wearable Cardiac Patch"
     ],
-    "key_people": "Belfast Engineering Team",
-    "last_checked": "2026-08-28T11:25:10.208Z",
+    "key_people": "Belfast Engineering Leadership",
+    "last_checked": "2026-08-28T11:30:40.989Z",
     "open_roles_count": 2,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -1848,7 +1848,7 @@
       "VetIMPRESS Veterinary Data Platform"
     ],
     "key_people": "George Brownlee (Founder & Managing Director)",
-    "last_checked": "2026-08-28T11:25:10.208Z",
+    "last_checked": "2026-08-28T11:30:40.989Z",
     "open_roles_count": 3,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -2135,7 +2135,7 @@
       "CattleEye AI Computer Vision Platform"
     ],
     "key_people": "Terry Canning (CEO & Co-Founder), Adam Bradley (CTO)",
-    "last_checked": "2026-08-28T11:25:10.210Z",
+    "last_checked": "2026-08-28T11:30:40.989Z",
     "open_roles_count": 3,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -2158,8 +2158,8 @@
       "Overwatch Preclinical Study Platform",
       "Benchling In Vivo"
     ],
-    "key_people": "Chris Armstrong (CEO & Co-Founder), Graham Finch (CTO)",
-    "last_checked": "2026-08-28T11:25:10.210Z",
+    "key_people": "Chris Armstrong (Founder), Graham Finch (Founder), Benchling Leadership",
+    "last_checked": "2026-08-28T11:30:40.989Z",
     "open_roles_count": 4,
     "product_roles_count": 1,
     "active_product_roles": [
@@ -2252,7 +2252,7 @@
     "sub_sector": "Deep Packet Inspection (DPI) & Hardware Acceleration Silicon",
     "scale_tier": "Large Enterprise / FDI Hub (500+)",
     "headcount_estimate": "30,000+ (Belfast Silicon Lab: 50+)",
-    "funding_type": "Publicly Listed (NASDAQ: NVDA)",
+    "funding_type": "Corporate Subsidiary (Nvidia / NASDAQ: NVDA)",
     "location": "Belfast",
     "address": "Titanic Quarter, Belfast",
     "description": "World-leading hardware regular expression matching and network security acceleration technology (pioneered by Titan IC, acquired by Mellanox and Nvidia for BlueField DPUs).",
@@ -2260,8 +2260,8 @@
       "Nvidia BlueField DPU Regex Processor",
       "HyperScan Acceleration"
     ],
-    "key_people": "Noel McKenna (Former CEO Titan IC / VP Nvidia)",
-    "last_checked": "2026-08-28T11:25:10.210Z",
+    "key_people": "Noel McKenna (Former CEO Titan IC / VP Nvidia), Belfast Lab Leadership",
+    "last_checked": "2026-08-28T11:30:40.989Z",
     "open_roles_count": 6,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -2285,7 +2285,7 @@
       "Uleska Continuous AppSec Orchestration"
     ],
     "key_people": "Gary Robinson (Founder & Chief Architect)",
-    "last_checked": "2026-08-28T11:25:10.210Z",
+    "last_checked": "2026-08-28T11:30:40.989Z",
     "open_roles_count": 3,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -2330,8 +2330,8 @@
     "key_products": [
       "SignVideo Web & Mobile VRS Platform"
     ],
-    "key_people": "Belfast Engineering Leadership",
-    "last_checked": "2026-08-28T11:25:10.210Z",
+    "key_people": "Belfast Operations & Engineering Team",
+    "last_checked": "2026-08-28T11:30:40.989Z",
     "open_roles_count": 2,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -2698,8 +2698,8 @@
       "MRP Prelytix ABM Platform",
       "Buyer Intent Engine"
     ],
-    "key_people": "Christopher Rack (CEO MRP)",
-    "last_checked": "2026-08-28T11:25:10.210Z",
+    "key_people": "Christopher Rack (CEO MRP), Belfast Leadership",
+    "last_checked": "2026-08-28T11:30:40.989Z",
     "open_roles_count": 5,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -2760,7 +2760,7 @@
     "industry": "Enterprise B2B SaaS",
     "sub_sector": "Workday Automation Products, Cloud & Digital Services",
     "scale_tier": "Large Enterprise / FDI Hub (500+)",
-    "headcount_estimate": "3,000+ (Belfast HQ: 1,500+)",
+    "headcount_estimate": "3,200+ (Belfast HQ: 1,600+)",
     "funding_type": "Publicly Listed (LSE: KNOS / FTSE 250)",
     "location": "Belfast",
     "address": "4-6 Upper Crescent & Bankmore Square, Belfast",
@@ -2771,7 +2771,7 @@
       "Kainos Smart Shield"
     ],
     "key_people": "Russell Sloan (CEO), Tom Gray (Director of Innovation)",
-    "last_checked": "2026-08-28T11:25:10.210Z",
+    "last_checked": "2026-08-28T11:30:40.989Z",
     "open_roles_count": 35,
     "product_roles_count": 3,
     "active_product_roles": [
