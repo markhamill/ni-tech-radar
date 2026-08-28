@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Northern Ireland Tech Radar | Ecosystem & Careers Tracker</title>
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -51,7 +51,7 @@
         <div>
           <h1 class="font-extrabold text-xl text-slate-50 tracking-tight flex items-center gap-3">
             <span>Northern Ireland Tech Radar</span>
-            <span class="inline-flex items-center gap-1.5 text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-3 py-1 rounded-full font-bold shadow-sm">
+            <span id="modeBadge" class="inline-flex items-center gap-1.5 text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-3 py-1 rounded-full font-bold shadow-sm">
               <i class="fa-solid fa-bullseye text-[11px] text-emerald-400"></i>
               <span>Active Target Tracker</span>
             </span>
@@ -61,14 +61,17 @@
       </div>
 
       <div class="flex items-center space-x-3">
+        <!-- Local-only scan button -->
         <button id="scanBtn" onclick="triggerScan()" class="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-sm font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/25 transition-all">
           <i class="fa-solid fa-arrows-rotate text-sm" id="scanIcon"></i>
           <span>Scan for Open Product Roles</span>
         </button>
-        <button onclick="openAddModal()" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-all">
+        <!-- Local-only add company button -->
+        <button id="addBtn" onclick="openAddModal()" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-all">
           <i class="fa-solid fa-plus text-sm"></i>
           <span>Add Company</span>
         </button>
+        <!-- Public export button -->
         <button onclick="exportCSV()" class="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-sm font-medium bg-slate-900 hover:bg-slate-800 text-slate-400 border border-slate-800 transition-all">
           <i class="fa-solid fa-download"></i>
           <span>Export CSV</span>
@@ -80,8 +83,8 @@
   <!-- Main Container (Widescreen Optimized) -->
   <main class="flex-1 max-w-[1700px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
 
-    <!-- KPI Metric Cards -->
-    <div class="grid grid-cols-2 sm:grid-cols-5 gap-4">
+    <!-- KPI Metric Cards (Dynamically adapted for Local vs Deployed) -->
+    <div id="kpiContainer" class="grid grid-cols-2 sm:grid-cols-5 gap-4">
       <div class="bg-slate-900/70 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between">
         <div class="text-sm font-semibold text-slate-400">Total NI Tech Companies</div>
         <div class="text-3xl font-extrabold text-slate-100 mt-2" id="statTotal">0</div>
@@ -95,7 +98,8 @@
         <div class="text-3xl font-extrabold text-emerald-400 mt-2" id="statProductRoles">0</div>
         <div class="text-xs text-emerald-500/80 mt-1">VP, Director, Group & Senior PMs</div>
       </div>
-      <div class="bg-slate-900/70 border border-amber-900/30 rounded-2xl p-5 flex flex-col justify-between">
+      <!-- Local-only Favourites Card -->
+      <div id="statFavouritesCard" class="bg-slate-900/70 border border-amber-900/30 rounded-2xl p-5 flex flex-col justify-between">
         <div class="text-sm font-semibold text-amber-400 flex items-center justify-between">
           <span>Starred Favourites</span>
           <i class="fa-solid fa-star text-xs text-amber-400"></i>
@@ -103,7 +107,8 @@
         <div class="text-3xl font-extrabold text-amber-400 mt-2" id="statFavourites">0</div>
         <div class="text-xs text-amber-500/80 mt-1">Shortlisted companies</div>
       </div>
-      <div class="bg-slate-900/70 border border-blue-900/30 rounded-2xl p-5 flex flex-col justify-between">
+      <!-- Local-only Pipeline Card -->
+      <div id="statAppliedCard" class="bg-slate-900/70 border border-blue-900/30 rounded-2xl p-5 flex flex-col justify-between">
         <div class="text-sm font-semibold text-blue-400">Applied in Pipeline</div>
         <div class="text-3xl font-extrabold text-blue-400 mt-2" id="statApplied">0</div>
         <div class="text-xs text-blue-500/80 mt-1">Active tracked applications</div>
@@ -132,8 +137,8 @@
 
         <!-- Quick Filter Toggles -->
         <div class="flex flex-wrap items-center gap-3">
-          <!-- Starred Favourites Toggle -->
-          <label class="flex items-center gap-2 cursor-pointer bg-slate-950/80 border border-slate-800 px-3.5 py-3 rounded-xl text-sm font-medium text-amber-300 hover:border-slate-700 select-none whitespace-nowrap">
+          <!-- Starred Favourites Toggle (Local only) -->
+          <label id="favouritesFilterWrap" class="flex items-center gap-2 cursor-pointer bg-slate-950/80 border border-slate-800 px-3.5 py-3 rounded-xl text-sm font-medium text-amber-300 hover:border-slate-700 select-none whitespace-nowrap">
             <input type="checkbox" id="toggleFavouritesOnly" class="rounded border-slate-700 bg-slate-900 text-amber-500 focus:ring-amber-500 h-4 w-4" onchange="applyFilters()">
             <span class="flex items-center gap-1.5"><i class="fa-solid fa-star text-amber-400 text-xs"></i> Favourites Only</span>
           </label>
@@ -142,8 +147,8 @@
             <input type="checkbox" id="toggleProductOnly" class="rounded border-slate-700 bg-slate-900 text-emerald-500 focus:ring-emerald-500 h-4 w-4" onchange="applyFilters()">
             <span>🔥 Live Product Roles</span>
           </label>
-          <!-- Pipeline Applications Toggle -->
-          <label class="flex items-center gap-2 cursor-pointer bg-slate-950/80 border border-slate-800 px-3.5 py-3 rounded-xl text-sm font-medium text-blue-300 hover:border-slate-700 select-none whitespace-nowrap">
+          <!-- Pipeline Applications Toggle (Local only) -->
+          <label id="appliedFilterWrap" class="flex items-center gap-2 cursor-pointer bg-slate-950/80 border border-slate-800 px-3.5 py-3 rounded-xl text-sm font-medium text-blue-300 hover:border-slate-700 select-none whitespace-nowrap">
             <input type="checkbox" id="toggleAppliedOnly" class="rounded border-slate-700 bg-slate-900 text-blue-500 focus:ring-blue-500 h-4 w-4" onchange="applyFilters()">
             <span>📋 My Applications</span>
           </label>
@@ -202,6 +207,8 @@
             <option value="Lisburn">Lisburn</option>
             <option value="Newry">Newry</option>
             <option value="Ballymena">Ballymena</option>
+            <option value="Antrim">Antrim</option>
+            <option value="Craigavon">Craigavon</option>
           </select>
         </div>
       </div>
@@ -214,7 +221,7 @@
           <thead>
             <tr class="border-b border-slate-800 bg-slate-950/90 text-slate-400 font-bold uppercase tracking-wider text-xs">
               <th class="py-4 px-3 w-10 text-center"></th>
-              <th class="py-4 px-3 w-10 text-center"><i class="fa-solid fa-star text-amber-400/60"></i></th>
+              <th id="thStar" class="py-4 px-3 w-10 text-center"><i class="fa-solid fa-star text-amber-400/60"></i></th>
               <th class="py-4 px-5">Company</th>
               <th class="py-4 px-5">Sector & Domain</th>
               <th class="py-4 px-5">Scale Tier</th>
@@ -240,7 +247,7 @@
     <div id="emptyState" class="hidden text-center py-20 bg-slate-900/30 border border-dashed border-slate-800 rounded-2xl">
       <i class="fa-solid fa-crosshairs text-5xl text-slate-700 mb-3"></i>
       <h3 class="text-base font-bold text-slate-300">No matching companies found</h3>
-      <p class="text-sm text-slate-500 mt-1">Try adjusting your filters, search terms, or favourites toggle.</p>
+      <p class="text-sm text-slate-500 mt-1">Try adjusting your filters or search terms.</p>
     </div>
 
   </main>
@@ -274,7 +281,7 @@
     </div>
   </div>
 
-  <!-- Add Company Modal -->
+  <!-- Add Company Modal (Local Only) -->
   <div id="addModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-xl w-full p-6 shadow-2xl space-y-4">
       <div class="flex items-start justify-between border-b border-slate-800 pb-3">
@@ -350,15 +357,88 @@
 
   <!-- JavaScript Client -->
   <script>
+    // =========================================================================
+    // ⚙️ DEPLOYMENT & ENVIRONMENT CONFIGURATION SWITCH
+    // =========================================================================
+    // 'auto'     : Automatically detects if running on localhost / 127.0.0.1 (Local Mode)
+    //              vs a public/static web host like GitHub Pages, Vercel, Netlify (Deployed Mode).
+    // 'local'    : Forces Local Mode (shows Live Scans, Application Sync, Favourites, Add Company).
+    // 'deployed' : Forces Static Deployed Mode (hides Live Scans, Application Sync, Favourites).
+    const DEPLOYMENT_MODE = 'auto';
+
+    function isLocalEnvironment() {
+      if (DEPLOYMENT_MODE === 'local') return true;
+      if (DEPLOYMENT_MODE === 'deployed') return false;
+      // Auto-detection of local environment
+      const host = window.location.hostname;
+      return host === 'localhost' || host === '127.0.0.1' || host === '0.0.0.0' || window.location.protocol === 'file:';
+    }
+
+    const isLocal = isLocalEnvironment();
+
     let allCompanies = [];
     let currentView = 'table';
     let expandedRows = new Set();
-    let favourites = new Set(JSON.parse(localStorage.getItem('ni_tech_radar_favourites') || '[]'));
+    let favourites = new Set(isLocal ? JSON.parse(localStorage.getItem('ni_tech_radar_favourites') || '[]') : []);
+
+    // Configure UI based on deployment environment
+    function setupEnvironmentUI() {
+      const scanBtn = document.getElementById('scanBtn');
+      const addBtn = document.getElementById('addBtn');
+      const favCard = document.getElementById('statFavouritesCard');
+      const appCard = document.getElementById('statAppliedCard');
+      const favFilter = document.getElementById('favouritesFilterWrap');
+      const appFilter = document.getElementById('appliedFilterWrap');
+      const thStar = document.getElementById('thStar');
+      const modeBadge = document.getElementById('modeBadge');
+      const kpiContainer = document.getElementById('kpiContainer');
+
+      if (!isLocal) {
+        // Hide server-dependent and private tracking elements in deployed state
+        if (scanBtn) scanBtn.classList.add('hidden');
+        if (addBtn) addBtn.classList.add('hidden');
+        if (favCard) favCard.classList.add('hidden');
+        if (appCard) appCard.classList.add('hidden');
+        if (favFilter) favFilter.classList.add('hidden');
+        if (appFilter) appFilter.classList.add('hidden');
+        if (thStar) thStar.classList.add('hidden');
+
+        // Adjust KPI grid for deployed view
+        if (kpiContainer) {
+          kpiContainer.className = 'grid grid-cols-1 sm:grid-cols-3 gap-4';
+        }
+
+        // Update badge for public directory
+        if (modeBadge) {
+          modeBadge.innerHTML = '<i class="fa-solid fa-globe text-[11px] text-emerald-400"></i><span>Public Tech Directory</span>';
+        }
+      } else {
+        if (modeBadge) {
+          modeBadge.innerHTML = '<i class="fa-solid fa-bullseye text-[11px] text-emerald-400"></i><span>Active Target Tracker (Local)</span>';
+        }
+      }
+    }
 
     async function loadCompanies() {
+      setupEnvironmentUI();
       try {
-        const res = await fetch('/api/companies');
-        if (!res.ok) throw new Error('Failed to fetch data');
+        let res;
+        if (isLocal) {
+          try {
+            res = await fetch('/api/companies');
+            if (!res.ok) throw new Error('API route unavailable');
+          } catch (apiErr) {
+            // Fallback to static JSON file if server API not responding
+            res = await fetch('./data/companies.json').catch(() => fetch('data/companies.json'));
+          }
+        } else {
+          // In deployed static state, fetch static JSON (supports subpaths and root paths)
+          res = await fetch('./data/companies.json')
+            .catch(() => fetch('data/companies.json'))
+            .catch(() => fetch('../data/companies.json'));
+        }
+
+        if (!res.ok) throw new Error('Failed to load companies data');
         allCompanies = await res.json();
         updateKPIs();
         applyFilters();
@@ -368,6 +448,7 @@
     }
 
     function toggleFavourite(id, event) {
+      if (!isLocal) return;
       if (event) event.stopPropagation();
       if (favourites.has(id)) {
         favourites.delete(id);
@@ -383,11 +464,18 @@
       document.getElementById('statTotal').innerText = allCompanies.length;
       const productRoles = allCompanies.reduce((acc, c) => acc + (c.product_roles_count || 0), 0);
       document.getElementById('statProductRoles').innerText = productRoles;
-      document.getElementById('statFavourites').innerText = favourites.size;
-      const appliedCount = allCompanies.filter(c => c.tracked_applications && c.tracked_applications.length > 0).length;
-      document.getElementById('statApplied').innerText = appliedCount;
       const scaleups = allCompanies.filter(c => c.scale_tier && (c.scale_tier.includes('Startup') || c.scale_tier.includes('Scaleup'))).length;
       document.getElementById('statScaleups').innerText = scaleups;
+
+      if (isLocal) {
+        const favEl = document.getElementById('statFavourites');
+        if (favEl) favEl.innerText = favourites.size;
+        const appEl = document.getElementById('statApplied');
+        if (appEl) {
+          const appliedCount = allCompanies.filter(c => c.tracked_applications && c.tracked_applications.length > 0).length;
+          appEl.innerText = appliedCount;
+        }
+      }
     }
 
     function getScaleBadgeClass(scale) {
@@ -399,7 +487,7 @@
     }
 
     function getPipelineStageBadge(stage) {
-      if (!stage) return '';
+      if (!isLocal || !stage) return '';
       const s = stage.toLowerCase();
       if (s === 'applied') {
         return '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40"><i class="fa-solid fa-check text-[9px]"></i> Applied</span>';
@@ -439,12 +527,12 @@
       const funding = document.getElementById('filterFunding').value;
       const location = document.getElementById('filterLocation').value;
       const productOnly = document.getElementById('toggleProductOnly').checked;
-      const appliedOnly = document.getElementById('toggleAppliedOnly').checked;
-      const favouritesOnly = document.getElementById('toggleFavouritesOnly').checked;
+      const appliedOnly = isLocal && document.getElementById('toggleAppliedOnly') && document.getElementById('toggleAppliedOnly').checked;
+      const favouritesOnly = isLocal && document.getElementById('toggleFavouritesOnly') && document.getElementById('toggleFavouritesOnly').checked;
 
       const filtered = allCompanies.filter(c => {
-        // Favourites filter
-        if (favouritesOnly && !favourites.has(c.id)) return false;
+        // Favourites filter (Local only)
+        if (isLocal && favouritesOnly && !favourites.has(c.id)) return false;
 
         // Search filter
         if (search) {
@@ -465,8 +553,8 @@
         // Active Product Roles filter
         if (productOnly && (!c.product_roles_count || c.product_roles_count === 0)) return false;
 
-        // Applied in Pipeline filter
-        if (appliedOnly && (!c.tracked_applications || c.tracked_applications.length === 0)) return false;
+        // Applied in Pipeline filter (Local only)
+        if (isLocal && appliedOnly && (!c.tracked_applications || c.tracked_applications.length === 0)) return false;
 
         return true;
       });
@@ -488,12 +576,12 @@
 
       emptyState.classList.add('hidden');
 
-      // Table Render with Expandable Rows & Favourite Stars
+      // Table Render
       tbody.innerHTML = companies.map(c => {
         const isExpanded = expandedRows.has(c.id);
-        const isFav = favourites.has(c.id);
+        const isFav = isLocal && favourites.has(c.id);
         const hasProductRoles = (c.product_roles_count || 0) > 0;
-        const trackedApps = c.tracked_applications || [];
+        const trackedApps = isLocal ? (c.tracked_applications || []) : [];
         const latestApp = trackedApps.length > 0 ? trackedApps[0] : null;
 
         return `
@@ -506,12 +594,14 @@
               </button>
             </td>
 
-            <!-- Favourite Star Icon -->
-            <td class="py-4 px-3 text-center" onclick="event.stopPropagation()">
-              <button onclick="toggleFavourite('${c.id}', event)" class="p-1 text-slate-600 hover:text-amber-400 transition-colors group" title="${isFav ? 'Remove from favourites' : 'Add to favourites'}">
-                <i class="${isFav ? 'fa-solid fa-star text-amber-400' : 'fa-regular fa-star text-slate-500 group-hover:text-amber-400/80'} text-sm transition-transform active:scale-125"></i>
-              </button>
-            </td>
+            <!-- Favourite Star Icon (Local only) -->
+            ${isLocal ? `
+              <td class="py-4 px-3 text-center" onclick="event.stopPropagation()">
+                <button onclick="toggleFavourite('${c.id}', event)" class="p-1 text-slate-600 hover:text-amber-400 transition-colors group" title="${isFav ? 'Remove from favourites' : 'Add to favourites'}">
+                  <i class="${isFav ? 'fa-solid fa-star text-amber-400' : 'fa-regular fa-star text-slate-500 group-hover:text-amber-400/80'} text-sm transition-transform active:scale-125"></i>
+                </button>
+              </td>
+            ` : ''}
 
             <!-- Company Name & Snippet -->
             <td class="py-4 px-5">
@@ -573,11 +663,11 @@
 
           <!-- Expandable Details Row -->
           <tr id="details-${c.id}" class="${isExpanded ? '' : 'hidden'} bg-slate-950/90 border-b border-slate-800">
-            <td colspan="9" class="p-6">
+            <td colspan="${isLocal ? 9 : 8}" class="p-6">
               <div class="bg-slate-900/90 border border-slate-800/90 rounded-2xl p-6 space-y-5 shadow-inner">
                 
-                <!-- Pipeline Banner (If already applied or rejected) -->
-                ${trackedApps.length > 0 ? `
+                <!-- Pipeline Banner (Local only, if already applied or rejected) -->
+                ${(isLocal && trackedApps.length > 0) ? `
                   <div class="p-4 rounded-xl border ${trackedApps[0].current_stage.toLowerCase() === 'rejected' ? 'bg-rose-950/40 border-rose-800/60 text-rose-200' : 'bg-emerald-950/40 border-emerald-800/60 text-emerald-200'} flex items-start justify-between">
                     <div>
                       <div class="flex items-center gap-2 font-bold text-sm">
@@ -628,7 +718,7 @@
                     </h5>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       ${c.active_product_roles.map(r => {
-                        const isThisRoleApplied = trackedApps.some(app => app.role_title.toLowerCase().includes('principal') || app.role_title.toLowerCase() === r.title.toLowerCase());
+                        const isThisRoleApplied = isLocal && trackedApps.some(app => app.role_title.toLowerCase().includes('principal') || app.role_title.toLowerCase() === r.title.toLowerCase());
                         return `
                           <div class="p-4 bg-slate-950 border border-slate-800 rounded-xl flex items-center justify-between hover:border-slate-700 transition-all">
                             <div>
@@ -637,7 +727,7 @@
                                 ${isThisRoleApplied ? '<span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-bold">Applied</span>' : ''}
                               </div>
                               <div class="text-xs text-slate-400 mt-1">
-                                <i class="fa-solid fa-location-dot text-slate-500 mr-1"></i> ${r.location}
+                                <i class="fa-solid fa-location-dot text-slate-500 mr-1 text-xs"></i> ${r.location}
                                 ${r.date_posted ? ` • <span class="text-slate-500">Posted ${r.date_posted}</span>` : ''}
                               </div>
                             </div>
@@ -662,10 +752,10 @@
         `;
       }).join('');
 
-      // Grid Render with Star Icons
+      // Grid Render
       grid.innerHTML = companies.map(c => {
-        const isFav = favourites.has(c.id);
-        const trackedApps = c.tracked_applications || [];
+        const isFav = isLocal && favourites.has(c.id);
+        const trackedApps = isLocal ? (c.tracked_applications || []) : [];
         const latestApp = trackedApps.length > 0 ? trackedApps[0] : null;
 
         return `
@@ -683,9 +773,11 @@
                   </p>
                 </div>
                 <div class="flex items-center gap-2">
-                  <button onclick="toggleFavourite('${c.id}', event)" class="text-slate-600 hover:text-amber-400 p-1">
-                    <i class="${isFav ? 'fa-solid fa-star text-amber-400' : 'fa-regular fa-star text-slate-500'} text-base"></i>
-                  </button>
+                  ${isLocal ? `
+                    <button onclick="toggleFavourite('${c.id}', event)" class="text-slate-600 hover:text-amber-400 p-1">
+                      <i class="${isFav ? 'fa-solid fa-star text-amber-400' : 'fa-regular fa-star text-slate-500'} text-base"></i>
+                    </button>
+                  ` : ''}
                   <span class="border px-3 py-1 rounded-lg text-xs font-semibold ${getScaleBadgeClass(c.scale_tier)}">${c.scale_tier.split(' ')[0]}</span>
                 </div>
               </div>
@@ -772,6 +864,7 @@
     }
 
     function openAddModal() {
+      if (!isLocal) return;
       document.getElementById('addModal').classList.remove('hidden');
     }
 
@@ -780,6 +873,7 @@
     }
 
     async function submitNewCompany(e) {
+      if (!isLocal) return;
       e.preventDefault();
       const newCo = {
         id: document.getElementById('addName').value.toLowerCase().replace(/[^a-z0-9]/g, '-'),
@@ -808,6 +902,7 @@
     }
 
     async function triggerScan() {
+      if (!isLocal) return;
       const icon = document.getElementById('scanIcon');
       icon.classList.add('animate-spin');
       try {
@@ -825,11 +920,15 @@
 
     function exportCSV() {
       if (!allCompanies || allCompanies.length === 0) return;
-      const headers = ['Name', 'Industry', 'Scale Tier', 'Funding Type', 'Location', 'Website', 'Careers URL', 'Product Roles Count', 'Application Status', 'Is Favourite'];
+      const headers = isLocal 
+        ? ['Name', 'Industry', 'Scale Tier', 'Funding Type', 'Location', 'Website', 'Careers URL', 'Product Roles Count', 'Application Status', 'Is Favourite']
+        : ['Name', 'Industry', 'Scale Tier', 'Funding Type', 'Location', 'Website', 'Careers URL', 'Product Roles Count'];
+        
       const rows = allCompanies.map(c => {
-        const appStatus = c.tracked_applications && c.tracked_applications.length > 0 ? c.tracked_applications[0].current_stage : 'None';
-        const isFav = favourites.has(c.id) ? 'Yes' : 'No';
-        return [
+        const appStatus = (isLocal && c.tracked_applications && c.tracked_applications.length > 0) ? c.tracked_applications[0].current_stage : 'None';
+        const isFav = (isLocal && favourites.has(c.id)) ? 'Yes' : 'No';
+        
+        return isLocal ? [
           `"${c.name}"`,
           `"${c.industry}"`,
           `"${c.scale_tier}"`,
@@ -840,8 +939,18 @@
           c.product_roles_count || 0,
           `"${appStatus}"`,
           `"${isFav}"`
+        ] : [
+          `"${c.name}"`,
+          `"${c.industry}"`,
+          `"${c.scale_tier}"`,
+          `"${c.funding_type}"`,
+          `"${c.location}"`,
+          `"${c.website}"`,
+          `"${c.careers_url}"`,
+          c.product_roles_count || 0
         ];
       });
+
       const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
       const encodedUri = encodeURI(csvContent);
       const link = document.createElement('a');

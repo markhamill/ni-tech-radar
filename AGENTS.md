@@ -60,3 +60,8 @@ When importing companies from directories (TechIreland, Catalyst, Software NI):
 * Verify company ID format (`lowercase-hyphenated`).
 * Normalise scale tier to: `Startup (1-20)`, `Scaleup (20-100)`, `Mid-Market (100-500)`, or `Large Enterprise / FDI Hub (500+)`.
 * Ensure every entry has a valid `website` and `careers_url`.
+
+### D. Managing the Static Deployment Switch
+* `public/index.html` contains an environment switch `DEPLOYMENT_MODE = 'auto'`.
+* Never hardcode backend assumptions into the client UI. Ensure that when deployed to GitHub Pages or static hosts, all server-dependent actions (e.g. Scans, Add Company, Application Pipeline sync, Favourites) remain completely hidden and fail-safe.
+

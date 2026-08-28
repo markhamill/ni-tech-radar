@@ -182,3 +182,38 @@ function isTargetRole(title) {
 
 ### 3. Customise Sectors or Regional Locations
 Modify the dropdown `<select>` filters in [`public/index.html`](public/index.html) and add your target cities, scale categories, or specialized sectors.
+
+---
+
+## 🌐 Static Deployment Switch (GitHub Pages, Netlify, Vercel)
+
+The dashboard includes a built-in **Environment & Deployment Switch** (`DEPLOYMENT_MODE = 'auto'`) that allows you to deploy the frontend as a public, static website without needing a Node.js or Python backend running in production:
+
+```javascript
+// Located at the top of the <script> block in public/index.html:
+const DEPLOYMENT_MODE = 'auto'; // 'auto' | 'local' | 'deployed'
+```
+
+### How the State Switch Behaves:
+
+| Feature | 💻 Local Mode (`localhost`) | 🌐 Deployed State (GitHub Pages / Public Host) |
+| :--- | :--- | :--- |
+| **Data Source** | Local server API (`/api/companies`) with fallback | Static JSON file (`./data/companies.json`) |
+| **"Scan for Open Roles" Button** | **Visible & Active** (Triggers local scrapers) | **Completely Hidden / Invisible** |
+| **"Add Company" Form** | **Visible & Active** (Saves to local database) | **Completely Hidden / Invisible** |
+| **Personal Application Tracker** | **Visible & Synchronised** (from `/applications/`) | **Completely Hidden / Invisible** |
+| **Starred Favourites** | **Visible & Active** (Local storage) | **Completely Hidden / Invisible** |
+| **Header Badge** | `Active Target Tracker (Local)` | `Public Tech Directory` |
+
+* **Zero Hosting Costs:** You can deploy the `public/` directory (along with `data/companies.json`) directly to GitHub Pages, Netlify, Cloudflare Pages, or Vercel, and it will automatically operate as a clean, read-only public tech ecosystem directory.
+
+### 🚀 1-Click GitHub Pages Deployment (GitHub Actions)
+
+Because this tool is built with **zero-dependency vanilla HTML5/JavaScript** (rather than React/Vite), there is **no build compilation step** and **no Vite config needed**. All asset references use relative paths (`./`), so it automatically works on any repository name (e.g. `https://username.github.io/your-repo-name/`) without base path configuration.
+
+A pre-configured GitHub Actions workflow is included at [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml).
+
+To activate it on your repository:
+1. Go to your GitHub repository **Settings** &rarr; **Pages**.
+2. Under **Build and deployment** &rarr; **Source**, select **GitHub Actions**.
+3. Push to `main`. GitHub Actions will automatically bundle `public/` and `data/companies.json` and deploy your site live in seconds!
