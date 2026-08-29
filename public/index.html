@@ -146,29 +146,29 @@
     </div>
 
     <!-- Filter & Search Toolbar (Mobile Streamlined) -->
-    <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-3.5 sm:p-5 space-y-3 sm:space-y-4 shadow-lg">
+    <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-3 sm:p-5 space-y-3 sm:space-y-4 shadow-lg">
       <div class="flex flex-col md:flex-row gap-3 md:gap-4 items-stretch md:items-center justify-between">
-        <!-- Search input -->
-        <div class="relative flex-1 w-full">
-          <i class="fa-solid fa-magnifying-glass absolute left-4 top-3 text-slate-500 text-sm sm:text-base sm:top-3.5"></i>
+        <!-- Search input (Desktop only) -->
+        <div class="relative flex-1 w-full hidden md:block">
+          <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-500 text-base"></i>
           <input 
             type="text" 
             id="searchInput" 
-            placeholder="Search 116 companies, tech, products..." 
-            class="w-full pl-10 sm:pl-12 pr-4 py-2 sm:py-3 bg-slate-950 border border-slate-800 rounded-xl text-sm sm:text-base text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all"
+            placeholder="Search by company name, products, leadership, technology, or keywords..." 
+            class="w-full pl-12 pr-4 py-3 bg-slate-950 border border-slate-800 rounded-xl text-base text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all"
             oninput="applyFilters()"
           />
         </div>
 
         <!-- Quick Filter Toggles -->
-        <div class="flex items-center gap-2 sm:gap-3 flex-wrap">
+        <div class="flex items-center gap-2 sm:gap-3 flex-wrap w-full md:w-auto">
           <!-- Starred Favourites Toggle (Local only) -->
           <label id="favouritesFilterWrap" class="hidden sm:flex items-center gap-2 cursor-pointer bg-slate-950/80 border border-slate-800 px-3.5 py-3 rounded-xl text-sm font-medium text-amber-300 hover:border-slate-700 select-none whitespace-nowrap">
             <input type="checkbox" id="toggleFavouritesOnly" class="rounded border-slate-700 bg-slate-900 text-amber-500 focus:ring-amber-500 h-4 w-4" onchange="applyFilters()">
             <span class="flex items-center gap-1.5"><i class="fa-solid fa-star text-amber-400 text-xs"></i> Favourites</span>
           </label>
-          <!-- Product Roles Toggle (Prominently featured on Mobile) -->
-          <label class="flex-1 sm:flex-none flex items-center justify-center gap-2 cursor-pointer bg-slate-950/80 border border-emerald-900/40 px-3 py-2 sm:px-3.5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold text-emerald-300 hover:border-emerald-700 select-none whitespace-nowrap shadow-sm">
+          <!-- Product Roles Toggle (Full width on Mobile) -->
+          <label class="flex-1 md:flex-none flex items-center justify-center gap-2 cursor-pointer bg-slate-950/80 border border-emerald-900/40 px-3.5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold text-emerald-300 hover:border-emerald-700 select-none whitespace-nowrap shadow-sm">
             <input type="checkbox" id="toggleProductOnly" class="rounded border-slate-700 bg-slate-900 text-emerald-500 focus:ring-emerald-500 h-4 w-4" onchange="applyFilters()">
             <span>🔥 Live Product Roles</span>
           </label>
@@ -177,16 +177,6 @@
             <input type="checkbox" id="toggleAppliedOnly" class="rounded border-slate-700 bg-slate-900 text-blue-500 focus:ring-blue-500 h-4 w-4" onchange="applyFilters()">
             <span>📋 My Applications</span>
           </label>
-
-          <!-- View Switcher (Desktop only) -->
-          <div class="hidden md:flex bg-slate-950 border border-slate-800 rounded-xl p-1.5">
-            <button id="viewTableBtn" onclick="switchView('table')" class="px-3.5 py-1.5 text-sm rounded-lg font-semibold bg-slate-800 text-slate-100 transition-all">
-              <i class="fa-solid fa-list mr-1.5"></i> Table
-            </button>
-            <button id="viewGridBtn" onclick="switchView('grid')" class="px-3.5 py-1.5 text-sm rounded-lg font-semibold text-slate-400 hover:text-slate-200 transition-all">
-              <i class="fa-solid fa-border-all mr-1.5"></i> Grid
-            </button>
-          </div>
         </div>
       </div>
 
@@ -266,11 +256,6 @@
           </tbody>
         </table>
       </div>
-    </div>
-
-    <!-- Grid Content Area (Desktop only) -->
-    <div id="gridContainer" class="hidden grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-      <!-- Grid Cards Rendered dynamically -->
     </div>
 
     <!-- Empty State -->
@@ -573,7 +558,6 @@
     }
 
     let allCompanies = [];
-    let currentView = 'table';
     let expandedRows = new Set();
     let favourites = new Set(isLocal ? JSON.parse(localStorage.getItem('ni_tech_radar_favourites') || '[]') : []);
 
@@ -1093,88 +1077,6 @@
           </tr>
         `;
         }).join('');
-      }
-
-      // Grid Render
-      if (grid) {
-        grid.innerHTML = companies.map(c => {
-          const isFav = isLocal && favourites.has(c.id);
-          const trackedApps = isLocal ? (c.tracked_applications || []) : [];
-          const latestApp = trackedApps.length > 0 ? trackedApps[0] : null;
-
-          return `
-            <div class="bg-slate-900 border ${isFav ? 'border-amber-500/40 bg-amber-950/10' : 'border-slate-800'} rounded-2xl p-6 hover:border-slate-700 transition-all flex flex-col justify-between space-y-4 shadow-lg relative">
-              <div>
-                <div class="flex items-start justify-between">
-                  <div>
-                    <h4 class="font-bold text-lg text-slate-100 flex items-center gap-2">
-                      <a href="${c.website}" target="_blank" class="hover:text-emerald-400 transition-colors">${c.name}</a>
-                      ${latestApp ? getPipelineStageBadge(latestApp.current_stage) : ''}
-                    </h4>
-                    <p class="text-xs text-slate-400 flex items-center gap-1.5 mt-1">
-                      <i class="fa-solid fa-location-dot text-slate-500 text-xs"></i>
-                      ${c.location} • <span class="text-slate-400 font-medium">${c.funding_type}</span>
-                    </p>
-                  </div>
-                  <div class="flex items-center gap-2">
-                    ${isLocal ? `
-                      <button onclick="toggleFavourite('${c.id}', event)" class="text-slate-600 hover:text-amber-400 p-1">
-                        <i class="${isFav ? 'fa-solid fa-star text-amber-400' : 'fa-regular fa-star text-slate-500'} text-base"></i>
-                      </button>
-                    ` : ''}
-                    <span class="border px-3 py-1 rounded-lg text-xs font-semibold ${getScaleBadgeClass(c.scale_tier)}">${c.scale_tier.split(' ')[0]}</span>
-                  </div>
-                </div>
-                <p class="text-sm text-slate-300 mt-4 line-clamp-3 leading-relaxed">${c.description || ''}</p>
-              </div>
-
-              <div class="pt-4 border-t border-slate-800 flex items-center justify-between">
-                <div>
-                  ${(c.product_roles_count || 0) > 0 ? `
-                    <button onclick="viewCompanyRoles('${c.id}')" class="text-xs font-bold text-emerald-400 hover:underline flex items-center gap-1.5">
-                      <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                      ${c.product_roles_count} Active PM Role${c.product_roles_count > 1 ? 's' : ''}
-                    </button>
-                  ` : (isAutomatedATS(c) ? `
-                    <span class="text-xs text-slate-500 font-medium">0 Scanned Roles</span>
-                  ` : `
-                    <span class="text-xs text-slate-400 font-medium flex items-center gap-1">
-                      <i class="fa-solid fa-arrow-up-right-from-square text-[9px] text-slate-500"></i> N/A (Portal)
-                    </span>
-                  `)}
-                </div>
-                <div class="flex items-center gap-2">
-                  <a href="${getLinkedInSearchUrl(c.name)}" target="_blank" class="inline-flex items-center gap-1 text-xs font-bold text-sky-400 hover:text-sky-300 bg-sky-950/40 border border-sky-800/50 px-2 py-1.5 rounded-lg hover:bg-sky-900/40 transition-colors" title="Search LinkedIn Jobs for ${c.name}">
-                    <i class="fa-brands fa-linkedin text-sm text-[#0a66c2]"></i>
-                  </a>
-                  <a href="${c.careers_url}" target="_blank" class="text-xs font-bold text-slate-300 hover:text-emerald-400 flex items-center gap-1.5">
-                    Careers <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          `;
-        }).join('');
-      }
-    }
-
-    function switchView(view) {
-      currentView = view;
-      const table = document.getElementById('tableContainer');
-      const grid = document.getElementById('gridContainer');
-      const tBtn = document.getElementById('viewTableBtn');
-      const gBtn = document.getElementById('viewGridBtn');
-
-      if (view === 'table') {
-        table.classList.remove('hidden');
-        grid.classList.add('hidden');
-        tBtn.className = 'px-3.5 py-1.5 text-sm rounded-lg font-semibold bg-slate-800 text-slate-100 transition-all';
-        gBtn.className = 'px-3.5 py-1.5 text-sm rounded-lg font-semibold text-slate-400 hover:text-slate-200 transition-all';
-      } else {
-        table.classList.add('hidden');
-        grid.classList.remove('hidden');
-        gBtn.className = 'px-3.5 py-1.5 text-sm rounded-lg font-semibold bg-slate-800 text-slate-100 transition-all';
-        tBtn.className = 'px-3.5 py-1.5 text-sm rounded-lg font-semibold text-slate-400 hover:text-slate-200 transition-all';
       }
     }
 
