@@ -29,9 +29,8 @@ jobs:
 
       - name: Prepare static files
         run: |
-          mkdir -p _site/data
+          mkdir -p _site
           cp -r public/* _site/
-          cp data/companies.json _site/data/
           touch _site/.nojekyll
 
       - name: Upload Artifact

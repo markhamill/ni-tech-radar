@@ -4,7 +4,7 @@ const path = require('path');
 const { runScanner } = require('./scanner');
 
 const PORT = process.env.PORT || 3333;
-const DB_PATH = path.join(__dirname, 'data', 'companies.json');
+const DB_PATH = path.join(__dirname, 'public', 'data', 'companies.json');
 const PUBLIC_DIR = path.join(__dirname, 'public');
 const APPLICATIONS_DIR = path.join(__dirname, '..', 'applications');
 

@@ -9,7 +9,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const DB_PATH = path.join(__dirname, 'data', 'companies.json');
+const DB_PATH = path.join(__dirname, 'public', 'data', 'companies.json');
 
 const PRODUCT_KEYWORDS = [
   'product manager',
