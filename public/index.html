@@ -40,50 +40,58 @@
 </head>
 <body class="h-full flex flex-col antialiased selection:bg-emerald-500 selection:text-white">
 
-  <!-- Top Navigation (Widescreen Optimized) -->
+  <!-- Top Navigation (Mobile Streamlined & Widescreen Optimized) -->
   <header class="border-b border-slate-800 bg-slate-900/90 backdrop-blur sticky top-0 z-40">
-    <div class="max-w-[1700px] mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-      <div class="flex items-center space-x-4">
-        <!-- Target / Crosshairs Logo Icon (Enlarged) -->
-        <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-emerald-500 via-teal-400 to-emerald-300 flex items-center justify-center shadow-xl shadow-emerald-500/30 text-slate-950 border border-emerald-300/50">
-          <i class="fa-solid fa-crosshairs text-slate-950 text-[32px] font-black"></i>
+    <div class="max-w-[1700px] mx-auto px-4 sm:px-6 lg:px-8 py-3.5 sm:py-0 sm:h-20 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-4">
+      <!-- Main Brand Row (Always Fully Visible) -->
+      <div class="flex items-center space-x-3 sm:space-x-4">
+        <!-- Target / Crosshairs Logo Icon -->
+        <div class="w-9 h-9 sm:w-14 sm:h-14 shrink-0 rounded-xl sm:rounded-2xl bg-gradient-to-tr from-emerald-500 via-teal-400 to-emerald-300 flex items-center justify-center shadow-lg shadow-emerald-500/20 text-slate-950 border border-emerald-300/50">
+          <i class="fa-solid fa-crosshairs text-slate-950 text-lg sm:text-[32px] font-black"></i>
         </div>
         <div>
-          <div class="flex items-center gap-3">
-            <h1 class="font-extrabold text-xl text-slate-50 tracking-tight">
+          <div class="flex items-center gap-2.5">
+            <h1 class="font-extrabold text-base sm:text-xl text-slate-50 tracking-tight whitespace-nowrap">
               Northern Ireland Tech Radar
             </h1>
-            <!-- About this project button (Top Left) -->
-            <button onclick="openAboutModal()" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700/80 transition-all shadow-sm group" title="About this project">
+            <!-- About Button (Desktop Inline) -->
+            <button onclick="openAboutModal()" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700/80 transition-all shadow-sm group shrink-0" title="About this project">
               <i class="fa-solid fa-circle-info text-emerald-400 text-xs group-hover:scale-110 transition-transform"></i>
               <span>About</span>
             </button>
           </div>
-          <p class="text-sm text-slate-400">Directory & Automated Product Role Intelligence across Northern Ireland</p>
+          <p class="hidden sm:block text-xs sm:text-sm text-slate-400 mt-0.5">Directory & Automated Product Role Intelligence across Northern Ireland</p>
         </div>
       </div>
 
-      <div class="flex items-start space-x-3">
+      <!-- Secondary Sub-Row on Mobile / Actions Cluster on Desktop -->
+      <div class="flex items-center justify-between sm:justify-end space-x-2 sm:space-x-3 w-full sm:w-auto">
+        <!-- About Button (Mobile Only Sub-Row) -->
+        <button onclick="openAboutModal()" class="sm:hidden inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700/80 transition-all shadow-sm group shrink-0" title="About this project">
+          <i class="fa-solid fa-circle-info text-emerald-400 text-xs group-hover:scale-110 transition-transform"></i>
+          <span>About</span>
+        </button>
+
         <!-- Deployed-only Last Updated Label -->
-        <div id="deployedUpdatedLabel" class="hidden text-xs text-slate-400 flex items-center gap-1.5 bg-slate-900 border border-slate-800 px-3.5 py-2.5 rounded-xl font-medium shadow-sm">
+        <div id="deployedUpdatedLabel" class="hidden text-xs text-slate-400 flex items-center gap-1.5 bg-slate-900 border border-slate-800 px-3 py-1.5 sm:px-3.5 sm:py-2.5 rounded-xl font-medium shadow-sm whitespace-nowrap shrink-0">
           <i class="fa-regular fa-calendar-check text-emerald-400 text-xs"></i>
-          <span id="staticUpdatedText">Catalogue updated: Recently</span>
+          <span id="staticUpdatedText">Updated: Recently</span>
         </div>
 
-        <!-- Public export button -->
-        <button onclick="exportCSV()" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 transition-all shadow-sm">
+        <!-- Public export button (Desktop only) -->
+        <button onclick="exportCSV()" class="hidden sm:inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 transition-all shadow-sm">
           <i class="fa-solid fa-download text-xs text-slate-400"></i>
           <span>Export CSV</span>
         </button>
 
         <!-- Local-only add company button -->
-        <button id="addBtn" onclick="openAddModal()" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-all shadow-sm">
+        <button id="addBtn" onclick="openAddModal()" class="hidden sm:inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-all shadow-sm">
           <i class="fa-solid fa-plus text-xs text-slate-300"></i>
           <span>Add Company</span>
         </button>
 
-        <!-- Local-only scan button & timestamp wrapper (Outside Right Edge) -->
-        <div id="scanBtnWrap" class="flex flex-col items-end">
+        <!-- Local-only scan button & timestamp wrapper -->
+        <div id="scanBtnWrap" class="hidden sm:flex flex-col items-end">
           <button id="scanBtn" onclick="triggerScan()" class="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-sm font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/25 transition-all">
             <i class="fa-solid fa-arrows-rotate text-sm" id="scanIcon"></i>
             <span>Scan for Open Product Roles</span>
@@ -98,92 +106,92 @@
   </header>
 
   <!-- Main Container (Widescreen Optimized) -->
-  <main class="flex-1 max-w-[1700px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+  <main class="flex-1 max-w-[1700px] w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8 space-y-4 sm:space-y-6">
 
-    <!-- KPI Metric Cards (Dynamically adapted for Local vs Deployed) -->
-    <div id="kpiContainer" class="grid grid-cols-2 sm:grid-cols-5 gap-4">
-      <div class="bg-slate-900/70 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between">
-        <div class="text-sm font-semibold text-slate-400">Total NI Tech Companies</div>
-        <div class="text-3xl font-extrabold text-slate-100 mt-2" id="statTotal">0</div>
-        <div class="text-xs text-slate-500 mt-1">Tracked across Northern Ireland</div>
+    <!-- KPI Metric Cards (Compact on Mobile, Full on Desktop) -->
+    <div id="kpiContainer" class="grid grid-cols-3 sm:grid-cols-5 gap-2 sm:gap-4">
+      <div class="bg-slate-900/70 border border-slate-800 rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between">
+        <div class="text-[11px] sm:text-sm font-semibold text-slate-400 leading-tight">Total Companies</div>
+        <div class="text-xl sm:text-3xl font-extrabold text-slate-100 mt-1 sm:mt-2" id="statTotal">0</div>
+        <div class="hidden sm:block text-xs text-slate-500 mt-1">Tracked across Northern Ireland</div>
       </div>
-      <div class="bg-slate-900/70 border border-emerald-900/40 rounded-2xl p-5 flex flex-col justify-between">
-        <div class="text-sm font-semibold text-emerald-400 flex items-center justify-between">
-          <span>Live Product Roles</span>
-          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+      <div class="bg-slate-900/70 border border-emerald-900/40 rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between">
+        <div class="text-[11px] sm:text-sm font-semibold text-emerald-400 flex items-center justify-between leading-tight">
+          <span>Live Roles</span>
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
         </div>
-        <div class="text-3xl font-extrabold text-emerald-400 mt-2" id="statProductRoles">0</div>
-        <div class="text-xs text-emerald-500/80 mt-1">VP, Director, Group & Senior PMs</div>
+        <div class="text-xl sm:text-3xl font-extrabold text-emerald-400 mt-1 sm:mt-2" id="statProductRoles">0</div>
+        <div class="hidden sm:block text-xs text-emerald-500/80 mt-1">VP, Director, Group & Senior PMs</div>
       </div>
       <!-- Local-only Favourites Card -->
-      <div id="statFavouritesCard" class="bg-slate-900/70 border border-amber-900/30 rounded-2xl p-5 flex flex-col justify-between">
-        <div class="text-sm font-semibold text-amber-400 flex items-center justify-between">
-          <span>Starred Favourites</span>
+      <div id="statFavouritesCard" class="bg-slate-900/70 border border-amber-900/30 rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between">
+        <div class="text-[11px] sm:text-sm font-semibold text-amber-400 flex items-center justify-between leading-tight">
+          <span>Favourites</span>
           <i class="fa-solid fa-star text-xs text-amber-400"></i>
         </div>
-        <div class="text-3xl font-extrabold text-amber-400 mt-2" id="statFavourites">0</div>
-        <div class="text-xs text-amber-500/80 mt-1">Shortlisted companies</div>
+        <div class="text-xl sm:text-3xl font-extrabold text-amber-400 mt-1 sm:mt-2" id="statFavourites">0</div>
+        <div class="hidden sm:block text-xs text-amber-500/80 mt-1">Shortlisted companies</div>
       </div>
       <!-- Local-only Pipeline Card -->
-      <div id="statAppliedCard" class="bg-slate-900/70 border border-blue-900/30 rounded-2xl p-5 flex flex-col justify-between">
-        <div class="text-sm font-semibold text-blue-400">Applied in Pipeline</div>
-        <div class="text-3xl font-extrabold text-blue-400 mt-2" id="statApplied">0</div>
-        <div class="text-xs text-blue-500/80 mt-1">Active tracked applications</div>
+      <div id="statAppliedCard" class="bg-slate-900/70 border border-blue-900/30 rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between">
+        <div class="text-[11px] sm:text-sm font-semibold text-blue-400 leading-tight">Applied</div>
+        <div class="text-xl sm:text-3xl font-extrabold text-blue-400 mt-1 sm:mt-2" id="statApplied">0</div>
+        <div class="hidden sm:block text-xs text-blue-500/80 mt-1">Active tracked applications</div>
       </div>
-      <div class="bg-slate-900/70 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between">
-        <div class="text-sm font-semibold text-slate-400">Scaleups & Startups (1 - 100)</div>
-        <div class="text-3xl font-extrabold text-sky-400 mt-2" id="statScaleups">0</div>
-        <div class="text-xs text-slate-500 mt-1">Indigenous innovators</div>
+      <div class="bg-slate-900/70 border border-slate-800 rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between">
+        <div class="text-[11px] sm:text-sm font-semibold text-slate-400 leading-tight">Scaleups</div>
+        <div class="text-xl sm:text-3xl font-extrabold text-sky-400 mt-1 sm:mt-2" id="statScaleups">0</div>
+        <div class="hidden sm:block text-xs text-slate-500 mt-1">Indigenous innovators</div>
       </div>
     </div>
 
-    <!-- Filter & Search Toolbar -->
-    <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-lg">
-      <div class="flex flex-col lg:flex-row gap-4 items-center justify-between">
+    <!-- Filter & Search Toolbar (Mobile Streamlined) -->
+    <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-3.5 sm:p-5 space-y-3 sm:space-y-4 shadow-lg">
+      <div class="flex flex-col md:flex-row gap-3 md:gap-4 items-stretch md:items-center justify-between">
         <!-- Search input -->
         <div class="relative flex-1 w-full">
-          <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-500 text-base"></i>
+          <i class="fa-solid fa-magnifying-glass absolute left-4 top-3 text-slate-500 text-sm sm:text-base sm:top-3.5"></i>
           <input 
             type="text" 
             id="searchInput" 
-            placeholder="Search by company name, products, leadership, technology, or keywords..." 
-            class="w-full pl-12 pr-4 py-3 bg-slate-950 border border-slate-800 rounded-xl text-base text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all"
+            placeholder="Search 116 companies, tech, products..." 
+            class="w-full pl-10 sm:pl-12 pr-4 py-2 sm:py-3 bg-slate-950 border border-slate-800 rounded-xl text-sm sm:text-base text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all"
             oninput="applyFilters()"
           />
         </div>
 
         <!-- Quick Filter Toggles -->
-        <div class="flex flex-wrap items-center gap-3">
+        <div class="flex items-center gap-2 sm:gap-3 flex-wrap">
           <!-- Starred Favourites Toggle (Local only) -->
-          <label id="favouritesFilterWrap" class="flex items-center gap-2 cursor-pointer bg-slate-950/80 border border-slate-800 px-3.5 py-3 rounded-xl text-sm font-medium text-amber-300 hover:border-slate-700 select-none whitespace-nowrap">
+          <label id="favouritesFilterWrap" class="hidden sm:flex items-center gap-2 cursor-pointer bg-slate-950/80 border border-slate-800 px-3.5 py-3 rounded-xl text-sm font-medium text-amber-300 hover:border-slate-700 select-none whitespace-nowrap">
             <input type="checkbox" id="toggleFavouritesOnly" class="rounded border-slate-700 bg-slate-900 text-amber-500 focus:ring-amber-500 h-4 w-4" onchange="applyFilters()">
-            <span class="flex items-center gap-1.5"><i class="fa-solid fa-star text-amber-400 text-xs"></i> Favourites Only</span>
+            <span class="flex items-center gap-1.5"><i class="fa-solid fa-star text-amber-400 text-xs"></i> Favourites</span>
           </label>
-          <!-- Product Roles Toggle -->
-          <label class="flex items-center gap-2 cursor-pointer bg-slate-950/80 border border-slate-800 px-3.5 py-3 rounded-xl text-sm font-medium text-slate-200 hover:border-slate-700 select-none whitespace-nowrap">
+          <!-- Product Roles Toggle (Prominently featured on Mobile) -->
+          <label class="flex-1 sm:flex-none flex items-center justify-center gap-2 cursor-pointer bg-slate-950/80 border border-emerald-900/40 px-3 py-2 sm:px-3.5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold text-emerald-300 hover:border-emerald-700 select-none whitespace-nowrap shadow-sm">
             <input type="checkbox" id="toggleProductOnly" class="rounded border-slate-700 bg-slate-900 text-emerald-500 focus:ring-emerald-500 h-4 w-4" onchange="applyFilters()">
             <span>🔥 Live Product Roles</span>
           </label>
           <!-- Pipeline Applications Toggle (Local only) -->
-          <label id="appliedFilterWrap" class="flex items-center gap-2 cursor-pointer bg-slate-950/80 border border-slate-800 px-3.5 py-3 rounded-xl text-sm font-medium text-blue-300 hover:border-slate-700 select-none whitespace-nowrap">
+          <label id="appliedFilterWrap" class="hidden sm:flex items-center gap-2 cursor-pointer bg-slate-950/80 border border-slate-800 px-3.5 py-3 rounded-xl text-sm font-medium text-blue-300 hover:border-slate-700 select-none whitespace-nowrap">
             <input type="checkbox" id="toggleAppliedOnly" class="rounded border-slate-700 bg-slate-900 text-blue-500 focus:ring-blue-500 h-4 w-4" onchange="applyFilters()">
             <span>📋 My Applications</span>
           </label>
-        </div>
 
-        <!-- View Switcher -->
-        <div class="flex bg-slate-950 border border-slate-800 rounded-xl p-1.5">
-          <button id="viewTableBtn" onclick="switchView('table')" class="px-3.5 py-1.5 text-sm rounded-lg font-semibold bg-slate-800 text-slate-100 transition-all">
-            <i class="fa-solid fa-list mr-1.5"></i> Table
-          </button>
-          <button id="viewGridBtn" onclick="switchView('grid')" class="px-3.5 py-1.5 text-sm rounded-lg font-semibold text-slate-400 hover:text-slate-200 transition-all">
-            <i class="fa-solid fa-border-all mr-1.5"></i> Grid
-          </button>
+          <!-- View Switcher (Desktop only) -->
+          <div class="hidden md:flex bg-slate-950 border border-slate-800 rounded-xl p-1.5">
+            <button id="viewTableBtn" onclick="switchView('table')" class="px-3.5 py-1.5 text-sm rounded-lg font-semibold bg-slate-800 text-slate-100 transition-all">
+              <i class="fa-solid fa-list mr-1.5"></i> Table
+            </button>
+            <button id="viewGridBtn" onclick="switchView('grid')" class="px-3.5 py-1.5 text-sm rounded-lg font-semibold text-slate-400 hover:text-slate-200 transition-all">
+              <i class="fa-solid fa-border-all mr-1.5"></i> Grid
+            </button>
+          </div>
         </div>
       </div>
 
-      <!-- Dropdown Filter Row -->
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3 border-t border-slate-800/80">
+      <!-- Dropdown Filter Row (Desktop only: hidden md:grid) -->
+      <div class="hidden md:grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3 border-t border-slate-800/80">
         <div>
           <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Scale Tier</label>
           <select id="filterScale" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-emerald-500" onchange="applyFilters()">
@@ -231,8 +239,13 @@
       </div>
     </div>
 
-    <!-- Table Content Area -->
-    <div id="tableContainer" class="bg-slate-900/70 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl">
+    <!-- Mobile Native Card List View (Mobile only: md:hidden) -->
+    <div id="mobileListContainer" class="md:hidden space-y-3">
+      <!-- Mobile cards rendered dynamically -->
+    </div>
+
+    <!-- Desktop Table Content Area (Desktop only: hidden md:block) -->
+    <div id="tableContainer" class="hidden md:block bg-slate-900/70 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl">
       <div class="overflow-x-auto">
         <table class="w-full text-left text-sm border-collapse">
           <thead>
@@ -255,8 +268,8 @@
       </div>
     </div>
 
-    <!-- Grid Content Area -->
-    <div id="gridContainer" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+    <!-- Grid Content Area (Desktop only) -->
+    <div id="gridContainer" class="hidden grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
       <!-- Grid Cards Rendered dynamically -->
     </div>
 
@@ -481,11 +494,22 @@
     const DEPLOYMENT_MODE = 'auto';
 
     function isLocalEnvironment() {
-      if (DEPLOYMENT_MODE === 'local') return true;
       if (DEPLOYMENT_MODE === 'deployed') return false;
-      // Auto-detection of local environment
+      if (DEPLOYMENT_MODE === 'local') return true;
+
+      // Detect if running on local development machine
       const host = window.location.hostname;
-      return host === 'localhost' || host === '127.0.0.1' || host === '0.0.0.0' || window.location.protocol === 'file:';
+      const isActualLocalHost = host === 'localhost' || host === '127.0.0.1' || host === '0.0.0.0' || window.location.protocol === 'file:';
+
+      // Security isolation: URL query overrides only function on your local machine
+      if (isActualLocalHost) {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('mode') === 'deployed') return false;
+        return true;
+      }
+
+      // Public web host (Vercel, GitHub Pages): strictly false
+      return false;
     }
 
     const isLocal = isLocalEnvironment();
@@ -543,7 +567,7 @@
       } else {
         const latest = getLatestCompanyTimestamp();
         if (staticUpdatedText) {
-          staticUpdatedText.innerText = `Catalogue updated: ${latest ? formatLastUpdated(latest) : 'Recently'}`;
+          staticUpdatedText.innerText = `Updated: ${latest ? formatLastUpdated(latest) : 'Recently'}`;
         }
       }
     }
@@ -578,7 +602,7 @@
 
         // Adjust KPI grid for deployed view
         if (kpiContainer) {
-          kpiContainer.className = 'grid grid-cols-1 sm:grid-cols-3 gap-4';
+          kpiContainer.className = 'grid grid-cols-3 gap-2 sm:gap-4';
         }
       } else {
         if (scanWrap) scanWrap.classList.remove('hidden');
@@ -675,16 +699,29 @@
     function toggleRow(id) {
       const detailsRow = document.getElementById(`details-${id}`);
       const chevron = document.getElementById(`chevron-${id}`);
-      if (!detailsRow) return;
+      const detailsMob = document.getElementById(`details-mob-${id}`);
+      const chevronMob = document.getElementById(`chevron-mob-${id}`);
 
       if (expandedRows.has(id)) {
         expandedRows.delete(id);
-        detailsRow.classList.add('hidden');
+        if (detailsRow) detailsRow.classList.add('hidden');
         if (chevron) chevron.classList.remove('rotate-90');
+        if (detailsMob) detailsMob.classList.add('hidden');
+        if (chevronMob) {
+          chevronMob.classList.remove('rotate-180');
+          const btn = chevronMob.parentElement;
+          if (btn) btn.querySelector('span').innerText = 'Details';
+        }
       } else {
         expandedRows.add(id);
-        detailsRow.classList.remove('hidden');
+        if (detailsRow) detailsRow.classList.remove('hidden');
         if (chevron) chevron.classList.add('rotate-90');
+        if (detailsMob) detailsMob.classList.remove('hidden');
+        if (chevronMob) {
+          chevronMob.classList.add('rotate-180');
+          const btn = chevronMob.parentElement;
+          if (btn) btn.querySelector('span').innerText = 'Less';
+        }
       }
     }
 
@@ -732,25 +769,119 @@
 
     function render(companies) {
       const tbody = document.getElementById('companyTableBody');
+      const mobileList = document.getElementById('mobileListContainer');
       const grid = document.getElementById('gridContainer');
       const emptyState = document.getElementById('emptyState');
 
       if (companies.length === 0) {
-        tbody.innerHTML = '';
-        grid.innerHTML = '';
+        if (tbody) tbody.innerHTML = '';
+        if (mobileList) mobileList.innerHTML = '';
+        if (grid) grid.innerHTML = '';
         emptyState.classList.remove('hidden');
         return;
       }
 
       emptyState.classList.add('hidden');
 
-      // Table Render
-      tbody.innerHTML = companies.map(c => {
-        const isExpanded = expandedRows.has(c.id);
-        const isFav = isLocal && favourites.has(c.id);
-        const hasProductRoles = (c.product_roles_count || 0) > 0;
-        const trackedApps = isLocal ? (c.tracked_applications || []) : [];
-        const latestApp = trackedApps.length > 0 ? trackedApps[0] : null;
+      // Mobile Native Cards Render (Mobile View)
+      if (mobileList) {
+        mobileList.innerHTML = companies.map(c => {
+          const isExpanded = expandedRows.has(c.id);
+          const hasProductRoles = (c.product_roles_count || 0) > 0;
+
+          let badgeHtml = '';
+          if (hasProductRoles) {
+            badgeHtml = `
+              <button onclick="event.stopPropagation(); viewCompanyRoles('${c.id}')" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 text-xs font-bold shadow-sm active:scale-95 transition-transform">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>${c.product_roles_count} Role${c.product_roles_count > 1 ? 's' : ''}</span>
+              </button>
+            `;
+          } else if (isAutomatedATS(c)) {
+            badgeHtml = `<span class="px-2 py-0.5 rounded-full bg-slate-900 text-slate-500 text-[11px] font-medium border border-slate-800">0 Open</span>`;
+          } else {
+            badgeHtml = `<span class="px-2 py-0.5 rounded-full bg-slate-900/80 text-slate-400 text-[11px] font-medium border border-slate-800">↗ Portal</span>`;
+          }
+
+          return `
+            <div class="bg-slate-900/85 border border-slate-800 rounded-2xl p-4 transition-all shadow-md">
+              <!-- Mobile Card Header: Company Name & Status Badge -->
+              <div class="flex items-start justify-between gap-2.5">
+                <div class="min-w-0 flex-1">
+                  <div class="font-bold text-base text-slate-100 flex items-center gap-2">
+                    <span class="truncate">${c.name}</span>
+                    <a href="${c.website}" target="_blank" class="text-slate-500 hover:text-emerald-400 text-xs shrink-0" title="Visit website">
+                      <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                  </div>
+                  <div class="text-xs text-slate-400 mt-1 flex items-center gap-1.5 flex-wrap">
+                    <span><i class="fa-solid fa-location-dot text-slate-500 text-[10px]"></i> ${c.location}</span>
+                    <span>•</span>
+                    <span class="text-slate-300 font-medium">${c.industry}</span>
+                  </div>
+                </div>
+                <div class="shrink-0">
+                  ${badgeHtml}
+                </div>
+              </div>
+
+              <!-- Mobile Quick Actions Bar -->
+              <div class="flex items-center justify-between gap-2 mt-3 pt-3 border-t border-slate-800/80">
+                <div class="flex items-center gap-2">
+                  <a href="${c.careers_url}" target="_blank" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm transition-colors">
+                    <span>Careers</span>
+                    <i class="fa-solid fa-chevron-right text-[9px]"></i>
+                  </a>
+                  <a href="${getLinkedInSearchUrl(c.name)}" target="_blank" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-sky-400 bg-sky-950/50 border border-sky-800/60 hover:bg-sky-900/50 transition-colors">
+                    <i class="fa-brands fa-linkedin text-sm text-[#0a66c2]"></i>
+                    <span>LinkedIn</span>
+                  </a>
+                </div>
+
+                <button onclick="toggleRow('${c.id}')" class="inline-flex items-center gap-1 text-xs font-semibold text-slate-400 hover:text-slate-200 px-2.5 py-1.5 rounded-lg bg-slate-950 border border-slate-800 transition-colors">
+                  <span>${isExpanded ? 'Less' : 'Details'}</span>
+                  <i id="chevron-mob-${c.id}" class="fa-solid fa-chevron-down text-[10px] transition-transform ${isExpanded ? 'rotate-180' : ''}"></i>
+                </button>
+              </div>
+
+              <!-- Expandable Mobile Summary -->
+              <div id="details-mob-${c.id}" class="${isExpanded ? '' : 'hidden'} mt-3 pt-3 border-t border-slate-800/60 space-y-2.5 text-xs text-slate-300">
+                ${hasProductRoles ? `
+                  <div class="p-3 bg-emerald-950/30 border border-emerald-800/40 rounded-xl space-y-2">
+                    <div class="text-[11px] font-bold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
+                      <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                      <span>Live Verified Openings (${c.product_roles_count})</span>
+                    </div>
+                    ${c.active_product_roles.map(r => `
+                      <a href="${r.url}" target="_blank" class="flex items-center justify-between p-2 rounded-lg bg-slate-900 border border-emerald-900/50 hover:border-emerald-500/50 transition-colors text-slate-100">
+                        <span class="font-bold truncate pr-2 text-xs">${r.title}</span>
+                        <span class="text-[11px] text-emerald-400 font-bold shrink-0">Apply ↗</span>
+                      </a>
+                    `).join('')}
+                  </div>
+                ` : ''}
+
+                <p class="text-slate-300 leading-relaxed text-xs">${c.description || 'No detailed overview available yet.'}</p>
+
+                <div class="flex flex-wrap gap-1.5 pt-1">
+                  <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 text-[11px]">${c.scale_tier}</span>
+                  <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 text-[11px]">${c.funding_type || 'Private'}</span>
+                  ${c.headcount_estimate ? `<span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 text-[11px]">${c.headcount_estimate} team</span>` : ''}
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // Desktop Table Render
+      if (tbody) {
+        tbody.innerHTML = companies.map(c => {
+          const isExpanded = expandedRows.has(c.id);
+          const isFav = isLocal && favourites.has(c.id);
+          const hasProductRoles = (c.product_roles_count || 0) > 0;
+          const trackedApps = isLocal ? (c.tracked_applications || []) : [];
+          const latestApp = trackedApps.length > 0 ? trackedApps[0] : null;
 
         return `
           <!-- Main Row -->
@@ -955,67 +1086,70 @@
             </td>
           </tr>
         `;
-      }).join('');
+        }).join('');
+      }
 
       // Grid Render
-      grid.innerHTML = companies.map(c => {
-        const isFav = isLocal && favourites.has(c.id);
-        const trackedApps = isLocal ? (c.tracked_applications || []) : [];
-        const latestApp = trackedApps.length > 0 ? trackedApps[0] : null;
+      if (grid) {
+        grid.innerHTML = companies.map(c => {
+          const isFav = isLocal && favourites.has(c.id);
+          const trackedApps = isLocal ? (c.tracked_applications || []) : [];
+          const latestApp = trackedApps.length > 0 ? trackedApps[0] : null;
 
-        return `
-          <div class="bg-slate-900 border ${isFav ? 'border-amber-500/40 bg-amber-950/10' : 'border-slate-800'} rounded-2xl p-6 hover:border-slate-700 transition-all flex flex-col justify-between space-y-4 shadow-lg relative">
-            <div>
-              <div class="flex items-start justify-between">
+          return `
+            <div class="bg-slate-900 border ${isFav ? 'border-amber-500/40 bg-amber-950/10' : 'border-slate-800'} rounded-2xl p-6 hover:border-slate-700 transition-all flex flex-col justify-between space-y-4 shadow-lg relative">
+              <div>
+                <div class="flex items-start justify-between">
+                  <div>
+                    <h4 class="font-bold text-lg text-slate-100 flex items-center gap-2">
+                      <a href="${c.website}" target="_blank" class="hover:text-emerald-400 transition-colors">${c.name}</a>
+                      ${latestApp ? getPipelineStageBadge(latestApp.current_stage) : ''}
+                    </h4>
+                    <p class="text-xs text-slate-400 flex items-center gap-1.5 mt-1">
+                      <i class="fa-solid fa-location-dot text-slate-500 text-xs"></i>
+                      ${c.location} • <span class="text-slate-400 font-medium">${c.funding_type}</span>
+                    </p>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    ${isLocal ? `
+                      <button onclick="toggleFavourite('${c.id}', event)" class="text-slate-600 hover:text-amber-400 p-1">
+                        <i class="${isFav ? 'fa-solid fa-star text-amber-400' : 'fa-regular fa-star text-slate-500'} text-base"></i>
+                      </button>
+                    ` : ''}
+                    <span class="border px-3 py-1 rounded-lg text-xs font-semibold ${getScaleBadgeClass(c.scale_tier)}">${c.scale_tier.split(' ')[0]}</span>
+                  </div>
+                </div>
+                <p class="text-sm text-slate-300 mt-4 line-clamp-3 leading-relaxed">${c.description || ''}</p>
+              </div>
+
+              <div class="pt-4 border-t border-slate-800 flex items-center justify-between">
                 <div>
-                  <h4 class="font-bold text-lg text-slate-100 flex items-center gap-2">
-                    <a href="${c.website}" target="_blank" class="hover:text-emerald-400 transition-colors">${c.name}</a>
-                    ${latestApp ? getPipelineStageBadge(latestApp.current_stage) : ''}
-                  </h4>
-                  <p class="text-xs text-slate-400 flex items-center gap-1.5 mt-1">
-                    <i class="fa-solid fa-location-dot text-slate-500 text-xs"></i>
-                    ${c.location} • <span class="text-slate-400 font-medium">${c.funding_type}</span>
-                  </p>
+                  ${(c.product_roles_count || 0) > 0 ? `
+                    <button onclick="viewCompanyRoles('${c.id}')" class="text-xs font-bold text-emerald-400 hover:underline flex items-center gap-1.5">
+                      <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                      ${c.product_roles_count} Active PM Role${c.product_roles_count > 1 ? 's' : ''}
+                    </button>
+                  ` : (isAutomatedATS(c) ? `
+                    <span class="text-xs text-slate-500 font-medium">0 Scanned Roles</span>
+                  ` : `
+                    <span class="text-xs text-slate-400 font-medium flex items-center gap-1">
+                      <i class="fa-solid fa-arrow-up-right-from-square text-[9px] text-slate-500"></i> N/A (Portal)
+                    </span>
+                  `)}
                 </div>
                 <div class="flex items-center gap-2">
-                  ${isLocal ? `
-                    <button onclick="toggleFavourite('${c.id}', event)" class="text-slate-600 hover:text-amber-400 p-1">
-                      <i class="${isFav ? 'fa-solid fa-star text-amber-400' : 'fa-regular fa-star text-slate-500'} text-base"></i>
-                    </button>
-                  ` : ''}
-                  <span class="border px-3 py-1 rounded-lg text-xs font-semibold ${getScaleBadgeClass(c.scale_tier)}">${c.scale_tier.split(' ')[0]}</span>
+                  <a href="${getLinkedInSearchUrl(c.name)}" target="_blank" class="inline-flex items-center gap-1 text-xs font-bold text-sky-400 hover:text-sky-300 bg-sky-950/40 border border-sky-800/50 px-2 py-1.5 rounded-lg hover:bg-sky-900/40 transition-colors" title="Search LinkedIn Jobs for ${c.name}">
+                    <i class="fa-brands fa-linkedin text-sm text-[#0a66c2]"></i>
+                  </a>
+                  <a href="${c.careers_url}" target="_blank" class="text-xs font-bold text-slate-300 hover:text-emerald-400 flex items-center gap-1.5">
+                    Careers <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                  </a>
                 </div>
               </div>
-              <p class="text-sm text-slate-300 mt-4 line-clamp-3 leading-relaxed">${c.description || ''}</p>
             </div>
-
-            <div class="pt-4 border-t border-slate-800 flex items-center justify-between">
-              <div>
-                ${(c.product_roles_count || 0) > 0 ? `
-                  <button onclick="viewCompanyRoles('${c.id}')" class="text-xs font-bold text-emerald-400 hover:underline flex items-center gap-1.5">
-                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                    ${c.product_roles_count} Active PM Role${c.product_roles_count > 1 ? 's' : ''}
-                  </button>
-                ` : (isAutomatedATS(c) ? `
-                  <span class="text-xs text-slate-500 font-medium">0 Scanned Roles</span>
-                ` : `
-                  <span class="text-xs text-slate-400 font-medium flex items-center gap-1">
-                    <i class="fa-solid fa-arrow-up-right-from-square text-[9px] text-slate-500"></i> N/A (Portal)
-                  </span>
-                `)}
-              </div>
-              <div class="flex items-center gap-2">
-                <a href="${getLinkedInSearchUrl(c.name)}" target="_blank" class="inline-flex items-center gap-1 text-xs font-bold text-sky-400 hover:text-sky-300 bg-sky-950/40 border border-sky-800/50 px-2 py-1.5 rounded-lg hover:bg-sky-900/40 transition-colors" title="Search LinkedIn Jobs for ${c.name}">
-                  <i class="fa-brands fa-linkedin text-sm text-[#0a66c2]"></i>
-                </a>
-                <a href="${c.careers_url}" target="_blank" class="text-xs font-bold text-slate-300 hover:text-emerald-400 flex items-center gap-1.5">
-                  Careers <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-                </a>
-              </div>
-            </div>
-          </div>
-        `;
-      }).join('');
+          `;
+        }).join('');
+      }
     }
 
     function switchView(view) {
