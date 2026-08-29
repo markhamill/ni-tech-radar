@@ -590,23 +590,29 @@
       const kpiContainer = document.getElementById('kpiContainer');
 
       if (!isLocal) {
-        // Hide server-dependent and private tracking elements in deployed state
-        if (scanWrap) scanWrap.classList.add('hidden');
+        // Strictly force-hide server-dependent and private tracking elements in deployed state
+        if (scanWrap) scanWrap.style.display = 'none';
         if (deployedUpdatedLabel) deployedUpdatedLabel.classList.remove('hidden');
-        if (addBtn) addBtn.classList.add('hidden');
-        if (favCard) favCard.classList.add('hidden');
-        if (appCard) appCard.classList.add('hidden');
-        if (favFilter) favFilter.classList.add('hidden');
-        if (appFilter) appFilter.classList.add('hidden');
-        if (thStar) thStar.classList.add('hidden');
+        if (addBtn) addBtn.style.display = 'none';
+        if (favCard) favCard.style.display = 'none';
+        if (appCard) appCard.style.display = 'none';
+        if (favFilter) favFilter.style.display = 'none';
+        if (appFilter) appFilter.style.display = 'none';
+        if (thStar) thStar.style.display = 'none';
 
         // Adjust KPI grid for deployed view
         if (kpiContainer) {
           kpiContainer.className = 'grid grid-cols-3 gap-2 sm:gap-4';
         }
       } else {
-        if (scanWrap) scanWrap.classList.remove('hidden');
+        if (scanWrap) scanWrap.style.display = '';
         if (deployedUpdatedLabel) deployedUpdatedLabel.classList.add('hidden');
+        if (addBtn) addBtn.style.display = '';
+        if (favCard) favCard.style.display = '';
+        if (appCard) appCard.style.display = '';
+        if (favFilter) favFilter.style.display = '';
+        if (appFilter) appFilter.style.display = '';
+        if (thStar) thStar.style.display = '';
       }
     }
 
