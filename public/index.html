@@ -49,13 +49,16 @@
           <i class="fa-solid fa-crosshairs text-slate-950 text-[32px] font-black"></i>
         </div>
         <div>
-          <h1 class="font-extrabold text-xl text-slate-50 tracking-tight flex items-center gap-3">
-            <span>Northern Ireland Tech Radar</span>
-            <span id="modeBadge" class="inline-flex items-center gap-1.5 text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-3 py-1 rounded-full font-bold shadow-sm">
-              <i class="fa-solid fa-bullseye text-[11px] text-emerald-400"></i>
-              <span>Active Target Tracker</span>
-            </span>
-          </h1>
+          <div class="flex items-center gap-3">
+            <h1 class="font-extrabold text-xl text-slate-50 tracking-tight">
+              Northern Ireland Tech Radar
+            </h1>
+            <!-- About this project button (Top Left) -->
+            <button onclick="openAboutModal()" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700/80 transition-all shadow-sm group" title="About this project">
+              <i class="fa-solid fa-circle-info text-emerald-400 text-xs group-hover:scale-110 transition-transform"></i>
+              <span>About</span>
+            </button>
+          </div>
           <p class="text-sm text-slate-400">Directory & Automated Product Role Intelligence across Northern Ireland</p>
         </div>
       </div>
@@ -376,6 +379,96 @@
     </div>
   </div>
 
+  <!-- About This Project Modal -->
+  <div id="aboutModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md transition-opacity">
+    <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-2xl w-full p-6 sm:p-8 space-y-6 shadow-2xl shadow-slate-950/90 max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between border-b border-slate-800/80 pb-5">
+        <div class="flex items-center gap-3.5">
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-500 via-teal-400 to-emerald-300 flex items-center justify-center shadow-lg shadow-emerald-500/20 text-slate-950 border border-emerald-300/40">
+            <i class="fa-solid fa-crosshairs text-slate-950 text-2xl font-black"></i>
+          </div>
+          <h3 class="text-2xl font-black text-slate-100 tracking-tight">About Northern Ireland Tech Radar</h3>
+        </div>
+        <button onclick="closeAboutModal()" class="w-9 h-9 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-slate-200 flex items-center justify-center transition-colors">
+          <i class="fa-solid fa-xmark text-base"></i>
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="space-y-6 text-base text-slate-300 leading-relaxed">
+        <!-- Intro -->
+        <div>
+          <h4 class="font-bold text-slate-100 text-lg mb-2 flex items-center gap-2">
+            <i class="fa-solid fa-compass text-emerald-400 text-sm"></i>
+            What is this and why build it?
+          </h4>
+          <p class="text-slate-300">
+            This started as a personal project to cut through generic job board noise and get a clear, unvarnished picture of Northern Ireland’s tech ecosystem. It tracks indigenous startups, scaleups, FDI tech hubs, and academic commercialisation centres across the region, specifically keeping an eye on open product leadership roles (Product Managers, Group PMs, Directors, and VPs).
+          </p>
+        </div>
+
+        <!-- How it works -->
+        <div class="space-y-3">
+          <h4 class="font-bold text-slate-100 text-lg flex items-center gap-2">
+            <i class="fa-solid fa-bolt text-emerald-400 text-sm"></i>
+            How does it work?
+          </h4>
+          <p class="text-slate-300">
+            A built-in scanner regularly queries public applicant tracking system (ATS) APIs and career feeds to pull verified live vacancies with direct application links.
+          </p>
+          <div>
+            <div class="text-sm font-semibold text-slate-200 mb-2.5">Automated checks supported on:</div>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">Greenhouse</span>
+              <span class="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">Ashby</span>
+              <span class="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">SmartRecruiters</span>
+              <span class="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">Workable</span>
+              <span class="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">Lever</span>
+              <span class="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">Teamtailor</span>
+              <span class="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">Volcanic</span>
+            </div>
+          </div>
+          <div class="text-sm text-slate-300 pt-1 leading-relaxed">
+            <strong class="font-semibold text-slate-200">What's not supported via direct API:</strong> Closed enterprise systems like Workday, Taleo, iTrent, or custom portals don't expose open feeds, so they're marked <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 font-mono text-xs">N/A (Portal)</span>. Use the 1-click <strong>Careers</strong> button or the <strong>LinkedIn</strong> search shortcut to check them directly.
+          </div>
+        </div>
+
+        <!-- How to contribute -->
+        <div>
+          <h4 class="font-bold text-slate-100 text-lg mb-2 flex items-center gap-2">
+            <i class="fa-solid fa-code-pull-request text-emerald-400 text-sm"></i>
+            How to contribute or report updates
+          </h4>
+          <p class="text-slate-300">
+            Know a Northern Ireland tech company that should be on here, spotted an out-of-date link, or want to suggest a new ATS connector? Contributions are very welcome. The entire project is open source and can also be forked and tailored to track any other region, industry vertical, or job discipline.
+          </p>
+        </div>
+
+        <!-- Get in touch / LinkedIn -->
+        <div class="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border border-emerald-500/20 rounded-2xl p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
+          <div class="flex-1">
+            <div class="font-bold text-slate-100 text-base">Built by Mark Hamill</div>
+            <div class="text-sm text-slate-300 mt-1 leading-relaxed">
+              Mark is a product guy, with a passion for technology and likes building things and meeting new people. Connect to strike up a conversation!
+            </div>
+          </div>
+          <a href="https://www.linkedin.com/in/markhamill2/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2.5 px-6 py-3 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-sm font-bold shadow-lg shadow-sky-600/25 whitespace-nowrap shrink-0 transition-all" style="padding: 12px 24px;">
+            <i class="fa-brands fa-linkedin text-lg"></i>
+            <span>Connect on LinkedIn</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="pt-4 border-t border-slate-800 flex justify-end">
+        <button type="button" onclick="closeAboutModal()" class="px-6 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-base font-semibold transition-colors">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- JavaScript Client -->
   <script>
     // =========================================================================
@@ -470,7 +563,6 @@
       const favFilter = document.getElementById('favouritesFilterWrap');
       const appFilter = document.getElementById('appliedFilterWrap');
       const thStar = document.getElementById('thStar');
-      const modeBadge = document.getElementById('modeBadge');
       const kpiContainer = document.getElementById('kpiContainer');
 
       if (!isLocal) {
@@ -488,17 +580,9 @@
         if (kpiContainer) {
           kpiContainer.className = 'grid grid-cols-1 sm:grid-cols-3 gap-4';
         }
-
-        // Update badge for public directory
-        if (modeBadge) {
-          modeBadge.innerHTML = '<i class="fa-solid fa-globe text-[11px] text-emerald-400"></i><span>Public Tech Directory</span>';
-        }
       } else {
         if (scanWrap) scanWrap.classList.remove('hidden');
         if (deployedUpdatedLabel) deployedUpdatedLabel.classList.add('hidden');
-        if (modeBadge) {
-          modeBadge.innerHTML = '<i class="fa-solid fa-bullseye text-[11px] text-emerald-400"></i><span>Active Target Tracker (Local)</span>';
-        }
       }
     }
 
@@ -993,6 +1077,16 @@
       document.getElementById('roleModal').classList.remove('hidden');
     }
 
+    function openAboutModal() {
+      const modal = document.getElementById('aboutModal');
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeAboutModal() {
+      const modal = document.getElementById('aboutModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
     function closeRoleModal() {
       document.getElementById('roleModal').classList.add('hidden');
     }
@@ -1113,6 +1207,28 @@
       link.click();
       document.body.removeChild(link);
     }
+
+    // Global Escape key dismiss listener
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeAboutModal();
+        closeRoleModal();
+        closeAddModal();
+        closeDetailsDrawer();
+      }
+    });
+
+    // Global backdrop click dismiss listeners
+    ['aboutModal', 'roleModal', 'addModal'].forEach(modalId => {
+      const el = document.getElementById(modalId);
+      if (el) {
+        el.addEventListener('click', (e) => {
+          if (e.target === el) {
+            el.classList.add('hidden');
+          }
+        });
+      }
+    });
 
     // Initialize on load
     loadCompanies();
