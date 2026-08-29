@@ -521,6 +521,18 @@
 
     const isLocal = isLocalEnvironment();
 
+    // Escapes user-/file-sourced text before it goes into innerHTML templates below
+    // (company data can come from the "Add Company" form or local application_status.md files).
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
     const SUPPORTED_ATS = new Set(['greenhouse', 'ashby', 'smartrecruiters', 'workable', 'lever', 'teamtailor', 'pinpoint', 'bamboohr', 'volcanic']);
 
     function isAutomatedATS(company) {
@@ -729,7 +741,7 @@
       if (s.includes('ghosted') || s.includes('closed')) {
         return '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-slate-800 text-slate-400 border border-slate-700">Closed</span>';
       }
-      return `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-blue-500/20 text-blue-400 border border-blue-500/40">${stage}</span>`;
+      return `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-blue-500/20 text-blue-400 border border-blue-500/40">${escapeHtml(stage)}</span>`;
     }
 
     function toggleRow(id) {
@@ -849,15 +861,15 @@
               <div class="flex items-start justify-between gap-2.5">
                 <div class="min-w-0 flex-1">
                   <div class="font-bold text-base text-slate-100 flex items-center gap-2">
-                    <span class="truncate">${c.name}</span>
+                    <span class="truncate">${escapeHtml(c.name)}</span>
                     <a href="${c.website}" target="_blank" class="text-slate-500 hover:text-emerald-400 text-xs shrink-0" title="Visit website">
                       <i class="fa-solid fa-arrow-up-right-from-square"></i>
                     </a>
                   </div>
                   <div class="text-xs text-slate-400 mt-1 flex items-center gap-1.5 flex-wrap">
-                    <span><i class="fa-solid fa-location-dot text-slate-500 text-[10px]"></i> ${c.location}</span>
+                    <span><i class="fa-solid fa-location-dot text-slate-500 text-[10px]"></i> ${escapeHtml(c.location)}</span>
                     <span>•</span>
-                    <span class="text-slate-300 font-medium">${c.industry}</span>
+                    <span class="text-slate-300 font-medium">${escapeHtml(c.industry)}</span>
                   </div>
                 </div>
                 <div class="shrink-0">
@@ -868,7 +880,7 @@
               <!-- Mobile Quick Actions Bar -->
               <div class="flex items-center justify-between gap-2 mt-3 pt-3 border-t border-slate-800/80">
                 <div class="flex items-center gap-2">
-                  <a href="${getLinkedInSearchUrl(c.name)}" target="_blank" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-sky-400 bg-sky-950/50 border border-sky-800/60 hover:bg-sky-900/50 transition-colors" title="Search LinkedIn Jobs for ${c.name}">
+                  <a href="${getLinkedInSearchUrl(c.name)}" target="_blank" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-sky-400 bg-sky-950/50 border border-sky-800/60 hover:bg-sky-900/50 transition-colors" title="Search LinkedIn Jobs for ${escapeHtml(c.name)}">
                     <i class="fa-brands fa-linkedin text-sm text-[#0a66c2]"></i>
                     <span>LinkedIn</span>
                   </a>
@@ -901,19 +913,19 @@
                     </div>
                     ${c.active_product_roles.map(r => `
                       <a href="${r.url}" target="_blank" class="flex items-center justify-between p-2 rounded-lg bg-slate-900 border border-emerald-900/50 hover:border-emerald-500/50 transition-colors text-slate-100">
-                        <span class="font-bold truncate pr-2 text-xs">${r.title}</span>
+                        <span class="font-bold truncate pr-2 text-xs">${escapeHtml(r.title)}</span>
                         <span class="text-[11px] text-emerald-400 font-bold shrink-0">Apply ↗</span>
                       </a>
                     `).join('')}
                   </div>
                 ` : ''}
 
-                <p class="text-slate-300 leading-relaxed text-xs">${c.description || 'No detailed overview available yet.'}</p>
+                <p class="text-slate-300 leading-relaxed text-xs">${escapeHtml(c.description || 'No detailed overview available yet.')}</p>
 
                 <div class="flex flex-wrap gap-1.5 pt-1">
-                  <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 text-[11px]">${c.scale_tier}</span>
-                  <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 text-[11px]">${c.funding_type || 'Private'}</span>
-                  ${c.headcount_estimate ? `<span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 text-[11px]">${c.headcount_estimate} team</span>` : ''}
+                  <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 text-[11px]">${escapeHtml(c.scale_tier)}</span>
+                  <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 text-[11px]">${escapeHtml(c.funding_type || 'Private')}</span>
+                  ${c.headcount_estimate ? `<span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 text-[11px]">${escapeHtml(c.headcount_estimate)} team</span>` : ''}
                 </div>
               </div>
             </div>
@@ -953,37 +965,37 @@
             <!-- Company Name & Snippet -->
             <td class="py-4 px-5">
               <div class="font-bold text-base text-slate-100 flex items-center gap-2">
-                <span>${c.name}</span>
+                <span>${escapeHtml(c.name)}</span>
                 <a href="${c.website}" target="_blank" onclick="event.stopPropagation()" class="text-slate-500 hover:text-emerald-400 text-xs" title="Open website">
                   <i class="fa-solid fa-arrow-up-right-from-square"></i>
                 </a>
                 ${latestApp ? getPipelineStageBadge(latestApp.current_stage) : ''}
               </div>
-              <div class="text-xs text-slate-400 line-clamp-1 max-w-sm mt-0.5">${c.description || ''}</div>
+              <div class="text-xs text-slate-400 line-clamp-1 max-w-sm mt-0.5">${escapeHtml(c.description || '')}</div>
             </td>
 
             <!-- Sector & Domain -->
             <td class="py-4 px-5">
-              <span class="inline-block bg-slate-800 text-slate-200 text-xs px-2.5 py-1 rounded-lg font-medium">${c.industry}</span>
-              <div class="text-xs text-slate-500 mt-1">${c.sub_sector || ''}</div>
+              <span class="inline-block bg-slate-800 text-slate-200 text-xs px-2.5 py-1 rounded-lg font-medium">${escapeHtml(c.industry)}</span>
+              <div class="text-xs text-slate-500 mt-1">${escapeHtml(c.sub_sector || '')}</div>
             </td>
 
             <!-- Scale Tier -->
             <td class="py-4 px-5">
-              <span class="inline-block border px-2.5 py-1 rounded-lg text-xs font-semibold ${getScaleBadgeClass(c.scale_tier)}">${c.scale_tier}</span>
-              <div class="text-xs text-slate-500 mt-1">${c.headcount_estimate || ''} team</div>
+              <span class="inline-block border px-2.5 py-1 rounded-lg text-xs font-semibold ${getScaleBadgeClass(c.scale_tier)}">${escapeHtml(c.scale_tier)}</span>
+              <div class="text-xs text-slate-500 mt-1">${escapeHtml(c.headcount_estimate || '')} team</div>
             </td>
 
             <!-- Ownership -->
             <td class="py-4 px-5">
-              <span class="text-sm text-slate-300 font-medium">${c.funding_type || 'Private'}</span>
+              <span class="text-sm text-slate-300 font-medium">${escapeHtml(c.funding_type || 'Private')}</span>
             </td>
 
             <!-- Location -->
             <td class="py-4 px-5">
               <div class="text-sm text-slate-200 font-medium flex items-center gap-1.5">
                 <i class="fa-solid fa-location-dot text-slate-500 text-xs"></i>
-                ${c.location}
+                ${escapeHtml(c.location)}
               </div>
             </td>
 
@@ -1012,7 +1024,7 @@
             <!-- Actions -->
             <td class="py-4 px-5 text-right whitespace-nowrap" onclick="event.stopPropagation()">
               <div class="flex items-center justify-end gap-2">
-                <a href="${getLinkedInSearchUrl(c.name)}" target="_blank" class="inline-flex items-center gap-1.5 text-xs font-semibold text-sky-400 hover:text-sky-300 bg-sky-950/40 border border-sky-800/50 px-2.5 py-1.5 rounded-lg hover:bg-sky-900/40 transition-colors" title="Search LinkedIn Jobs for ${c.name}">
+                <a href="${getLinkedInSearchUrl(c.name)}" target="_blank" class="inline-flex items-center gap-1.5 text-xs font-semibold text-sky-400 hover:text-sky-300 bg-sky-950/40 border border-sky-800/50 px-2.5 py-1.5 rounded-lg hover:bg-sky-900/40 transition-colors" title="Search LinkedIn Jobs for ${escapeHtml(c.name)}">
                   <i class="fa-brands fa-linkedin text-sm text-[#0a66c2]"></i>
                   <span class="hidden sm:inline">LinkedIn</span>
                 </a>
@@ -1042,16 +1054,16 @@
                     <div>
                       <div class="flex items-center gap-2 font-bold text-sm">
                         <i class="fa-solid ${trackedApps[0].current_stage.toLowerCase() === 'rejected' ? 'fa-ban text-rose-400' : 'fa-clipboard-check text-emerald-400'}"></i>
-                        <span>Tracked Application: ${trackedApps[0].role_title}</span>
+                        <span>Tracked Application: ${escapeHtml(trackedApps[0].role_title)}</span>
                         ${getPipelineStageBadge(trackedApps[0].current_stage)}
                       </div>
                       <p class="text-xs text-slate-300 mt-1">
-                        Applied: <strong>${trackedApps[0].date_applied || 'Recorded'}</strong>
+                        Applied: <strong>${escapeHtml(trackedApps[0].date_applied || 'Recorded')}</strong>
                         ${trackedApps[0].current_stage.toLowerCase() === 'rejected' ? ' • <span class="text-rose-300">Rejection on file. Do not duplicate cold applications.</span>' : ' • <span class="text-emerald-300">Active in pipeline.</span>'}
                       </p>
                     </div>
                     <span class="text-[11px] font-mono text-slate-400 bg-slate-900 px-2.5 py-1 rounded border border-slate-800">
-                      ${trackedApps[0].folder}
+                      ${escapeHtml(trackedApps[0].folder)}
                     </span>
                   </div>
                 ` : ''}
@@ -1059,24 +1071,24 @@
                 <!-- About & Description -->
                 <div>
                   <h4 class="text-xs font-bold uppercase tracking-wider text-emerald-400 mb-2 flex items-center gap-2">
-                    <i class="fa-solid fa-circle-info"></i> About ${c.name}
+                    <i class="fa-solid fa-circle-info"></i> About ${escapeHtml(c.name)}
                   </h4>
-                  <p class="text-sm text-slate-200 leading-relaxed">${c.description || 'No detailed overview available yet.'}</p>
+                  <p class="text-sm text-slate-200 leading-relaxed">${escapeHtml(c.description || 'No detailed overview available yet.')}</p>
                 </div>
 
                 <!-- Products, Leadership & Location Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t border-slate-800/60 text-sm">
                   <div>
                     <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Key Products & Technology</span>
-                    <p class="text-slate-200 font-medium">${(c.key_products && c.key_products.length > 0) ? c.key_products.join(', ') : 'Proprietary platform architecture'}</p>
+                    <p class="text-slate-200 font-medium">${(c.key_products && c.key_products.length > 0) ? escapeHtml(c.key_products.join(', ')) : 'Proprietary platform architecture'}</p>
                   </div>
                   <div>
                     <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Leadership & Key People</span>
-                    <p class="text-slate-200 font-medium">${c.key_people || 'Executive leadership team'}</p>
+                    <p class="text-slate-200 font-medium">${escapeHtml(c.key_people || 'Executive leadership team')}</p>
                   </div>
                   <div>
                     <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">NI Base & Address</span>
-                    <p class="text-slate-200 font-medium">${c.address || c.location + ', Northern Ireland'}</p>
+                    <p class="text-slate-200 font-medium">${escapeHtml(c.address || c.location + ', Northern Ireland')}</p>
                   </div>
                 </div>
 
@@ -1088,17 +1100,17 @@
                     </h5>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       ${c.active_product_roles.map(r => {
-                        const isThisRoleApplied = isLocal && trackedApps.some(app => app.role_title.toLowerCase().includes('principal') || app.role_title.toLowerCase() === r.title.toLowerCase());
+                        const isThisRoleApplied = isLocal && trackedApps.some(app => app.role_title.toLowerCase() === r.title.toLowerCase());
                         return `
                           <div class="p-4 bg-slate-950 border border-slate-800 rounded-xl flex items-center justify-between hover:border-slate-700 transition-all">
                             <div>
                               <div class="font-bold text-sm text-slate-100 flex items-center gap-2">
-                                <span>${r.title}</span>
+                                <span>${escapeHtml(r.title)}</span>
                                 ${isThisRoleApplied ? '<span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-bold">Applied</span>' : ''}
                               </div>
                               <div class="text-xs text-slate-400 mt-1">
-                                <i class="fa-solid fa-location-dot text-slate-500 mr-1 text-xs"></i> ${r.location}
-                                ${r.date_posted ? ` • <span class="text-slate-500">Posted ${r.date_posted}</span>` : ''}
+                                <i class="fa-solid fa-location-dot text-slate-500 mr-1 text-xs"></i> ${escapeHtml(r.location)}
+                                ${r.date_posted ? ` • <span class="text-slate-500">Posted ${escapeHtml(r.date_posted)}</span>` : ''}
                               </div>
                             </div>
                             <a href="${r.url}" target="_blank" class="px-3.5 py-2 ${isThisRoleApplied ? 'bg-slate-800 hover:bg-slate-700 text-emerald-300' : 'bg-emerald-600 hover:bg-emerald-500 text-white'} rounded-lg text-xs font-bold shadow-sm shadow-emerald-600/20 whitespace-nowrap">
@@ -1137,7 +1149,7 @@
                   <div class="flex items-center gap-2.5">
                     <a href="${getLinkedInSearchUrl(c.name)}" target="_blank" class="inline-flex items-center gap-2 px-3.5 py-2 bg-sky-950/60 hover:bg-sky-900/60 text-sky-300 border border-sky-800/60 rounded-xl font-bold transition-all shadow-sm">
                       <i class="fa-brands fa-linkedin text-base text-[#0a66c2]"></i>
-                      <span>Search LinkedIn Jobs for ${c.name}</span>
+                      <span>Search LinkedIn Jobs for ${escapeHtml(c.name)}</span>
                       <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
                     </a>
                     <a href="${c.website}" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-2 bg-slate-950 hover:bg-slate-800 text-slate-300 border border-slate-800 rounded-xl font-medium transition-all">
@@ -1184,10 +1196,10 @@
         rolesList.innerHTML = company.active_product_roles.map(r => `
           <div class="p-4 bg-slate-950 border border-slate-800 rounded-xl flex items-center justify-between hover:border-slate-700 transition-all">
             <div>
-              <h5 class="text-sm font-bold text-slate-100">${r.title}</h5>
+              <h5 class="text-sm font-bold text-slate-100">${escapeHtml(r.title)}</h5>
               <p class="text-xs text-slate-400 mt-1">
-                <i class="fa-solid fa-location-dot text-slate-500 mr-1 text-xs"></i> ${r.location}
-                ${r.date_posted ? ` • <span class="text-slate-500">Posted ${r.date_posted}</span>` : ''}
+                <i class="fa-solid fa-location-dot text-slate-500 mr-1 text-xs"></i> ${escapeHtml(r.location)}
+                ${r.date_posted ? ` • <span class="text-slate-500">Posted ${escapeHtml(r.date_posted)}</span>` : ''}
               </p>
             </div>
             <a href="${r.url}" target="_blank" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold whitespace-nowrap shadow-sm shadow-emerald-600/20">

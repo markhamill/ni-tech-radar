@@ -224,9 +224,11 @@ async function scanCompany(company) {
       }
     }
 
-    // 6. Teamtailor Parser (e.g. Cloudsmith)
-    if (company.ats_type === 'teamtailor' || (company.careers_url && company.careers_url.includes('careers.')) || company.id === 'cloudsmith') {
-      const targetUrl = (company.careers_url && company.careers_url.endsWith('/jobs')) ? company.careers_url : `${company.careers_url.replace(/\/$/, '')}/jobs`;
+    // 6. Teamtailor Parser (explicit ats_type only - "careers." URL substring is too broad
+    // and false-matches enterprise custom portals like careers.thalesgroup.com)
+    if (company.ats_type === 'teamtailor' && company.careers_url) {
+      const targetUrl = company.careers_url.endsWith('/jobs') ? company.careers_url : `${company.careers_url.replace(/\/$/, '')}/jobs`;
+      const origin = new URL(company.careers_url).origin;
       try {
         const res = await fetch(targetUrl);
         if (res.ok) {
@@ -247,7 +249,7 @@ async function scanCompany(company) {
             result.active_product_roles = prodJobs.map(j => ({
               title: j.title,
               location: 'Belfast / Remote UK',
-              url: j.url.startsWith('http') ? j.url : `https://careers.cloudsmith.com${j.url}`,
+              url: j.url.startsWith('http') ? j.url : `${origin}${j.url}`,
               date_posted: new Date().toISOString().split('T')[0]
             }));
             return result;

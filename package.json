@@ -9,5 +9,8 @@
   },
   "keywords": ["northern-ireland", "tech-radar", "job-tracker", "careers"],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  }
 }

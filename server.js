@@ -80,17 +80,6 @@ const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, `http://${req.headers.host}`);
   const pathname = url.pathname;
 
-  // CORS headers for local development
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-
-  if (req.method === 'OPTIONS') {
-    res.writeHead(204);
-    res.end();
-    return;
-  }
-
   // API: Get all companies enriched with live local application tracking
   if (req.method === 'GET' && pathname === '/api/companies') {
     try {
@@ -149,6 +138,11 @@ const server = http.createServer(async (req, res) => {
           return;
         }
         const companies = JSON.parse(fs.readFileSync(DB_PATH, 'utf-8'));
+        if (companies.some(c => c.id === newCompany.id)) {
+          res.writeHead(409, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: `Company with id "${newCompany.id}" already exists` }));
+          return;
+        }
         companies.push({
           ...newCompany,
           last_checked: new Date().toISOString(),
