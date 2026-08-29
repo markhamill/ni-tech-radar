@@ -73,7 +73,7 @@
         </button>
 
         <!-- Deployed-only Last Updated Label -->
-        <div id="deployedUpdatedLabel" class="hidden text-xs text-slate-400 flex items-center gap-1.5 bg-slate-900 border border-slate-800 px-3 py-1.5 sm:px-3.5 sm:py-2.5 rounded-xl font-medium shadow-sm whitespace-nowrap shrink-0">
+        <div id="deployedUpdatedLabel" class="text-xs text-slate-400 inline-flex items-center gap-1.5 bg-slate-900 border border-slate-800 px-3 py-1.5 sm:px-3.5 sm:py-2.5 rounded-xl font-medium shadow-sm whitespace-nowrap shrink-0">
           <i class="fa-regular fa-calendar-check text-emerald-400 text-xs"></i>
           <span id="staticUpdatedText">Updated: Recently</span>
         </div>
@@ -592,7 +592,7 @@
       if (!isLocal) {
         // Strictly force-hide server-dependent and private tracking elements in deployed state
         if (scanWrap) scanWrap.style.display = 'none';
-        if (deployedUpdatedLabel) deployedUpdatedLabel.classList.remove('hidden');
+        if (deployedUpdatedLabel) deployedUpdatedLabel.style.display = 'inline-flex';
         if (addBtn) addBtn.style.display = 'none';
         if (favCard) favCard.style.display = 'none';
         if (appCard) appCard.style.display = 'none';
@@ -606,7 +606,7 @@
         }
       } else {
         if (scanWrap) scanWrap.style.display = '';
-        if (deployedUpdatedLabel) deployedUpdatedLabel.classList.add('hidden');
+        if (deployedUpdatedLabel) deployedUpdatedLabel.style.display = 'none';
         if (addBtn) addBtn.style.display = '';
         if (favCard) favCard.style.display = '';
         if (appCard) appCard.style.display = '';
