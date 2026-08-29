@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/", "destination": "/public/index.html" },
+    { "source": "/favicon.svg", "destination": "/public/favicon.svg" },
+    { "source": "/data/companies.json", "destination": "/data/companies.json" }
+  ]
+}

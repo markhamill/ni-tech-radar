@@ -256,6 +256,46 @@ async function scanCompany(company) {
       }
     }
 
+    // 7. Volcanic Cloud Parser (e.g. Ulster University)
+    if (company.ats_type === 'volcanic' || (company.careers_url && company.careers_url.includes('volcanic.cloud'))) {
+      try {
+        const res = await fetch(company.careers_url, {
+          headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+          }
+        });
+        if (res.ok) {
+          const html = await res.text();
+          const jobRegex = /<a[^>]+href=["'](\/job\/[^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi;
+          const found = [];
+          let jm;
+          while ((jm = jobRegex.exec(html)) !== null) {
+            const rawHref = jm[1];
+            if (rawHref.includes('/save_job') || rawHref.includes('/apply')) continue;
+            const rawText = jm[2].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+            if (rawText && rawText.length > 3 && rawText.length < 120 && !found.some(f => f.url === rawHref)) {
+              found.push({ url: rawHref, title: rawText });
+            }
+          }
+          if (found.length > 0) {
+            result.open_roles_count = found.length;
+            const prodJobs = found.filter(j => isProductRole(j.title));
+            result.product_roles_count = prodJobs.length;
+            const urlObj = new URL(company.careers_url);
+            result.active_product_roles = prodJobs.map(j => ({
+              title: j.title,
+              location: 'Belfast & Derry',
+              url: `${urlObj.origin}${j.url}`,
+              date_posted: new Date().toISOString().split('T')[0]
+            }));
+            return result;
+          }
+        }
+      } catch (vErr) {
+        console.error(`Volcanic fetch error for ${company.name}:`, vErr.message);
+      }
+    }
+
     // Retain existing active roles if manually verified or if scraper didn't run
     if (!result.active_product_roles) {
       result.active_product_roles = [];
