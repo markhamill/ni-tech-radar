@@ -26,6 +26,8 @@ const PRODUCT_KEYWORDS = [
   'lead product manager',
   'product lead',
   'product owner',
+  'product champion',
+  'product specialist',
   'chief product officer',
   'cpo'
 ];
@@ -293,6 +295,39 @@ async function scanCompany(company) {
         }
       } catch (vErr) {
         console.error(`Volcanic fetch error for ${company.name}:`, vErr.message);
+      }
+    }
+
+    // 8. BambooHR API Handler (e.g. Aflac NI)
+    if (company.ats_type === 'bamboohr' || (company.careers_url && company.careers_url.includes('bamboohr.com'))) {
+      try {
+        let subdomain = company.ats_identifier;
+        if (!subdomain && company.careers_url) {
+          const match = company.careers_url.match(/https?:\/\/([^.]+)\.bamboohr\.com/);
+          if (match) subdomain = match[1];
+        }
+        if (subdomain) {
+          const res = await fetch(`https://${subdomain}.bamboohr.com/careers/list`, {
+            headers: { 'Accept': 'application/json' }
+          });
+          if (res.ok) {
+            const data = await res.json();
+            const jobs = data.result || [];
+            result.open_roles_count = jobs.length;
+            const prodJobs = jobs.filter(j => isProductRole(j.jobOpeningName));
+            result.product_roles_count = prodJobs.length;
+            result.active_product_roles = prodJobs.map(j => ({
+              title: j.jobOpeningName,
+              location: (j.location && j.location.city) || 'Belfast (Hybrid)',
+              department: j.departmentLabel || 'Digital Services',
+              url: `https://${subdomain}.bamboohr.com/careers/${j.id}`,
+              date_found: new Date().toISOString().split('T')[0]
+            }));
+            return result;
+          }
+        }
+      } catch (bErr) {
+        console.error(`BambooHR fetch error for ${company.name}:`, bErr.message);
       }
     }
 

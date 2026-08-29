@@ -34,7 +34,7 @@ ni-tech-radar/
 3. **Punctuation Rules:**
    * Do NOT use em dashes anywhere in text. Use standard hyphens, colons, or commas for separation.
 4. **Data Schema Immutability:**
-   * Whenever adding or updating records in `data/companies.json`, ensure all mandatory keys are preserved: `id`, `name`, `website`, `careers_url`, `industry`, `scale_tier`, `funding_type`, `location`, `description`, `product_roles_count`, and `active_product_roles`.
+   * Whenever adding or updating records in `public/data/companies.json`, ensure all mandatory keys are preserved: `id`, `name`, `website`, `careers_url`, `industry`, `scale_tier`, `funding_type`, `location`, `description`, `product_roles_count`, and `active_product_roles`.
 5. **Application Status Failsafe:**
    * `server.js` includes an optional integration with a parent `/applications/` directory. All file reads must remain wrapped in try-catch blocks with graceful fallbacks. The application must run without crashing even if the `/applications/` folder does not exist.
 
@@ -43,17 +43,17 @@ ni-tech-radar/
 ## 4. How to Extend & Modify
 
 ### A. Adding New ATS Parsers to `scanner.js`
-When adding support for a new ATS (e.g. Lever, Workday, SmartRecruiters):
+When adding support for a new ATS (e.g. Lever, SmartRecruiters, Teamtailor, BambooHR):
 1. Detect ATS type via `company.ats_type` or regex pattern matching on `company.careers_url`.
-2. Query the platform's public JSON API endpoint (e.g. `https://api.lever.co/v0/postings/<org>`).
-3. Filter role titles using `isTargetRole(title)`.
-4. Return normalized `{ title, location, url, date_posted }` objects.
+2. Query the platform's public JSON API endpoint (e.g. `https://<subdomain>.bamboohr.com/careers/list`).
+3. Filter role titles using `isProductRole(title)`.
+4. Return normalised `{ title, location, url, date_found }` objects.
 
 ### B. Switching Target Role Disciplines
 To fork or adapt this dashboard for different skillsets (e.g. Software Engineering or Data Science):
 1. **In `scanner.js`:** Update `PRODUCT_KEYWORDS` with the relevant domain titles.
 2. **In `public/index.html`:** Update UI headers, metric labels, and the filter checkbox from *"Live Product Roles"* to the target discipline (e.g. *"Live Engineering Roles"*).
-3. **In `data/companies.json`:** Update the count and active role array keys if renaming.
+3. **In `public/data/companies.json`:** Update the count and active role array keys if renaming.
 
 ### C. Batch Ingesting Companies
 When importing companies from directories (TechIreland, Catalyst, Software NI):

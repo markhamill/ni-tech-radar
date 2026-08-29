@@ -184,47 +184,67 @@
       <div class="hidden md:grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3 border-t border-slate-800/80">
         <div>
           <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Scale Tier</label>
-          <select id="filterScale" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-emerald-500" onchange="applyFilters()">
-            <option value="ALL">All Scale Tiers</option>
-            <option value="Startup">Startup (1-20)</option>
-            <option value="Scaleup">Scaleup (20-100)</option>
-            <option value="Mid-Market">Mid-Market (100-500)</option>
-            <option value="Large Enterprise">Large Enterprise / FDI (500+)</option>
-          </select>
+          <div class="relative">
+            <select id="filterScale" class="w-full appearance-none bg-slate-950 border border-slate-800 rounded-xl pl-3.5 pr-9 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-emerald-500 cursor-pointer" onchange="applyFilters()">
+              <option value="ALL">All Scale Tiers</option>
+              <option value="Startup">Startup (1-20)</option>
+              <option value="Scaleup">Scaleup (20-100)</option>
+              <option value="Mid-Market">Mid-Market (100-500)</option>
+              <option value="Large Enterprise">Large Enterprise / FDI (500+)</option>
+            </select>
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3.5 text-slate-400">
+              <i class="fa-solid fa-chevron-down text-xs"></i>
+            </div>
+          </div>
         </div>
         <div>
           <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Industry / Sector</label>
-          <select id="filterIndustry" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-emerald-500" onchange="applyFilters()">
-            <option value="ALL">All Industries</option>
-            <option value="Cybersecurity">Cybersecurity & DevTools</option>
-            <option value="Enterprise B2B SaaS">Enterprise B2B SaaS</option>
-            <option value="FinTech">FinTech, Trading & RegTech</option>
-            <option value="HealthTech">HealthTech & Life Sciences</option>
-            <option value="Data">Data, AI & Analytics</option>
-          </select>
+          <div class="relative">
+            <select id="filterIndustry" class="w-full appearance-none bg-slate-950 border border-slate-800 rounded-xl pl-3.5 pr-9 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-emerald-500 cursor-pointer" onchange="applyFilters()">
+              <option value="ALL">All Industries</option>
+              <option value="Cybersecurity">Cybersecurity & DevTools</option>
+              <option value="Enterprise B2B SaaS">Enterprise B2B SaaS</option>
+              <option value="FinTech">FinTech, Trading & RegTech</option>
+              <option value="HealthTech">HealthTech & Life Sciences</option>
+              <option value="Data">Data, AI & Analytics</option>
+            </select>
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3.5 text-slate-400">
+              <i class="fa-solid fa-chevron-down text-xs"></i>
+            </div>
+          </div>
         </div>
         <div>
           <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Funding / Ownership</label>
-          <select id="filterFunding" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-emerald-500" onchange="applyFilters()">
-            <option value="ALL">All Ownership Types</option>
-            <option value="Bootstrapped">Bootstrapped / Private</option>
-            <option value="VC-backed">VC-backed</option>
-            <option value="PE-backed">PE-backed</option>
-            <option value="Publicly Listed">Publicly Listed / Corporate</option>
-          </select>
+          <div class="relative">
+            <select id="filterFunding" class="w-full appearance-none bg-slate-950 border border-slate-800 rounded-xl pl-3.5 pr-9 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-emerald-500 cursor-pointer" onchange="applyFilters()">
+              <option value="ALL">All Ownership Types</option>
+              <option value="Bootstrapped">Bootstrapped / Private</option>
+              <option value="VC-backed">VC-backed</option>
+              <option value="PE-backed">PE-backed</option>
+              <option value="Publicly Listed">Publicly Listed / Corporate</option>
+            </select>
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3.5 text-slate-400">
+              <i class="fa-solid fa-chevron-down text-xs"></i>
+            </div>
+          </div>
         </div>
         <div>
           <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Location</label>
-          <select id="filterLocation" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-emerald-500" onchange="applyFilters()">
-            <option value="ALL">All NI Locations</option>
-            <option value="Belfast">Belfast</option>
-            <option value="Derry">Derry / Londonderry</option>
-            <option value="Lisburn">Lisburn</option>
-            <option value="Newry">Newry</option>
-            <option value="Ballymena">Ballymena</option>
-            <option value="Antrim">Antrim</option>
-            <option value="Craigavon">Craigavon</option>
-          </select>
+          <div class="relative">
+            <select id="filterLocation" class="w-full appearance-none bg-slate-950 border border-slate-800 rounded-xl pl-3.5 pr-9 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-emerald-500 cursor-pointer" onchange="applyFilters()">
+              <option value="ALL">All NI Locations</option>
+              <option value="Belfast">Belfast</option>
+              <option value="Derry">Derry / Londonderry</option>
+              <option value="Lisburn">Lisburn</option>
+              <option value="Newry">Newry</option>
+              <option value="Ballymena">Ballymena</option>
+              <option value="Antrim">Antrim</option>
+              <option value="Craigavon">Craigavon</option>
+            </select>
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3.5 text-slate-400">
+              <i class="fa-solid fa-chevron-down text-xs"></i>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -247,8 +267,8 @@
               <th class="py-4 px-5">Scale Tier</th>
               <th class="py-4 px-5">Ownership</th>
               <th class="py-4 px-5">Location</th>
-              <th class="py-4 px-5 text-center">Live Product Roles</th>
-              <th class="py-4 px-5 text-right">Links</th>
+              <th class="py-4 px-4 text-center whitespace-nowrap min-w-[140px]">Live Product Roles</th>
+              <th class="py-4 px-5 text-right whitespace-nowrap">Links</th>
             </tr>
           </thead>
           <tbody id="companyTableBody" class="divide-y divide-slate-800/60 text-slate-200 font-normal">
@@ -424,6 +444,8 @@
               <span class="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">Workable</span>
               <span class="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">Lever</span>
               <span class="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">Teamtailor</span>
+              <span class="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">BambooHR</span>
+              <span class="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">Pinpoint</span>
               <span class="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">Volcanic</span>
             </div>
           </div>
@@ -499,11 +521,35 @@
 
     const isLocal = isLocalEnvironment();
 
-    const SUPPORTED_ATS = new Set(['greenhouse', 'ashby', 'smartrecruiters', 'workable', 'lever', 'teamtailor', 'pinpoint', 'volcanic']);
+    const SUPPORTED_ATS = new Set(['greenhouse', 'ashby', 'smartrecruiters', 'workable', 'lever', 'teamtailor', 'pinpoint', 'bamboohr', 'volcanic']);
 
     function isAutomatedATS(company) {
       if (!company || !company.ats_type) return false;
       return SUPPORTED_ATS.has(company.ats_type.toLowerCase());
+    }
+
+    function getAtsDisplayName(atsType) {
+      if (!atsType) return 'direct ATS';
+      const map = {
+        'greenhouse': 'Greenhouse',
+        'ashby': 'Ashby',
+        'smartrecruiters': 'SmartRecruiters',
+        'workable': 'Workable',
+        'lever': 'Lever',
+        'teamtailor': 'Teamtailor',
+        'bamboohr': 'BambooHR',
+        'pinpoint': 'Pinpoint',
+        'volcanic': 'Volcanic'
+      };
+      return map[atsType.toLowerCase()] || (atsType.charAt(0).toUpperCase() + atsType.slice(1));
+    }
+
+    function hasDedicatedCareersPage(company) {
+      if (!company || !company.careers_url) return false;
+      if (isAutomatedATS(company)) return true;
+      const cleanCareers = (company.careers_url || '').toLowerCase().trim().replace(/\/+$/, '');
+      const cleanWeb = (company.website || '').toLowerCase().trim().replace(/\/+$/, '');
+      return cleanCareers !== '' && cleanCareers !== cleanWeb;
     }
 
     function getLinkedInSearchUrl(companyName) {
@@ -779,18 +825,22 @@
           const isExpanded = expandedRows.has(c.id);
           const hasProductRoles = (c.product_roles_count || 0) > 0;
 
+          const hasDedicatedCareers = hasDedicatedCareersPage(c);
+
           let badgeHtml = '';
           if (hasProductRoles) {
             badgeHtml = `
-              <button onclick="event.stopPropagation(); viewCompanyRoles('${c.id}')" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 text-xs font-bold shadow-sm active:scale-95 transition-transform">
+              <button onclick="event.stopPropagation(); viewCompanyRoles('${c.id}')" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 text-xs font-bold shadow-sm active:scale-95 transition-transform whitespace-nowrap">
                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span>${c.product_roles_count} Role${c.product_roles_count > 1 ? 's' : ''}</span>
+                <span>${c.product_roles_count} Open</span>
               </button>
             `;
           } else if (isAutomatedATS(c)) {
-            badgeHtml = `<span class="px-2 py-0.5 rounded-full bg-slate-900 text-slate-500 text-[11px] font-medium border border-slate-800">0 Open</span>`;
+            badgeHtml = `<span class="px-2 py-0.5 rounded-full bg-slate-900 text-slate-500 text-[11px] font-medium border border-slate-800" title="Scanned live via ${getAtsDisplayName(c.ats_type)} API. No active product roles currently open.">0 Open</span>`;
+          } else if (hasDedicatedCareers) {
+            badgeHtml = `<a href="${c.careers_url}" target="_blank" onclick="event.stopPropagation()" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-slate-900/80 text-slate-400 hover:text-emerald-300 hover:border-emerald-700/60 hover:bg-emerald-950/20 text-xs font-medium border border-slate-800 transition-colors" title="Check portal directly"><i class="fa-solid fa-arrow-up-right-from-square text-[9px] text-slate-500"></i> Portal</a>`;
           } else {
-            badgeHtml = `<span class="px-2 py-0.5 rounded-full bg-slate-900/80 text-slate-400 text-[11px] font-medium border border-slate-800">↗ Portal</span>`;
+            badgeHtml = `<a href="${c.website}" target="_blank" onclick="event.stopPropagation()" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-900/50 text-slate-500 hover:text-slate-300 text-[11px] font-medium border border-slate-800 transition-colors" title="No separate careers page - visit homepage"><i class="fa-solid fa-house text-[9px] text-slate-600"></i> Home</a>`;
           }
 
           return `
@@ -818,14 +868,21 @@
               <!-- Mobile Quick Actions Bar -->
               <div class="flex items-center justify-between gap-2 mt-3 pt-3 border-t border-slate-800/80">
                 <div class="flex items-center gap-2">
-                  <a href="${c.careers_url}" target="_blank" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm transition-colors">
-                    <span>Careers</span>
-                    <i class="fa-solid fa-chevron-right text-[9px]"></i>
-                  </a>
-                  <a href="${getLinkedInSearchUrl(c.name)}" target="_blank" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-sky-400 bg-sky-950/50 border border-sky-800/60 hover:bg-sky-900/50 transition-colors">
+                  <a href="${getLinkedInSearchUrl(c.name)}" target="_blank" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-sky-400 bg-sky-950/50 border border-sky-800/60 hover:bg-sky-900/50 transition-colors" title="Search LinkedIn Jobs for ${c.name}">
                     <i class="fa-brands fa-linkedin text-sm text-[#0a66c2]"></i>
                     <span>LinkedIn</span>
                   </a>
+                  ${hasDedicatedCareers ? `
+                    <a href="${c.careers_url}" target="_blank" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm transition-colors">
+                      <span>Careers</span>
+                      <i class="fa-solid fa-chevron-right text-[9px]"></i>
+                    </a>
+                  ` : `
+                    <a href="${c.website}" target="_blank" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-slate-200 bg-slate-950 border border-slate-800 transition-colors" title="No dedicated careers page - visit homepage">
+                      <i class="fa-solid fa-house text-slate-400 text-xs"></i>
+                      <span>Home</span>
+                    </a>
+                  `}
                 </div>
 
                 <button onclick="toggleRow('${c.id}')" class="inline-flex items-center gap-1 text-xs font-semibold text-slate-400 hover:text-slate-200 px-2.5 py-1.5 rounded-lg bg-slate-950 border border-slate-800 transition-colors">
@@ -872,6 +929,7 @@
           const hasProductRoles = (c.product_roles_count || 0) > 0;
           const trackedApps = isLocal ? (c.tracked_applications || []) : [];
           const latestApp = trackedApps.length > 0 ? trackedApps[0] : null;
+          const hasDedicatedCareers = hasDedicatedCareersPage(c);
 
         return `
           <!-- Main Row -->
@@ -930,19 +988,25 @@
             </td>
 
             <!-- Live Product Roles Column -->
-            <td class="py-4 px-5 text-center">
+            <td class="py-4 px-4 text-center whitespace-nowrap">
               ${hasProductRoles ? `
-                <button onclick="event.stopPropagation(); viewCompanyRoles('${c.id}')" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold hover:bg-emerald-500/20 transition-all text-xs shadow-sm">
-                  <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                  ${c.product_roles_count} Product Role${c.product_roles_count > 1 ? 's' : ''}
+                <button onclick="event.stopPropagation(); viewCompanyRoles('${c.id}')" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 font-bold hover:bg-emerald-500/25 transition-all text-xs shadow-sm whitespace-nowrap">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span>${c.product_roles_count} Open</span>
                 </button>
               ` : (isAutomatedATS(c) ? `
-                <span class="inline-block px-2.5 py-1 rounded-full bg-slate-900 text-slate-500 text-xs font-medium border border-slate-800" title="Scanned live. No active product roles currently open.">0 Open</span>
+                <span class="inline-block px-2.5 py-1 rounded-full bg-slate-900 text-slate-500 text-xs font-medium border border-slate-800 whitespace-nowrap" title="Scanned live via ${getAtsDisplayName(c.ats_type)} API. No active product roles currently open.">0 Open</span>
+              ` : (hasDedicatedCareers ? `
+                <a href="${c.careers_url}" target="_blank" onclick="event.stopPropagation()" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-900/80 text-slate-400 hover:text-emerald-300 hover:border-emerald-700/60 hover:bg-emerald-950/20 text-xs font-medium border border-slate-800/90 transition-colors group whitespace-nowrap" title="Uses closed or enterprise recruitment portal (e.g. Workday / custom). Click to open careers portal.">
+                  <i class="fa-solid fa-arrow-up-right-from-square text-[9px] text-slate-500 group-hover:text-emerald-400 transition-colors"></i>
+                  <span>N/A (Portal)</span>
+                </a>
               ` : `
-                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-900/80 text-slate-400 text-xs font-medium border border-slate-800/90" title="Uses closed or enterprise recruitment portal (e.g. Workday / custom). Click Careers to view openings.">
-                  <i class="fa-solid fa-arrow-up-right-from-square text-[9px] text-slate-500"></i> N/A (Portal)
-                </span>
-              `)}
+                <a href="${c.website}" target="_blank" onclick="event.stopPropagation()" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-900/50 text-slate-500 hover:text-slate-300 text-xs font-medium border border-slate-800/70 transition-colors group whitespace-nowrap" title="No dedicated careers portal. Visit homepage.">
+                  <i class="fa-solid fa-house text-[9px] text-slate-600 group-hover:text-slate-400 transition-colors"></i>
+                  <span>N/A (Home)</span>
+                </a>
+              `))}
             </td>
 
             <!-- Actions -->
@@ -952,10 +1016,17 @@
                   <i class="fa-brands fa-linkedin text-sm text-[#0a66c2]"></i>
                   <span class="hidden sm:inline">LinkedIn</span>
                 </a>
-                <a href="${c.careers_url}" target="_blank" class="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-400 hover:text-emerald-300 bg-emerald-950/40 border border-emerald-800/50 px-3.5 py-1.5 rounded-lg hover:bg-emerald-900/40 transition-colors">
-                  <span>Careers</span>
-                  <i class="fa-solid fa-chevron-right text-[10px]"></i>
-                </a>
+                ${hasDedicatedCareers ? `
+                  <a href="${c.careers_url}" target="_blank" class="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-400 hover:text-emerald-300 bg-emerald-950/40 border border-emerald-800/50 px-3.5 py-1.5 rounded-lg hover:bg-emerald-900/40 transition-colors" title="Open official careers portal">
+                    <span>Careers</span>
+                    <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                  </a>
+                ` : `
+                  <a href="${c.website}" target="_blank" class="inline-flex items-center gap-1.5 text-xs font-medium text-slate-400 hover:text-slate-200 bg-slate-900/50 border border-slate-800 px-3 py-1.5 rounded-lg hover:bg-slate-800/50 transition-colors" title="No dedicated careers portal - visit homepage">
+                    <i class="fa-solid fa-house text-slate-400 text-xs"></i>
+                    <span class="hidden lg:inline">Home</span>
+                  </a>
+                `}
               </div>
             </td>
           </tr>
@@ -1043,7 +1114,7 @@
                     <span>Scanned live via ${c.ats_type.toUpperCase()} feed. No active product management roles currently detected. Check full board for engineering and other vacancies.</span>
                     <a href="${c.careers_url}" target="_blank" class="text-emerald-400 hover:underline font-medium">Visit Careers Portal &rarr;</a>
                   </div>
-                ` : `
+                ` : (hasDedicatedCareers ? `
                   <div class="pt-2 flex items-center justify-between text-xs text-slate-400 bg-slate-950/70 p-3.5 rounded-xl border border-slate-800/80">
                     <div class="flex items-center gap-2">
                       <i class="fa-solid fa-circle-info text-slate-500 text-sm"></i>
@@ -1051,7 +1122,15 @@
                     </div>
                     <a href="${c.careers_url}" target="_blank" class="text-emerald-400 hover:underline font-bold whitespace-nowrap ml-4">Check Careers Portal &rarr;</a>
                   </div>
-                `)}
+                ` : `
+                  <div class="pt-2 flex items-center justify-between text-xs text-slate-400 bg-slate-950/70 p-3.5 rounded-xl border border-slate-800/80">
+                    <div class="flex items-center gap-2">
+                      <i class="fa-solid fa-circle-info text-slate-500 text-sm"></i>
+                      <span>This employer does not host a dedicated careers portal. Vacancies are typically announced directly on LinkedIn or on their homepage.</span>
+                    </div>
+                    <a href="${c.website}" target="_blank" class="text-emerald-400 hover:underline font-bold whitespace-nowrap ml-4">Visit Website &rarr;</a>
+                  </div>
+                `))}
 
                 <!-- Quick Action Bar in Drawer -->
                 <div class="pt-4 border-t border-slate-800/60 flex flex-wrap items-center justify-between gap-3 text-xs">
@@ -1066,10 +1145,12 @@
                       <span>Website</span>
                     </a>
                   </div>
-                  <a href="${c.careers_url}" target="_blank" class="inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold shadow-md shadow-emerald-600/20 transition-all">
-                    <span>Open Official Careers Portal</span>
-                    <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-                  </a>
+                  ${hasDedicatedCareers ? `
+                    <a href="${c.careers_url}" target="_blank" class="inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold shadow-md shadow-emerald-600/20 transition-all">
+                      <span>Open Official Careers Portal</span>
+                      <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                    </a>
+                  ` : ''}
                 </div>
 
               </div>

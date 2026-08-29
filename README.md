@@ -9,7 +9,8 @@ Built for senior professionals, candidates, and founders who want an unvarnished
 ## 🌟 Key Features
 
 * **Complete Regional Landscape:** Categorises companies by Scale Tier (`Startup`, `Scaleup`, `Mid-Market`, `Large Enterprise / FDI Hub`), Industry Sector, Funding / Ownership model, and Northern Ireland location.
-* **Automated Role Intelligence:** Scans ATS endpoints (Ashby, Greenhouse, Lever, SmartRecruiters, custom career portals) and extracts live vacancies with 1-click direct apply links.
+* **Automated Role Intelligence:** Scans ATS endpoints (Greenhouse, Ashby, SmartRecruiters, Workable, Lever, Teamtailor, BambooHR, Pinpoint, Volcanic, and custom career portals) and extracts live vacancies with 1-click direct apply links.
+* **Mobile-First Responsive Design:** Automatically transitions to a touch-friendly, native card list with 1-tap expandable drawers and a streamlined single-pill filter bar on smartphones and tablets, hiding horizontal tables and desktop search clutter.
 * **Interactive Favourites & Shortlisting:** Star (`★`) target companies to curate your shortlist, persisted in local storage.
 * **Local Application Pipeline Sync:** Automatically cross-references your private job application tracking notes (stage, date applied, rejection alerts) directly inside the company profile.
 * **Graceful Failsafe:** Runs completely standalone. If no application tracking directory is connected, it fails silently and gracefully with zero errors.
@@ -19,7 +20,7 @@ Built for senior professionals, candidates, and founders who want an unvarnished
 
 ## 🤖 Or Just Get Your AI Agent to Do It
 
-If you use an AI coding assistant (such as **Google Antigravity CLI**, **Claude Code**, **Codex**, or **Cursor**), you can let your agent handle the entire setup, scanning, or customization for you:
+If you use an AI coding assistant (such as **Google Antigravity CLI**, **Claude Code**, **Codex**, or **Cursor**), you can let your agent handle the entire setup, scanning, or customisation for you:
 
 ```bash
 cd ni-tech-radar
@@ -70,13 +71,13 @@ npm run scan
 # or directly:
 node scanner.js
 ```
-*(You can also click the **"Scan for Open Product Roles"** button directly inside the web UI).*
+*(You can also click the **"Scan for Open Product Roles"** button directly inside the local web UI).*
 
 ---
 
 ## 📊 Data Architecture & Data Sources
 
-All company intelligence is stored in clean JSON format at [`data/companies.json`](data/companies.json).
+All company intelligence is stored in clean JSON format at [`public/data/companies.json`](public/data/companies.json).
 
 ### Company Schema
 ```json
@@ -84,8 +85,9 @@ All company intelligence is stored in clean JSON format at [`data/companies.json
   "id": "cloudsmith",
   "name": "Cloudsmith",
   "website": "https://cloudsmith.com/",
-  "careers_url": "https://cloudsmith.com/careers",
-  "ats_type": "custom",
+  "careers_url": "https://careers.cloudsmith.com/jobs",
+  "ats_type": "teamtailor",
+  "ats_identifier": "cloudsmith",
   "industry": "Cybersecurity & DevTools",
   "sub_sector": "Software Supply Chain Security & Package Management",
   "scale_tier": "Scaleup (20-100)",
@@ -96,28 +98,28 @@ All company intelligence is stored in clean JSON format at [`data/companies.json
   "description": "Cloud-native universal package management and software supply chain security platform.",
   "key_products": ["Cloudsmith Universal Package Management", "Software Supply Chain Trust Engine"],
   "key_people": "Glenn Bilby (CEO), Alan Carson (Co-Founder)",
-  "last_checked": "2026-08-28T09:00:00Z",
+  "last_checked": "2026-08-29T10:00:00Z",
   "open_roles_count": 5,
-  "product_roles_count": 2,
+  "product_roles_count": 1,
   "active_product_roles": [
     {
       "title": "Group Product Manager, Software Supply Chain Trust",
       "location": "Belfast / Remote UK",
-      "url": "https://cloudsmith.com/careers",
-      "date_posted": "2026-08-20"
+      "url": "https://careers.cloudsmith.com/jobs/7830987-group-product-manager-software-supply-chain-trust",
+      "date_found": "2026-08-29"
     }
   ]
 }
 ```
 
 ### Example Regional Data Sources & Registries
-You can seed or expand [`data/companies.json`](data/companies.json) with company data from public ecosystem sources e.g.
+You can seed or expand [`public/data/companies.json`](public/data/companies.json) with company data from public ecosystem sources e.g.
 * **[TechIreland](https://techireland.org/)** (e.g. filter by Northern Ireland startups, scaleups, and FDI hubs).
 * **[Catalyst Community](https://wearecatalyst.org/)** (e.g. tenants across Belfast Titanic Quarter, Derry/Londonderry, and Ballymena).
 * **[Software NI](https://softwareni.co.uk/)** (e.g. official Northern Ireland software industry member directory).
 * **[FinTech NI](https://www.fintechni.org.uk/)** (e.g. capital markets, trading tech, and regtech map).
 
-Or ask your coding agent or AI tool to find new sources relevant to your own search preferences, and import them into data/companies.json.
+Or ask your coding agent or AI tool to find new sources relevant to your own search preferences, and import them into `public/data/companies.json`.
 
 ---
 
@@ -142,6 +144,57 @@ Where `application_status.md` contains metadata lines:
 
 * **When an application is found:** The dashboard displays a status badge (`✓ Applied`, `✕ Rejected`, `★ Interviewing`) on the table row and displays an in-depth alert banner inside the company's expanded accordion drawer.
 * **Graceful Failsafe:** If the `/applications/` directory does not exist (e.g. when forked standalone on GitHub), `server.js` catches the missing folder and returns an empty list `[]`. The frontend seamlessly renders company data without application badges and with zero errors.
+
+---
+
+## 🔒 Dual Architecture & Security Isolation
+
+This project uses an air-gapped architecture designed for a two-way workflow:
+
+1. **Local Mode (Admin & Data Gathering):**
+   * Run locally with `npm start` on your machine (`localhost:3333`).
+   * Gives you the full command center: one-click live ATS scrapers, add/edit company modals, star favourites, and private application pipeline synchronisation.
+2. **Public Deployed Mode (Zero-Risk Public Directory):**
+   * Deploy the static `public/` folder to Vercel, GitHub Pages, or Netlify.
+   * The client automatically evaluates `isLocalEnvironment() === false` and strictly hides all admin buttons, scraper triggers, and private application tracking via CSS and JavaScript.
+   * **Zero Cloud Writing & Zero Leakage:** The public static host contains no Node backend, Python scripts, or API endpoints, making it impossible for public visitors to trigger scraper jobs or access private career tracking files.
+
+### Feature Comparison Matrix:
+
+| Feature | 💻 Local Mode (`localhost`) | 🌐 Deployed State (Vercel / GitHub Pages / Public Host) |
+| :--- | :--- | :--- |
+| **Data Source** | Local server API (`/api/companies`) with fallback | Static JSON file (`./data/companies.json`) |
+| **"Scan for Open Roles" Button** | **Visible & Active** (Triggers local scrapers) | **Completely Hidden / Invisible** |
+| **"Add Company" Form** | **Visible & Active** (Saves to local database) | **Completely Hidden / Invisible** |
+| **Personal Application Tracker** | **Visible & Synchronised** (from `/applications/`) | **Completely Hidden / Invisible** |
+| **Starred Favourites** | **Visible & Active** (Local storage) | **Completely Hidden / Invisible** |
+| **Catalogue Updated Timestamp** | Synchronised to latest local scan timestamp | **Live & Visible** (Catalog date from static JSON) |
+| **Mobile Experience** | Native cards with responsive drawers | Native cards with responsive drawers |
+
+---
+
+## 🚀 Public Deployment Guide
+
+Because the application is built with **zero-dependency vanilla HTML5/JavaScript**, it requires zero build steps or compilation.
+
+### Option A: Deploying to Vercel (Recommended)
+
+1. Push your repository to **GitHub**.
+2. Go to **[Vercel.com](https://vercel.com)** and log in with your GitHub account.
+3. Click **"Add New..."** &rarr; **"Project"** and import this repository.
+4. In the project configuration:
+   * **Framework Preset:** Other (or leave Default).
+   * **Root Directory:** `./` (the pre-configured [`vercel.json`](vercel.json) handles routing to `public/` automatically).
+5. Click **"Deploy"**. Your site is live on a custom `*.vercel.app` domain in seconds!
+6. Whenever you commit and push updates to `main` (such as new companies or scan results), Vercel automatically redeploys.
+
+### Option B: Deploying to GitHub Pages (GitHub Actions)
+
+A pre-configured GitHub Actions workflow is included at [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml).
+
+1. Go to your GitHub repository **Settings** &rarr; **Pages**.
+2. Under **Build and deployment** &rarr; **Source**, select **GitHub Actions**.
+3. Push to `main`. GitHub Actions will automatically bundle `public/` and deploy your site live in seconds!
 
 ---
 
@@ -181,39 +234,4 @@ function isTargetRole(title) {
 * Update the filter toggle checkbox from **"🔥 Live Product Roles"** to **"🔥 Live Engineering Roles"**.
 
 ### 3. Customise Sectors or Regional Locations
-Modify the dropdown `<select>` filters in [`public/index.html`](public/index.html) and add your target cities, scale categories, or specialized sectors.
-
----
-
-## 🌐 Static Deployment Switch (GitHub Pages, Netlify, Vercel)
-
-The dashboard includes a built-in **Environment & Deployment Switch** (`DEPLOYMENT_MODE = 'auto'`) that allows you to deploy the frontend as a public, static website without needing a Node.js or Python backend running in production:
-
-```javascript
-// Located at the top of the <script> block in public/index.html:
-const DEPLOYMENT_MODE = 'auto'; // 'auto' | 'local' | 'deployed'
-```
-
-### How the State Switch Behaves:
-
-| Feature | 💻 Local Mode (`localhost`) | 🌐 Deployed State (GitHub Pages / Public Host) |
-| :--- | :--- | :--- |
-| **Data Source** | Local server API (`/api/companies`) with fallback | Static JSON file (`./data/companies.json`) |
-| **"Scan for Open Roles" Button** | **Visible & Active** (Triggers local scrapers) | **Completely Hidden / Invisible** |
-| **"Add Company" Form** | **Visible & Active** (Saves to local database) | **Completely Hidden / Invisible** |
-| **Personal Application Tracker** | **Visible & Synchronised** (from `/applications/`) | **Completely Hidden / Invisible** |
-| **Starred Favourites** | **Visible & Active** (Local storage) | **Completely Hidden / Invisible** |
-| **Header Badge** | `Active Target Tracker (Local)` | `Public Tech Directory` |
-
-* **Zero Hosting Costs:** You can deploy the `public/` directory (along with `data/companies.json`) directly to GitHub Pages, Netlify, Cloudflare Pages, or Vercel, and it will automatically operate as a clean, read-only public tech ecosystem directory.
-
-### 🚀 1-Click GitHub Pages Deployment (GitHub Actions)
-
-Because this tool is built with **zero-dependency vanilla HTML5/JavaScript** (rather than React/Vite), there is **no build compilation step** and **no Vite config needed**. All asset references use relative paths (`./`), so it automatically works on any repository name (e.g. `https://username.github.io/your-repo-name/`) without base path configuration.
-
-A pre-configured GitHub Actions workflow is included at [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml).
-
-To activate it on your repository:
-1. Go to your GitHub repository **Settings** &rarr; **Pages**.
-2. Under **Build and deployment** &rarr; **Source**, select **GitHub Actions**.
-3. Push to `main`. GitHub Actions will automatically bundle `public/` and `data/companies.json` and deploy your site live in seconds!
+Modify the dropdown `<select>` filters in [`public/index.html`](public/index.html) and add your target cities, scale categories, or specialised sectors.
