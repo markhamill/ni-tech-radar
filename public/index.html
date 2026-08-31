@@ -506,76 +506,121 @@
       </div>
 
       <!-- Modal Body (Scrollable Strictly Inside Modal) -->
-      <div class="p-6 sm:p-8 overflow-y-auto flex-1 space-y-6 text-base text-slate-700 dark:text-slate-300 leading-relaxed">
-        <!-- Intro -->
-        <div>
-          <h4 class="font-bold text-slate-900 dark:text-slate-100 text-lg mb-2 flex items-center gap-2">
-            <i class="fa-solid fa-compass text-emerald-600 dark:text-emerald-400 text-sm"></i>
-            What is this and why build it?
-          </h4>
-          <p class="text-slate-600 dark:text-slate-300">
+      <div class="p-5 sm:p-7 overflow-y-auto flex-1 space-y-4 text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+        
+        <!-- Section 1: Overview & Purpose -->
+        <div class="bg-[#F5F8FC] dark:bg-slate-950/60 border border-slate-200/80 dark:border-slate-800/80 rounded-2xl p-4 sm:p-5 space-y-2.5">
+          <div class="flex items-center gap-2.5">
+            <div class="w-7 h-7 rounded-lg bg-emerald-100 dark:bg-emerald-950/80 text-[#059669] dark:text-emerald-400 flex items-center justify-center text-xs shrink-0">
+              <i class="fa-solid fa-compass"></i>
+            </div>
+            <h4 class="font-bold text-slate-900 dark:text-slate-100 text-base">What is this and why build it?</h4>
+          </div>
+          <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
             This started as a personal project to cut through generic job board noise and get a clear, unvarnished picture of Northern Ireland’s tech ecosystem. It tracks indigenous startups, scaleups, FDI tech hubs, and academic commercialisation centres across the region, specifically keeping an eye on open product leadership roles (Product Managers, Group PMs, Directors, and VPs).
           </p>
         </div>
 
-        <!-- How it works -->
-        <div class="space-y-3">
-          <h4 class="font-bold text-slate-900 dark:text-slate-100 text-lg flex items-center gap-2">
-            <i class="fa-solid fa-bolt text-emerald-600 dark:text-emerald-400 text-sm"></i>
-            How does it work?
-          </h4>
-          <p class="text-slate-600 dark:text-slate-300">
+        <!-- Section 2: How It Works & ATS Engine -->
+        <div class="bg-[#F5F8FC] dark:bg-slate-950/60 border border-slate-200/80 dark:border-slate-800/80 rounded-2xl p-4 sm:p-5 space-y-3.5">
+          <div class="flex items-center gap-2.5">
+            <div class="w-7 h-7 rounded-lg bg-emerald-100 dark:bg-emerald-950/80 text-[#059669] dark:text-emerald-400 flex items-center justify-center text-xs shrink-0">
+              <i class="fa-solid fa-bolt"></i>
+            </div>
+            <h4 class="font-bold text-slate-900 dark:text-slate-100 text-base">How does it work?</h4>
+          </div>
+          <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
             A built-in scanner regularly queries public applicant tracking system (ATS) APIs and career feeds to pull verified live vacancies with direct application links.
           </p>
-          <div>
-            <div class="text-sm font-semibold text-slate-800 dark:text-slate-200 mb-2.5">Automated checks supported on:</div>
-            <div class="flex flex-wrap gap-2">
-              <span class="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-300 dark:border-emerald-500/20">Greenhouse</span>
-              <span class="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-300 dark:border-emerald-500/20">Ashby</span>
-              <span class="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-300 dark:border-emerald-500/20">SmartRecruiters</span>
-              <span class="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-300 dark:border-emerald-500/20">Workable</span>
-              <span class="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-300 dark:border-emerald-500/20">Lever</span>
-              <span class="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-300 dark:border-emerald-500/20">Teamtailor</span>
-              <span class="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-300 dark:border-emerald-500/20">BambooHR</span>
-              <span class="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-300 dark:border-emerald-500/20">Pinpoint</span>
-              <span class="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-300 dark:border-emerald-500/20">Volcanic</span>
+          
+          <div class="space-y-2 pt-1">
+            <div class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Automated checks supported on</div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              <div class="flex items-center gap-2 px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 text-xs font-semibold text-slate-800 dark:text-slate-200 shadow-sm">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
+                <span class="truncate">Greenhouse</span>
+              </div>
+              <div class="flex items-center gap-2 px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 text-xs font-semibold text-slate-800 dark:text-slate-200 shadow-sm">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
+                <span class="truncate">Ashby</span>
+              </div>
+              <div class="flex items-center gap-2 px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 text-xs font-semibold text-slate-800 dark:text-slate-200 shadow-sm">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
+                <span class="truncate">SmartRecruiters</span>
+              </div>
+              <div class="flex items-center gap-2 px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 text-xs font-semibold text-slate-800 dark:text-slate-200 shadow-sm">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
+                <span class="truncate">Workable</span>
+              </div>
+              <div class="flex items-center gap-2 px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 text-xs font-semibold text-slate-800 dark:text-slate-200 shadow-sm">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
+                <span class="truncate">Lever</span>
+              </div>
+              <div class="flex items-center gap-2 px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 text-xs font-semibold text-slate-800 dark:text-slate-200 shadow-sm">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
+                <span class="truncate">Teamtailor</span>
+              </div>
+              <div class="flex items-center gap-2 px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 text-xs font-semibold text-slate-800 dark:text-slate-200 shadow-sm">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
+                <span class="truncate">BambooHR</span>
+              </div>
+              <div class="flex items-center gap-2 px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 text-xs font-semibold text-slate-800 dark:text-slate-200 shadow-sm">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
+                <span class="truncate">Pinpoint</span>
+              </div>
+              <div class="flex items-center gap-2 px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 text-xs font-semibold text-slate-800 dark:text-slate-200 shadow-sm">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
+                <span class="truncate">Volcanic</span>
+              </div>
             </div>
           </div>
-          <div class="text-sm text-slate-600 dark:text-slate-300 pt-1 leading-relaxed">
-            <strong class="font-semibold text-slate-800 dark:text-slate-200">What's not supported via direct API:</strong> Closed enterprise systems like Workday, Taleo, iTrent, or custom portals don't expose open feeds, so they're marked <span class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-mono text-xs border border-slate-200 dark:border-slate-700">N/A (Portal)</span>. Use the 1-click <strong>Careers</strong> button or the <strong>LinkedIn</strong> search shortcut to check them directly.
+
+          <div class="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-400 space-y-1 shadow-sm">
+            <div class="font-bold text-slate-800 dark:text-slate-200">Closed Enterprise Portals</div>
+            <p class="leading-relaxed">
+              Closed systems like Workday, Taleo, and iTrent do not expose open feeds and are marked <span class="inline-block whitespace-nowrap px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 font-mono text-[11px] font-medium text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">N/A (Portal)</span>. Use the 1-click <strong>Careers</strong> button or the <strong>LinkedIn</strong> shortcut to check them directly.
+            </p>
           </div>
         </div>
 
-        <!-- How to contribute -->
-        <div>
-          <h4 class="font-bold text-slate-900 dark:text-slate-100 text-lg mb-2 flex items-center gap-2">
-            <i class="fa-solid fa-code-pull-request text-emerald-600 dark:text-emerald-400 text-sm"></i>
-            How to contribute or report updates
-          </h4>
-          <p class="text-slate-600 dark:text-slate-300">
+        <!-- Section 3: Contributions & Suggestions -->
+        <div class="bg-[#F5F8FC] dark:bg-slate-950/60 border border-slate-200/80 dark:border-slate-800/80 rounded-2xl p-4 sm:p-5 space-y-2.5">
+          <div class="flex items-center gap-2.5">
+            <div class="w-7 h-7 rounded-lg bg-sky-100 dark:bg-sky-950/80 text-sky-700 dark:text-sky-400 flex items-center justify-center text-xs shrink-0">
+              <i class="fa-solid fa-code-pull-request"></i>
+            </div>
+            <h4 class="font-bold text-slate-900 dark:text-slate-100 text-base">How to contribute or report updates</h4>
+          </div>
+          <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
             Know a Northern Ireland tech company that should be on here, spotted an out-of-date link, or want to suggest a new ATS connector? Contributions are very welcome. The entire project is open source and can also be forked and tailored to track any other region, industry vertical, or job discipline.
           </p>
         </div>
 
-        <!-- Get in touch / LinkedIn -->
-        <div class="bg-gradient-to-r from-slate-100 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 border border-emerald-500/30 rounded-2xl p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-5 shadow-sm dark:shadow-none">
-          <div class="flex-1">
-            <div class="font-bold text-slate-900 dark:text-slate-100 text-base">Built by Mark Hamill</div>
-            <div class="text-sm text-slate-600 dark:text-slate-300 mt-1 leading-relaxed">
-              Mark is a product guy, with a passion for technology and likes building things and meeting new people. Connect to strike up a conversation!
+        <!-- Section 4: Author / LinkedIn Card -->
+        <div class="bg-gradient-to-r from-emerald-500/10 via-[#F5F8FC] to-emerald-500/10 dark:from-emerald-950/30 dark:via-slate-950/60 dark:to-emerald-950/30 border border-emerald-500/30 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-emerald-600 to-teal-500 text-white font-black flex items-center justify-center text-sm shadow-md shrink-0">
+              MH
+            </div>
+            <div>
+              <div class="font-bold text-slate-900 dark:text-slate-100 text-base">Built by Mark Hamill</div>
+              <div class="text-xs text-slate-600 dark:text-slate-400 mt-0.5 leading-relaxed">
+                Mark is a product guy with a passion for technology, building useful things, and meeting new people.
+              </div>
             </div>
           </div>
-          <a href="https://www.linkedin.com/in/markhamill2/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2.5 px-6 py-3 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-sm font-bold shadow-lg shadow-sky-600/25 whitespace-nowrap shrink-0 transition-all" style="padding: 12px 24px;">
-            <i class="fa-brands fa-linkedin text-lg"></i>
+          <a href="https://www.linkedin.com/in/markhamill2/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 h-10 px-5 rounded-xl bg-[#0A66C2] hover:bg-[#084e96] text-white text-xs font-bold shadow-md shadow-sky-600/20 whitespace-nowrap shrink-0 transition-all self-end sm:self-center">
+            <i class="fa-brands fa-linkedin text-base"></i>
             <span>Connect on LinkedIn</span>
           </a>
         </div>
+
       </div>
 
       <!-- Modal Footer (Fixed) -->
       <div class="px-6 py-4 sm:px-8 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between shrink-0 bg-slate-50/70 dark:bg-slate-950/60">
         <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 font-mono">
-          <span class="px-2 py-0.5 rounded bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-semibold text-slate-700 dark:text-slate-300">v1.5.0</span>
+          <span class="px-2 py-0.5 rounded bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-semibold text-slate-700 dark:text-slate-300">v1.5.1</span>
           <span>•</span>
           <span>Build 2026.08</span>
         </div>
@@ -688,6 +733,16 @@
         'volcanic': 'Volcanic'
       };
       return map[atsType.toLowerCase()] || (atsType.charAt(0).toUpperCase() + atsType.slice(1));
+    }
+
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
     }
 
     function hasDedicatedCareersPage(company) {
@@ -1146,15 +1201,15 @@
               <div class="flex items-start justify-between gap-2.5">
                 <div class="min-w-0 flex-1">
                   <div class="font-bold text-base text-slate-900 dark:text-slate-100 flex items-center gap-2">
-                    <span class="truncate">${c.name}</span>
-                    <a href="${c.website}" target="_blank" class="text-slate-400 hover:text-emerald-600 dark:text-slate-500 dark:hover:text-emerald-400 text-xs shrink-0" title="Visit website">
+                    <span class="truncate">${escapeHtml(c.name)}</span>
+                    <a href="${encodeURI(c.website || '#')}" target="_blank" class="text-slate-400 hover:text-emerald-600 dark:text-slate-500 dark:hover:text-emerald-400 text-xs shrink-0" title="Visit website">
                       <i class="fa-solid fa-arrow-up-right-from-square"></i>
                     </a>
                   </div>
                   <div class="text-xs text-slate-500 dark:text-slate-400 mt-1 flex items-center gap-1.5 flex-wrap">
-                    <span><i class="fa-solid fa-location-dot text-slate-400 dark:text-slate-500 text-[10px]"></i> ${c.location}</span>
+                    <span><i class="fa-solid fa-location-dot text-slate-400 dark:text-slate-500 text-[10px]"></i> ${escapeHtml(c.location)}</span>
                     <span>•</span>
-                    <span class="text-slate-700 dark:text-slate-300 font-medium">${c.industry}</span>
+                    <span class="text-slate-700 dark:text-slate-300 font-medium">${escapeHtml(c.industry)}</span>
                   </div>
                 </div>
                 <div class="shrink-0">
@@ -1166,17 +1221,17 @@
               <div class="flex items-center justify-between gap-2 mt-3 pt-3 border-t border-slate-200 dark:border-slate-800/80">
                 <div class="flex items-center gap-2.5">
                   ${hasDedicatedCareers ? `
-                    <a href="${c.careers_url}" target="_blank" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold bg-[#059669] hover:bg-[#047857] text-white shadow-sm shadow-emerald-600/20 transition-colors">
+                    <a href="${encodeURI(c.careers_url)}" target="_blank" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold bg-[#059669] hover:bg-[#047857] text-white shadow-sm shadow-emerald-600/20 transition-colors">
                       <span>Careers</span>
                       <i class="fa-solid fa-chevron-right text-[9px]"></i>
                     </a>
                   ` : `
-                    <a href="${c.website}" target="_blank" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 border border-slate-200 dark:text-slate-400 dark:hover:text-slate-200 dark:bg-slate-950 dark:border-slate-800 transition-colors" title="No dedicated careers page - visit homepage">
+                    <a href="${encodeURI(c.website || '#')}" target="_blank" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 border border-slate-200 dark:text-slate-400 dark:hover:text-slate-200 dark:bg-slate-950 dark:border-slate-800 transition-colors" title="No dedicated careers page - visit homepage">
                       <i class="fa-solid fa-house text-slate-500 dark:text-slate-400 text-xs"></i>
                       <span>Home</span>
                     </a>
                   `}
-                  <a href="${getLinkedInSearchUrl(c.name)}" target="_blank" class="inline-flex items-center justify-center p-1 text-[#0A66C2] hover:text-[#004182] hover:scale-110 active:scale-95 transition-transform" title="Search LinkedIn Jobs for ${c.name}" aria-label="Search LinkedIn Jobs for ${c.name}">
+                  <a href="${getLinkedInSearchUrl(c.name)}" target="_blank" class="inline-flex items-center justify-center p-1 text-[#0A66C2] hover:text-[#004182] hover:scale-110 active:scale-95 transition-transform" title="Search LinkedIn Jobs for ${escapeHtml(c.name)}" aria-label="Search LinkedIn Jobs for ${escapeHtml(c.name)}">
                     <i class="fa-brands fa-linkedin text-2xl"></i>
                   </a>
                 </div>
@@ -1196,20 +1251,20 @@
                       <span>Live Verified Openings (${c.product_roles_count})</span>
                     </div>
                     ${c.active_product_roles.map(r => `
-                      <a href="${r.url}" target="_blank" class="flex items-center justify-between p-2 rounded-lg bg-white dark:bg-slate-900 border border-emerald-200 dark:border-emerald-900/50 hover:border-emerald-500/50 transition-colors text-slate-900 dark:text-slate-100">
-                        <span class="font-bold truncate pr-2 text-xs">${r.title}</span>
+                      <a href="${encodeURI(r.url)}" target="_blank" class="flex items-center justify-between p-2 rounded-lg bg-white dark:bg-slate-900 border border-emerald-200 dark:border-emerald-900/50 hover:border-emerald-500/50 transition-colors text-slate-900 dark:text-slate-100">
+                        <span class="font-bold truncate pr-2 text-xs">${escapeHtml(r.title)}</span>
                         <span class="text-[11px] text-emerald-700 dark:text-emerald-400 font-bold shrink-0">Apply ↗</span>
                       </a>
                     `).join('')}
                   </div>
                 ` : ''}
 
-                <p class="text-slate-600 dark:text-slate-300 leading-relaxed text-xs">${c.description || 'No detailed overview available yet.'}</p>
+                <p class="text-slate-600 dark:text-slate-300 leading-relaxed text-xs">${escapeHtml(c.description || 'No detailed overview available yet.')}</p>
 
                 <div class="flex flex-wrap gap-1.5 pt-1">
-                  <span class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-[11px] border border-slate-200 dark:border-slate-700">${c.scale_tier}</span>
-                  <span class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-[11px] border border-slate-200 dark:border-slate-700">${c.funding_type || 'Private'}</span>
-                  ${c.headcount_estimate ? `<span class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-[11px] border border-slate-200 dark:border-slate-700">${c.headcount_estimate} team</span>` : ''}
+                  <span class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-[11px] border border-slate-200 dark:border-slate-700">${escapeHtml(c.scale_tier)}</span>
+                  <span class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-[11px] border border-slate-200 dark:border-slate-700">${escapeHtml(c.funding_type || 'Private')}</span>
+                  ${c.headcount_estimate ? `<span class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-[11px] border border-slate-200 dark:border-slate-700">${escapeHtml(c.headcount_estimate)} team</span>` : ''}
                 </div>
               </div>
             </div>
@@ -1249,37 +1304,37 @@
             <!-- Company Name & Snippet -->
             <td class="py-4 px-5">
               <div class="font-bold text-base text-slate-900 dark:text-slate-100 flex items-center gap-2">
-                <span>${c.name}</span>
-                <a href="${c.website}" target="_blank" onclick="event.stopPropagation()" class="text-slate-400 hover:text-emerald-600 dark:text-slate-500 dark:hover:text-emerald-400 text-xs" title="Open website">
+                <span>${escapeHtml(c.name)}</span>
+                <a href="${encodeURI(c.website || '#')}" target="_blank" onclick="event.stopPropagation()" class="text-slate-400 hover:text-emerald-600 dark:text-slate-500 dark:hover:text-emerald-400 text-xs" title="Open website">
                   <i class="fa-solid fa-arrow-up-right-from-square"></i>
                 </a>
                 ${latestApp ? getPipelineStageBadge(latestApp.current_stage) : ''}
               </div>
-              <div class="text-xs text-slate-500 dark:text-slate-400 line-clamp-1 max-w-sm mt-0.5">${c.description || ''}</div>
+              <div class="text-xs text-slate-500 dark:text-slate-400 line-clamp-1 max-w-sm mt-0.5">${escapeHtml(c.description || '')}</div>
             </td>
 
             <!-- Sector & Domain -->
             <td class="py-4 px-5">
-              <span class="inline-block bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-200 text-xs px-2.5 py-1 rounded-lg font-medium border border-slate-200 dark:border-slate-700">${c.industry}</span>
-              <div class="text-xs text-slate-500 dark:text-slate-400 mt-1">${c.sub_sector || ''}</div>
+              <span class="inline-block bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-200 text-xs px-2.5 py-1 rounded-lg font-medium border border-slate-200 dark:border-slate-700">${escapeHtml(c.industry)}</span>
+              <div class="text-xs text-slate-500 dark:text-slate-400 mt-1">${escapeHtml(c.sub_sector || '')}</div>
             </td>
 
             <!-- Scale Tier -->
             <td class="py-4 px-5">
-              <span class="inline-block border px-2.5 py-1 rounded-lg text-xs font-semibold ${getScaleBadgeClass(c.scale_tier)}">${c.scale_tier}</span>
-              <div class="text-xs text-slate-500 dark:text-slate-400 mt-1">${c.headcount_estimate || ''} team</div>
+              <span class="inline-block border px-2.5 py-1 rounded-lg text-xs font-semibold ${getScaleBadgeClass(c.scale_tier)}">${escapeHtml(c.scale_tier)}</span>
+              <div class="text-xs text-slate-500 dark:text-slate-400 mt-1">${escapeHtml(c.headcount_estimate || '')} team</div>
             </td>
 
             <!-- Ownership -->
             <td class="py-4 px-5">
-              <span class="text-sm text-slate-700 dark:text-slate-300 font-medium">${c.funding_type || 'Private'}</span>
+              <span class="text-sm text-slate-700 dark:text-slate-300 font-medium">${escapeHtml(c.funding_type || 'Private')}</span>
             </td>
 
             <!-- Location -->
             <td class="py-4 px-5">
               <div class="text-sm text-slate-700 dark:text-slate-200 font-medium flex items-center gap-1.5">
                 <i class="fa-solid fa-location-dot text-slate-400 dark:text-slate-500 text-xs"></i>
-                ${c.location}
+                ${escapeHtml(c.location)}
               </div>
             </td>
 
@@ -1479,13 +1534,13 @@
         rolesList.innerHTML = company.active_product_roles.map(r => `
           <div class="p-4 bg-[#F5F8FC] dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl flex items-center justify-between hover:border-slate-300 dark:hover:border-slate-700 transition-all">
             <div>
-              <h5 class="text-sm font-bold text-slate-900 dark:text-slate-100">${r.title}</h5>
+              <h5 class="text-sm font-bold text-slate-900 dark:text-slate-100">${escapeHtml(r.title)}</h5>
               <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                <i class="fa-solid fa-location-dot text-slate-400 dark:text-slate-500 mr-1 text-xs"></i> ${r.location}
-                ${r.date_posted ? ` • <span class="text-slate-400 dark:text-slate-500">Posted ${r.date_posted}</span>` : ''}
+                <i class="fa-solid fa-location-dot text-slate-400 dark:text-slate-500 mr-1 text-xs"></i> ${escapeHtml(r.location)}
+                ${r.date_posted ? ` • <span class="text-slate-400 dark:text-slate-500">Posted ${escapeHtml(r.date_posted)}</span>` : ''}
               </p>
             </div>
-            <a href="${r.url}" target="_blank" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold whitespace-nowrap shadow-sm shadow-emerald-600/20">
+            <a href="${encodeURI(r.url)}" target="_blank" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold whitespace-nowrap shadow-sm shadow-emerald-600/20">
               Apply Direct
             </a>
           </div>

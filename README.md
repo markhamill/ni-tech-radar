@@ -10,11 +10,13 @@ Built for senior professionals, candidates, and founders who want an unvarnished
 
 * **Complete Regional Landscape:** Categorises companies by Scale Tier (`Startup`, `Scaleup`, `Mid-Market`, `Large Enterprise / FDI Hub`), Industry Sector, Funding / Ownership model, and Northern Ireland location.
 * **Automated Role Intelligence:** Scans ATS endpoints (Greenhouse, Ashby, SmartRecruiters, Workable, Lever, Teamtailor, BambooHR, Pinpoint, Volcanic, and custom career portals) and extracts live vacancies with 1-click direct apply links.
-* **Mobile-First Responsive Design:** Automatically transitions to a touch-friendly, native card list with 1-tap expandable drawers and a streamlined single-pill filter bar on smartphones and tablets, hiding horizontal tables and desktop search clutter.
+* **Light & Dark Mode Themes:** Full tokenised palette with automatic OS preference detection and smooth top-bar toggle.
+* **3-State Column Sorting:** Sort any table column in ascending, descending, or natural cleared order (including numeric role counts and ordinal scale tiers).
+* **Zero-Shift KPI Filters:** Top-level metrics cards double as 1-click filter toggles with reflow-safe CSS rings.
+* **Mobile-First Responsive Design:** Automatically transitions to a touch-friendly native card list with 1-tap expandable drawers on mobile devices.
 * **Interactive Favourites & Shortlisting:** Star (`★`) target companies to curate your shortlist, persisted in local storage.
-* **Local Application Pipeline Sync:** Automatically cross-references your private job application tracking notes (stage, date applied, rejection alerts) directly inside the company profile.
-* **Graceful Failsafe:** Runs completely standalone. If no application tracking directory is connected, it fails silently and gracefully with zero errors.
-* **Zero External Dependencies:** Built entirely with native Node.js APIs (`http`, `fs`, `path`) and lightweight frontend styling. Starts in milliseconds.
+* **Local Application Pipeline Sync:** Automatically cross-references private job application notes with token-boundary matching.
+* **Zero External Dependencies:** Built entirely with native Node.js APIs (`http`, `fs`, `path`) and lightweight vanilla frontend code. Starts in milliseconds.
 
 ---
 
@@ -97,7 +99,6 @@ All company intelligence is stored in clean JSON format at [`public/data/compani
   "address": "4th Floor, High Street, Belfast",
   "description": "Cloud-native universal package management and software supply chain security platform.",
   "key_products": ["Cloudsmith Universal Package Management", "Software Supply Chain Trust Engine"],
-  "key_people": "Glenn Bilby (CEO), Alan Carson (Co-Founder)",
   "last_checked": "2026-08-29T10:00:00Z",
   "open_roles_count": 5,
   "product_roles_count": 1,
@@ -147,13 +148,15 @@ Where `application_status.md` contains metadata lines:
 
 ---
 
-## 🔒 Dual Architecture & Security Isolation
+## 🔒 Dual Architecture & Security Hardening
 
 This project uses an air-gapped architecture designed for a two-way workflow:
 
 1. **Local Mode (Admin & Data Gathering):**
    * Run locally with `npm start` on your machine (`localhost:3333`).
    * Gives you the full command center: one-click live ATS scrapers, add/edit company modals, star favourites, and private application pipeline synchronisation.
+   * **Same-Origin API Isolation (v1.5.1):** Zero wildcard CORS headers. The local server communicates strictly on the same origin, preventing external sites open in other browser tabs from querying or triggering `/api/scan` on localhost.
+   * **DOM Output Sanitisation (v1.5.1):** All dynamic company names, descriptions, locations, and vacancy titles pass through `escapeHtml()` and URL encoders before insertion into the DOM to guard against cross-site scripting (XSS).
 2. **Public Deployed Mode (Zero-Risk Public Directory):**
    * Deploy the static `public/` folder to Vercel, GitHub Pages, or Netlify.
    * The client automatically evaluates `isLocalEnvironment() === false` and strictly hides all admin buttons, scraper triggers, and private application tracking via CSS and JavaScript.
@@ -164,11 +167,13 @@ This project uses an air-gapped architecture designed for a two-way workflow:
 | Feature | 💻 Local Mode (`localhost`) | 🌐 Deployed State (Vercel / GitHub Pages / Public Host) |
 | :--- | :--- | :--- |
 | **Data Source** | Local server API (`/api/companies`) with fallback | Static JSON file (`./data/companies.json`) |
-| **"Scan for Open Roles" Button** | **Visible & Active** (Triggers local scrapers) | **Completely Hidden / Invisible** |
+| **"Scan" Button** | **Visible & Active** (Triggers local scrapers) | **Completely Hidden / Invisible** |
 | **"Add Company" Form** | **Visible & Active** (Saves to local database) | **Completely Hidden / Invisible** |
 | **Personal Application Tracker** | **Visible & Synchronised** (from `/applications/`) | **Completely Hidden / Invisible** |
 | **Starred Favourites** | **Visible & Active** (Local storage) | **Completely Hidden / Invisible** |
-| **Catalogue Updated Timestamp** | Synchronised to latest local scan timestamp | **Live & Visible** (Catalog date from static JSON) |
+| **Light & Dark Theme Switch** | **Live & Visible** (Persisted in local storage) | **Live & Visible** (Persisted in local storage) |
+| **3-State Column Sorting** | **Live & Active** (Asc / Desc / Clear) | **Live & Active** (Asc / Desc / Clear) |
+| **Catalogue Updated Timestamp** | Synchronised to latest local scan timestamp | **Live & Visible** (Catalogue date from static JSON) |
 | **Mobile Experience** | Native cards with responsive drawers | Native cards with responsive drawers |
 
 ---
