@@ -1,10 +1,30 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full bg-slate-950 text-slate-100">
+<html lang="en" class="h-full">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Northern Ireland Tech Radar | Ecosystem & Careers Tracker</title>
   <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <!-- Google Fonts: DM Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  
+  <!-- Early Theme Initialisation to prevent flash -->
+  <script>
+    (function() {
+      try {
+        const savedTheme = localStorage.getItem('ni_tech_radar_theme');
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      } catch (e) {}
+    })();
+  </script>
+
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -12,6 +32,10 @@
       darkMode: 'class',
       theme: {
         extend: {
+          fontFamily: {
+            sans: ['"DM Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace']
+          },
           colors: {
             brand: {
               50: '#f0fdf4',
@@ -27,80 +51,128 @@
   </script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* Custom scrollbars */
-    ::-webkit-scrollbar { width: 8px; height: 8px; }
-    ::-webkit-scrollbar-track { background: #0f172a; }
-    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+    :root {
+      --bg: #EFF3F8;
+      --surface: #FFFFFF;
+      --surface-2: #F5F8FC;
+      --border: #D1D9E6;
+      --text: #111827;
+      --text-muted: #64748B;
+      --accent: #059669;
+      --accent-fg: #FFFFFF;
+      --accent-dim: #ECFDF5;
+      --badge-open-border: #059669;
+      --linkedin: #0A66C2;
+      --careers: #059669;
+    }
+
+    html.dark {
+      --bg: #020617;
+      --surface: #0f172a;
+      --surface-2: #020617;
+      --border: #1e293b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #10b981;
+      --accent-fg: #FFFFFF;
+      --accent-dim: rgba(16, 185, 129, 0.15);
+      --badge-open-border: rgba(16, 185, 129, 0.3);
+      --linkedin: #0A66C2;
+      --careers: #059669;
+    }
+
+    body {
+      font-family: 'DM Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+    }
+
+    /* Modern sleek capsule scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(148, 163, 184, 0.45);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(100, 116, 139, 0.7);
+    }
+    html.dark ::-webkit-scrollbar-thumb {
+      background: rgba(100, 116, 139, 0.45);
+      border-radius: 9999px;
+    }
+    html.dark ::-webkit-scrollbar-thumb:hover {
+      background: rgba(148, 163, 184, 0.7);
+    }
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(148, 163, 184, 0.45) transparent;
+    }
+    html.dark * {
+      scrollbar-color: rgba(100, 116, 139, 0.45) transparent;
+    }
     
     .rotate-90 {
       transform: rotate(90deg);
     }
   </style>
 </head>
-<body class="h-full flex flex-col antialiased selection:bg-emerald-500 selection:text-white">
+<body class="h-full flex flex-col antialiased bg-[#EFF3F8] dark:bg-slate-950 text-slate-900 dark:text-slate-100 selection:bg-emerald-500 selection:text-white transition-colors duration-150">
 
   <!-- Top Navigation (Mobile Streamlined & Widescreen Optimized) -->
-  <header class="border-b border-slate-800 bg-slate-900/90 backdrop-blur sticky top-0 z-40">
-    <div class="max-w-[1700px] mx-auto px-4 sm:px-6 lg:px-8 py-3.5 sm:py-0 sm:h-20 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-4">
-      <!-- Main Brand Row (Always Fully Visible) -->
+  <header class="border-b border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 backdrop-blur sticky top-0 z-40 shadow-sm dark:shadow-none transition-colors">
+    <div class="max-w-[1700px] mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-0 sm:h-20 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-4">
+      <!-- Main Brand Row -->
       <div class="flex items-center space-x-3 sm:space-x-4">
         <!-- Target / Crosshairs Logo Icon -->
         <div class="w-9 h-9 sm:w-14 sm:h-14 shrink-0 rounded-xl sm:rounded-2xl bg-gradient-to-tr from-emerald-500 via-teal-400 to-emerald-300 flex items-center justify-center shadow-lg shadow-emerald-500/20 text-slate-950 border border-emerald-300/50">
           <i class="fa-solid fa-crosshairs text-slate-950 text-lg sm:text-[32px] font-black"></i>
         </div>
         <div>
-          <div class="flex items-center gap-2.5">
-            <h1 class="font-extrabold text-base sm:text-xl text-slate-50 tracking-tight whitespace-nowrap">
-              Northern Ireland Tech Radar
-            </h1>
-            <!-- About Button (Desktop Inline) -->
-            <button onclick="openAboutModal()" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700/80 transition-all shadow-sm group shrink-0" title="About this project">
-              <i class="fa-solid fa-circle-info text-emerald-400 text-xs group-hover:scale-110 transition-transform"></i>
-              <span>About</span>
-            </button>
-          </div>
-          <p class="hidden sm:block text-xs sm:text-sm text-slate-400 mt-0.5">Directory & Automated Product Role Intelligence across Northern Ireland</p>
+          <h1 class="font-extrabold text-base sm:text-xl text-slate-900 dark:text-slate-50 tracking-tight whitespace-nowrap">
+            Northern Ireland Tech Radar
+          </h1>
+          <p class="hidden sm:block text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">Directory & Automated Product Role Intelligence across Northern Ireland</p>
         </div>
       </div>
 
-      <!-- Secondary Sub-Row on Mobile / Actions Cluster on Desktop -->
-      <div class="flex items-center justify-between sm:justify-end space-x-2 sm:space-x-3 w-full sm:w-auto">
-        <!-- About Button (Mobile Only Sub-Row) -->
-        <button onclick="openAboutModal()" class="sm:hidden inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700/80 transition-all shadow-sm group shrink-0" title="About this project">
-          <i class="fa-solid fa-circle-info text-emerald-400 text-xs group-hover:scale-110 transition-transform"></i>
+      <!-- Action & Controls Cluster (Order: About, Updated, Export, Scan, Light/Dark) -->
+      <div class="flex items-center justify-between sm:justify-end gap-2 sm:gap-2.5 w-full sm:w-auto">
+        <!-- 1. About Button -->
+        <button onclick="openAboutModal()" class="h-9 sm:h-10 px-3 sm:px-3.5 rounded-xl inline-flex items-center justify-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-semibold leading-none bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white border border-slate-300 dark:border-slate-700/80 transition-all shadow-sm group shrink-0 box-border" title="About this project">
+          <i class="fa-solid fa-circle-info text-emerald-600 dark:text-emerald-400 text-xs sm:text-sm group-hover:scale-110 transition-transform"></i>
           <span>About</span>
         </button>
 
-        <!-- Deployed-only Last Updated Label -->
-        <div id="deployedUpdatedLabel" class="text-xs text-slate-400 inline-flex items-center gap-1.5 bg-slate-900 border border-slate-800 px-3 py-1.5 sm:px-3.5 sm:py-2.5 rounded-xl font-medium shadow-sm whitespace-nowrap shrink-0">
-          <i class="fa-regular fa-calendar-check text-emerald-400 text-xs"></i>
+        <!-- 2. Updated Pill -->
+        <div id="updatedPill" class="h-9 sm:h-10 px-2.5 sm:px-3.5 rounded-xl inline-flex items-center justify-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-medium leading-none bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 shadow-sm whitespace-nowrap shrink-0 box-border" title="Dataset last updated">
+          <i class="fa-regular fa-calendar-check text-emerald-600 dark:text-emerald-400 text-xs sm:text-sm"></i>
           <span id="staticUpdatedText">Updated: Recently</span>
         </div>
 
-        <!-- Public export button (Desktop only) -->
-        <button onclick="exportCSV()" class="hidden sm:inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 transition-all shadow-sm">
-          <i class="fa-solid fa-download text-xs text-slate-400"></i>
+        <!-- 3. Export CSV Button (Desktop only) -->
+        <button onclick="exportCSV()" class="h-9 sm:h-10 px-3 sm:px-3.5 rounded-xl hidden sm:inline-flex items-center justify-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-semibold leading-none bg-white hover:bg-slate-50 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-800 transition-all shadow-sm shrink-0 box-border" title="Export directory to CSV">
+          <i class="fa-solid fa-download text-xs sm:text-sm text-slate-500 dark:text-slate-400"></i>
           <span>Export CSV</span>
         </button>
 
-        <!-- Local-only add company button -->
-        <button id="addBtn" onclick="openAddModal()" class="hidden sm:inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-all shadow-sm">
-          <i class="fa-solid fa-plus text-xs text-slate-300"></i>
-          <span>Add Company</span>
+        <!-- 4. Scan Button (Local Mode, Desktop only) -->
+        <button id="scanBtn" onclick="triggerScan()" class="h-9 sm:h-10 px-3.5 sm:px-4 rounded-xl hidden sm:inline-flex items-center justify-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-bold leading-none bg-emerald-600 hover:bg-emerald-500 text-white border border-emerald-600 hover:border-emerald-500 shadow-md shadow-emerald-600/20 transition-all shrink-0 box-border" title="Scan live ATS portals for open product roles">
+          <i class="fa-solid fa-arrows-rotate text-xs sm:text-sm" id="scanIcon"></i>
+          <span>Scan</span>
         </button>
 
-        <!-- Local-only scan button & timestamp wrapper -->
-        <div id="scanBtnWrap" class="hidden sm:flex flex-col items-end">
-          <button id="scanBtn" onclick="triggerScan()" class="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-sm font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/25 transition-all">
-            <i class="fa-solid fa-arrows-rotate text-sm" id="scanIcon"></i>
-            <span>Scan for Open Product Roles</span>
-          </button>
-          <span id="lastScannedText" class="text-[11px] text-slate-400 mt-1.5 font-medium flex items-center gap-1">
-            <i class="fa-regular fa-clock text-[10px] text-slate-500"></i>
-            <span>Last scanned: Never</span>
-          </span>
-        </div>
+        <!-- 5. Light/Dark Mode Toggle (Rightmost position) -->
+        <button id="themeToggleBtn" onclick="toggleTheme()" class="h-9 w-9 sm:h-10 sm:w-10 rounded-xl inline-flex items-center justify-center text-xs font-semibold leading-none bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700/80 transition-all shadow-sm group shrink-0 box-border" title="Toggle Light / Dark Mode">
+          <i id="themeToggleIcon" class="fa-solid fa-moon text-amber-500 dark:text-amber-300 text-sm group-hover:scale-110 transition-transform"></i>
+        </button>
       </div>
     </div>
   </header>
@@ -108,99 +180,84 @@
   <!-- Main Container (Widescreen Optimized) -->
   <main class="flex-1 max-w-[1700px] w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8 space-y-4 sm:space-y-6">
 
-    <!-- KPI Metric Cards (Compact on Mobile, Full on Desktop) -->
+    <!-- KPI Metric Cards (Interactive Toggles) -->
     <div id="kpiContainer" class="grid grid-cols-3 sm:grid-cols-5 gap-2 sm:gap-4">
-      <div class="bg-slate-900/70 border border-slate-800 rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between">
-        <div class="text-[11px] sm:text-sm font-semibold text-slate-400 leading-tight">Total Companies</div>
-        <div class="text-xl sm:text-3xl font-extrabold text-slate-100 mt-1 sm:mt-2" id="statTotal">0</div>
-        <div class="hidden sm:block text-xs text-slate-500 mt-1">Tracked across Northern Ireland</div>
+      <div id="statTotalCard" onclick="resetAllFilters()" class="cursor-pointer select-none bg-white dark:bg-slate-900/70 hover:bg-slate-50 dark:hover:bg-slate-800/80 border border-slate-200 dark:border-slate-800 rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between shadow-sm transition-colors" title="Click to view all companies">
+        <div class="text-[11px] sm:text-sm font-semibold text-slate-500 dark:text-slate-400 leading-tight flex items-center justify-between">
+          <span>Total Companies</span>
+          <i class="fa-solid fa-layer-group text-xs text-slate-400 dark:text-slate-500"></i>
+        </div>
+        <div class="text-xl sm:text-3xl font-extrabold font-mono tracking-tight text-slate-900 dark:text-slate-100 mt-1 sm:mt-2" id="statTotal">0</div>
+        <div class="hidden sm:block text-xs text-slate-400 dark:text-slate-500 mt-1">Tracked across Northern Ireland</div>
       </div>
-      <div class="bg-slate-900/70 border border-emerald-900/40 rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between">
-        <div class="text-[11px] sm:text-sm font-semibold text-emerald-400 flex items-center justify-between leading-tight">
+      <div id="statProductRolesCard" onclick="toggleProductRoles()" class="cursor-pointer select-none bg-emerald-50/70 dark:bg-slate-900/70 border border-emerald-200 dark:border-emerald-900/40 rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between shadow-sm transition-colors" title="Click to toggle live product roles">
+        <div class="text-[11px] sm:text-sm font-semibold text-emerald-700 dark:text-emerald-400 flex items-center justify-between leading-tight">
           <span>Live Roles</span>
-          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span class="w-2 h-2 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse"></span>
         </div>
-        <div class="text-xl sm:text-3xl font-extrabold text-emerald-400 mt-1 sm:mt-2" id="statProductRoles">0</div>
-        <div class="hidden sm:block text-xs text-emerald-500/80 mt-1">VP, Director, Group & Senior PMs</div>
+        <div class="text-xl sm:text-3xl font-extrabold font-mono tracking-tight text-emerald-700 dark:text-emerald-400 mt-1 sm:mt-2" id="statProductRoles">0</div>
+        <div class="hidden sm:block text-xs text-emerald-600/90 dark:text-emerald-500/80 mt-1">VP, Director, Group & Senior PMs</div>
       </div>
-      <!-- Local-only Favourites Card -->
-      <div id="statFavouritesCard" class="bg-slate-900/70 border border-amber-900/30 rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between">
-        <div class="text-[11px] sm:text-sm font-semibold text-amber-400 flex items-center justify-between leading-tight">
+      <!-- Local-only Favourites Card (Click to filter) -->
+      <div id="statFavouritesCard" onclick="toggleFavouritesFilter()" class="cursor-pointer select-none bg-amber-50/70 dark:bg-slate-900/70 border border-amber-200 dark:border-amber-900/30 rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between shadow-sm transition-colors" title="Click to toggle shortlisted favourites">
+        <div class="text-[11px] sm:text-sm font-semibold text-amber-700 dark:text-amber-400 flex items-center justify-between leading-tight">
           <span>Favourites</span>
-          <i class="fa-solid fa-star text-xs text-amber-400"></i>
+          <i class="fa-solid fa-star text-xs text-amber-500 dark:text-amber-400"></i>
         </div>
-        <div class="text-xl sm:text-3xl font-extrabold text-amber-400 mt-1 sm:mt-2" id="statFavourites">0</div>
-        <div class="hidden sm:block text-xs text-amber-500/80 mt-1">Shortlisted companies</div>
+        <div class="text-xl sm:text-3xl font-extrabold font-mono tracking-tight text-amber-700 dark:text-amber-400 mt-1 sm:mt-2" id="statFavourites">0</div>
+        <div class="hidden sm:block text-xs text-amber-600/90 dark:text-amber-500/80 mt-1">Shortlisted companies</div>
       </div>
-      <!-- Local-only Pipeline Card -->
-      <div id="statAppliedCard" class="bg-slate-900/70 border border-blue-900/30 rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between">
-        <div class="text-[11px] sm:text-sm font-semibold text-blue-400 leading-tight">Applied</div>
-        <div class="text-xl sm:text-3xl font-extrabold text-blue-400 mt-1 sm:mt-2" id="statApplied">0</div>
-        <div class="hidden sm:block text-xs text-blue-500/80 mt-1">Active tracked applications</div>
+      <!-- Local-only Pipeline Card (Click to filter) -->
+      <div id="statAppliedCard" onclick="toggleAppliedFilter()" class="cursor-pointer select-none bg-blue-50/70 dark:bg-slate-900/70 border border-blue-200 dark:border-blue-900/30 rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between shadow-sm transition-colors" title="Click to toggle tracked applications">
+        <div class="text-[11px] sm:text-sm font-semibold text-blue-700 dark:text-blue-400 flex items-center justify-between leading-tight">
+          <span>Applied</span>
+          <i class="fa-solid fa-clipboard-check text-xs text-blue-500 dark:text-blue-400"></i>
+        </div>
+        <div class="text-xl sm:text-3xl font-extrabold font-mono tracking-tight text-blue-700 dark:text-blue-400 mt-1 sm:mt-2" id="statApplied">0</div>
+        <div class="hidden sm:block text-xs text-blue-600/90 dark:text-blue-500/80 mt-1">Active tracked applications</div>
       </div>
-      <div class="bg-slate-900/70 border border-slate-800 rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between">
-        <div class="text-[11px] sm:text-sm font-semibold text-slate-400 leading-tight">Scaleups</div>
-        <div class="text-xl sm:text-3xl font-extrabold text-sky-400 mt-1 sm:mt-2" id="statScaleups">0</div>
-        <div class="hidden sm:block text-xs text-slate-500 mt-1">Indigenous innovators</div>
+      <div class="bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between shadow-sm transition-colors">
+        <div class="text-[11px] sm:text-sm font-semibold text-slate-500 dark:text-slate-400 leading-tight">Scaleups</div>
+        <div class="text-xl sm:text-3xl font-extrabold font-mono tracking-tight text-sky-600 dark:text-sky-400 mt-1 sm:mt-2" id="statScaleups">0</div>
+        <div class="hidden sm:block text-xs text-slate-400 dark:text-slate-500 mt-1">Indigenous innovators</div>
       </div>
     </div>
 
-    <!-- Filter & Search Toolbar (Mobile Streamlined) -->
-    <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-3 sm:p-5 space-y-3 sm:space-y-4 shadow-lg">
-      <div class="flex flex-col md:flex-row gap-3 md:gap-4 items-stretch md:items-center justify-between">
-        <!-- Search input (Desktop only) -->
-        <div class="relative flex-1 w-full hidden md:block">
-          <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-500 text-base"></i>
-          <input 
-            type="text" 
-            id="searchInput" 
-            placeholder="Search by company name, products, leadership, technology, or keywords..." 
-            class="w-full pl-12 pr-4 py-3 bg-slate-950 border border-slate-800 rounded-xl text-base text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all"
-            oninput="applyFilters()"
-          />
-        </div>
-
-        <!-- Quick Filter Toggles -->
-        <div class="flex items-center gap-2 sm:gap-3 flex-wrap w-full md:w-auto">
-          <!-- Starred Favourites Toggle (Local only) -->
-          <label id="favouritesFilterWrap" class="hidden sm:flex items-center gap-2 cursor-pointer bg-slate-950/80 border border-slate-800 px-3.5 py-3 rounded-xl text-sm font-medium text-amber-300 hover:border-slate-700 select-none whitespace-nowrap">
-            <input type="checkbox" id="toggleFavouritesOnly" class="rounded border-slate-700 bg-slate-900 text-amber-500 focus:ring-amber-500 h-4 w-4" onchange="applyFilters()">
-            <span class="flex items-center gap-1.5"><i class="fa-solid fa-star text-amber-400 text-xs"></i> Favourites</span>
-          </label>
-          <!-- Product Roles Toggle (Full width on Mobile) -->
-          <label class="flex-1 md:flex-none flex items-center justify-center gap-2 cursor-pointer bg-slate-950/80 border border-emerald-900/40 px-3.5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold text-emerald-300 hover:border-emerald-700 select-none whitespace-nowrap shadow-sm">
-            <input type="checkbox" id="toggleProductOnly" class="rounded border-slate-700 bg-slate-900 text-emerald-500 focus:ring-emerald-500 h-4 w-4" onchange="applyFilters()">
-            <span>🔥 Live Product Roles</span>
-          </label>
-          <!-- Pipeline Applications Toggle (Local only) -->
-          <label id="appliedFilterWrap" class="hidden sm:flex items-center gap-2 cursor-pointer bg-slate-950/80 border border-slate-800 px-3.5 py-3 rounded-xl text-sm font-medium text-blue-300 hover:border-slate-700 select-none whitespace-nowrap">
-            <input type="checkbox" id="toggleAppliedOnly" class="rounded border-slate-700 bg-slate-900 text-blue-500 focus:ring-blue-500 h-4 w-4" onchange="applyFilters()">
-            <span>📋 My Applications</span>
-          </label>
-        </div>
+    <!-- Filter & Search Toolbar (Desktop Only) -->
+    <div class="hidden md:block bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 space-y-3 shadow-sm dark:shadow-lg transition-colors">
+      <!-- Search input (Full Width) -->
+      <div class="relative w-full">
+        <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-400 dark:text-slate-500 text-base"></i>
+        <input 
+          type="text" 
+          id="searchInput" 
+          placeholder="Search by company name, products, leadership, technology, or keywords..." 
+          class="w-full pl-12 pr-4 py-3 bg-[#F5F8FC] dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-base text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all"
+          oninput="applyFilters()"
+        />
       </div>
 
-      <!-- Dropdown Filter Row (Desktop only: hidden md:grid) -->
-      <div class="hidden md:grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3 border-t border-slate-800/80">
+      <!-- Dropdown Filter Row -->
+      <div class="grid grid-cols-4 gap-3 pt-3 border-t border-slate-200 dark:border-slate-800/80">
         <div>
-          <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Scale Tier</label>
+          <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1.5">Scale Tier</label>
           <div class="relative">
-            <select id="filterScale" class="w-full appearance-none bg-slate-950 border border-slate-800 rounded-xl pl-3.5 pr-9 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-emerald-500 cursor-pointer" onchange="applyFilters()">
+            <select id="filterScale" class="w-full appearance-none bg-[#F5F8FC] dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl pl-3.5 pr-9 py-2.5 text-sm text-slate-800 dark:text-slate-200 focus:outline-none focus:border-emerald-500 cursor-pointer" onchange="applyFilters()">
               <option value="ALL">All Scale Tiers</option>
               <option value="Startup">Startup (1-20)</option>
               <option value="Scaleup">Scaleup (20-100)</option>
               <option value="Mid-Market">Mid-Market (100-500)</option>
               <option value="Large Enterprise">Large Enterprise / FDI (500+)</option>
             </select>
-            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3.5 text-slate-400">
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3.5 text-slate-400 dark:text-slate-500">
               <i class="fa-solid fa-chevron-down text-xs"></i>
             </div>
           </div>
         </div>
         <div>
-          <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Industry / Sector</label>
+          <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1.5">Industry / Sector</label>
           <div class="relative">
-            <select id="filterIndustry" class="w-full appearance-none bg-slate-950 border border-slate-800 rounded-xl pl-3.5 pr-9 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-emerald-500 cursor-pointer" onchange="applyFilters()">
+            <select id="filterIndustry" class="w-full appearance-none bg-[#F5F8FC] dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl pl-3.5 pr-9 py-2.5 text-sm text-slate-800 dark:text-slate-200 focus:outline-none focus:border-emerald-500 cursor-pointer" onchange="applyFilters()">
               <option value="ALL">All Industries</option>
               <option value="Cybersecurity">Cybersecurity & DevTools</option>
               <option value="Enterprise B2B SaaS">Enterprise B2B SaaS</option>
@@ -208,30 +265,30 @@
               <option value="HealthTech">HealthTech & Life Sciences</option>
               <option value="Data">Data, AI & Analytics</option>
             </select>
-            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3.5 text-slate-400">
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3.5 text-slate-400 dark:text-slate-500">
               <i class="fa-solid fa-chevron-down text-xs"></i>
             </div>
           </div>
         </div>
         <div>
-          <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Funding / Ownership</label>
+          <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1.5">Funding / Ownership</label>
           <div class="relative">
-            <select id="filterFunding" class="w-full appearance-none bg-slate-950 border border-slate-800 rounded-xl pl-3.5 pr-9 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-emerald-500 cursor-pointer" onchange="applyFilters()">
+            <select id="filterFunding" class="w-full appearance-none bg-[#F5F8FC] dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl pl-3.5 pr-9 py-2.5 text-sm text-slate-800 dark:text-slate-200 focus:outline-none focus:border-emerald-500 cursor-pointer" onchange="applyFilters()">
               <option value="ALL">All Ownership Types</option>
               <option value="Bootstrapped">Bootstrapped / Private</option>
               <option value="VC-backed">VC-backed</option>
               <option value="PE-backed">PE-backed</option>
               <option value="Publicly Listed">Publicly Listed / Corporate</option>
             </select>
-            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3.5 text-slate-400">
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3.5 text-slate-400 dark:text-slate-500">
               <i class="fa-solid fa-chevron-down text-xs"></i>
             </div>
           </div>
         </div>
         <div>
-          <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Location</label>
+          <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1.5">Location</label>
           <div class="relative">
-            <select id="filterLocation" class="w-full appearance-none bg-slate-950 border border-slate-800 rounded-xl pl-3.5 pr-9 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-emerald-500 cursor-pointer" onchange="applyFilters()">
+            <select id="filterLocation" class="w-full appearance-none bg-[#F5F8FC] dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl pl-3.5 pr-9 py-2.5 text-sm text-slate-800 dark:text-slate-200 focus:outline-none focus:border-emerald-500 cursor-pointer" onchange="applyFilters()">
               <option value="ALL">All NI Locations</option>
               <option value="Belfast">Belfast</option>
               <option value="Derry">Derry / Londonderry</option>
@@ -241,7 +298,7 @@
               <option value="Antrim">Antrim</option>
               <option value="Craigavon">Craigavon</option>
             </select>
-            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3.5 text-slate-400">
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3.5 text-slate-400 dark:text-slate-500">
               <i class="fa-solid fa-chevron-down text-xs"></i>
             </div>
           </div>
@@ -255,23 +312,58 @@
     </div>
 
     <!-- Desktop Table Content Area (Desktop only: hidden md:block) -->
-    <div id="tableContainer" class="hidden md:block bg-slate-900/70 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl">
+    <div id="tableContainer" class="hidden md:block bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm dark:shadow-2xl transition-colors">
       <div class="overflow-x-auto">
         <table class="w-full text-left text-sm border-collapse">
           <thead>
-            <tr class="border-b border-slate-800 bg-slate-950/90 text-slate-400 font-bold uppercase tracking-wider text-xs">
+            <tr class="border-b border-slate-200 dark:border-slate-800 bg-[#F5F8FC] dark:bg-slate-950/90 text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider text-xs">
               <th class="py-4 px-3 w-10 text-center"></th>
-              <th id="thStar" class="py-4 px-3 w-10 text-center"><i class="fa-solid fa-star text-amber-400/60"></i></th>
-              <th class="py-4 px-5">Company</th>
-              <th class="py-4 px-5">Sector & Domain</th>
-              <th class="py-4 px-5">Scale Tier</th>
-              <th class="py-4 px-5">Ownership</th>
-              <th class="py-4 px-5">Location</th>
-              <th class="py-4 px-4 text-center whitespace-nowrap min-w-[140px]">Live Product Roles</th>
+              <th id="thStar" class="py-4 px-3 w-10 text-center cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors select-none group" onclick="handleSort('star')" title="Sort by favourites">
+                <span class="inline-flex items-center justify-center gap-1">
+                  <i class="fa-solid fa-star text-amber-500 dark:text-amber-400/60"></i>
+                  <span id="sortIcon-star" class="text-slate-300 dark:text-slate-700 group-hover:text-slate-500 text-[10px]"><i class="fa-solid fa-sort"></i></span>
+                </span>
+              </th>
+              <th class="py-4 px-5 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors select-none group" onclick="handleSort('name')" title="Sort alphabetically by company name">
+                <div class="flex items-center gap-1.5">
+                  <span>Company</span>
+                  <span id="sortIcon-name" class="text-slate-300 dark:text-slate-700 group-hover:text-slate-500 text-[10px]"><i class="fa-solid fa-sort"></i></span>
+                </div>
+              </th>
+              <th class="py-4 px-5 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors select-none group" onclick="handleSort('domain')" title="Sort by industry domain">
+                <div class="flex items-center gap-1.5">
+                  <span>Domain</span>
+                  <span id="sortIcon-domain" class="text-slate-300 dark:text-slate-700 group-hover:text-slate-500 text-[10px]"><i class="fa-solid fa-sort"></i></span>
+                </div>
+              </th>
+              <th class="py-4 px-5 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors select-none group" onclick="handleSort('size')" title="Sort by company scale tier">
+                <div class="flex items-center gap-1.5">
+                  <span>Size</span>
+                  <span id="sortIcon-size" class="text-slate-300 dark:text-slate-700 group-hover:text-slate-500 text-[10px]"><i class="fa-solid fa-sort"></i></span>
+                </div>
+              </th>
+              <th class="py-4 px-5 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors select-none group" onclick="handleSort('ownership')" title="Sort by funding and ownership">
+                <div class="flex items-center gap-1.5">
+                  <span>Ownership</span>
+                  <span id="sortIcon-ownership" class="text-slate-300 dark:text-slate-700 group-hover:text-slate-500 text-[10px]"><i class="fa-solid fa-sort"></i></span>
+                </div>
+              </th>
+              <th class="py-4 px-5 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors select-none group" onclick="handleSort('location')" title="Sort by location">
+                <div class="flex items-center gap-1.5">
+                  <span>Location</span>
+                  <span id="sortIcon-location" class="text-slate-300 dark:text-slate-700 group-hover:text-slate-500 text-[10px]"><i class="fa-solid fa-sort"></i></span>
+                </div>
+              </th>
+              <th class="py-4 px-4 text-center whitespace-nowrap min-w-[140px] cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors select-none group" onclick="handleSort('roles')" title="Sort by live product roles count">
+                <div class="flex items-center justify-center gap-1.5">
+                  <span>Product Roles</span>
+                  <span id="sortIcon-roles" class="text-slate-300 dark:text-slate-700 group-hover:text-slate-500 text-[10px]"><i class="fa-solid fa-sort"></i></span>
+                </div>
+              </th>
               <th class="py-4 px-5 text-right whitespace-nowrap">Links</th>
             </tr>
           </thead>
-          <tbody id="companyTableBody" class="divide-y divide-slate-800/60 text-slate-200 font-normal">
+          <tbody id="companyTableBody" class="divide-y divide-slate-200 dark:divide-slate-800/60 text-slate-800 dark:text-slate-200 font-normal">
             <!-- Rendered dynamically with expandable rows -->
           </tbody>
         </table>
@@ -279,23 +371,23 @@
     </div>
 
     <!-- Empty State -->
-    <div id="emptyState" class="hidden text-center py-20 bg-slate-900/30 border border-dashed border-slate-800 rounded-2xl">
-      <i class="fa-solid fa-crosshairs text-5xl text-slate-700 mb-3"></i>
-      <h3 class="text-base font-bold text-slate-300">No matching companies found</h3>
+    <div id="emptyState" class="hidden text-center py-20 bg-white/60 dark:bg-slate-900/30 border border-dashed border-slate-300 dark:border-slate-800 rounded-2xl shadow-sm dark:shadow-none">
+      <i class="fa-solid fa-crosshairs text-5xl text-slate-300 dark:text-slate-700 mb-3"></i>
+      <h3 class="text-base font-bold text-slate-700 dark:text-slate-300">No matching companies found</h3>
       <p class="text-sm text-slate-500 mt-1">Try adjusting your filters or search terms.</p>
     </div>
 
   </main>
 
   <!-- Role Details Modal / Drawer -->
-  <div id="roleModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-2xl w-full p-6 shadow-2xl space-y-5">
-      <div class="flex items-start justify-between border-b border-slate-800 pb-4">
+  <div id="roleModal" class="fixed inset-0 bg-slate-950/40 dark:bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-2xl w-full p-6 shadow-2xl space-y-5">
+      <div class="flex items-start justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
         <div>
-          <h3 class="text-xl font-bold text-slate-100 flex items-center gap-2" id="modalCompanyName"></h3>
-          <p class="text-sm text-slate-400 mt-1" id="modalCompanySector"></p>
+          <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2" id="modalCompanyName"></h3>
+          <p class="text-sm text-slate-500 dark:text-slate-400 mt-1" id="modalCompanySector"></p>
         </div>
-        <button onclick="closeRoleModal()" class="text-slate-400 hover:text-slate-200 p-1.5">
+        <button onclick="closeRoleModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1.5">
           <i class="fa-solid fa-xmark text-xl"></i>
         </button>
       </div>
@@ -304,19 +396,19 @@
         <!-- Roles dynamically populated -->
       </div>
 
-      <div class="pt-4 border-t border-slate-800 flex flex-wrap justify-between items-center gap-3">
+      <div class="pt-4 border-t border-slate-200 dark:border-slate-800 flex flex-wrap justify-between items-center gap-3">
         <div class="flex items-center gap-3">
-          <a id="modalCareersLink" href="#" target="_blank" class="text-sm font-semibold text-emerald-400 hover:text-emerald-300 flex items-center gap-1.5">
+          <a id="modalCareersLink" href="#" target="_blank" class="text-sm font-semibold text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 flex items-center gap-1.5">
             <span>View Full Careers Portal</span>
             <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
           </a>
-          <a id="modalLinkedInLink" href="#" target="_blank" class="text-sm font-semibold text-sky-400 hover:text-sky-300 flex items-center gap-1.5">
+          <a id="modalLinkedInLink" href="#" target="_blank" class="text-sm font-semibold text-sky-600 dark:text-sky-400 hover:text-sky-700 dark:hover:text-sky-300 flex items-center gap-1.5">
             <i class="fa-brands fa-linkedin text-base text-[#0a66c2]"></i>
             <span>Search LinkedIn</span>
             <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
           </a>
         </div>
-        <button onclick="closeRoleModal()" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-sm font-semibold text-slate-200 rounded-xl">
+        <button onclick="closeRoleModal()" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-sm font-semibold text-slate-700 dark:text-slate-200 rounded-xl transition-colors">
           Close
         </button>
       </div>
@@ -324,34 +416,34 @@
   </div>
 
   <!-- Add Company Modal (Local Only) -->
-  <div id="addModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-xl w-full p-6 shadow-2xl space-y-4">
-      <div class="flex items-start justify-between border-b border-slate-800 pb-3">
-        <h3 class="text-lg font-bold text-slate-100">Add NI Tech Company</h3>
-        <button onclick="closeAddModal()" class="text-slate-400 hover:text-slate-200 p-1">
+  <div id="addModal" class="fixed inset-0 bg-slate-950/40 dark:bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-xl w-full p-6 shadow-2xl space-y-4">
+      <div class="flex items-start justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+        <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100">Add NI Tech Company</h3>
+        <button onclick="closeAddModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1">
           <i class="fa-solid fa-xmark text-lg"></i>
         </button>
       </div>
 
       <form id="addCompanyForm" onsubmit="submitNewCompany(event)" class="space-y-4 text-sm">
         <div>
-          <label class="block font-medium text-slate-300 mb-1.5">Company Name *</label>
-          <input type="text" id="addName" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-200" placeholder="e.g. Acme Tech">
+          <label class="block font-medium text-slate-700 dark:text-slate-300 mb-1.5">Company Name *</label>
+          <input type="text" id="addName" required class="w-full bg-[#F5F8FC] dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-900 dark:text-slate-200" placeholder="e.g. Acme Tech">
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block font-medium text-slate-300 mb-1.5">Website URL *</label>
-            <input type="url" id="addWebsite" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-200" placeholder="https://example.com">
+            <label class="block font-medium text-slate-700 dark:text-slate-300 mb-1.5">Website URL *</label>
+            <input type="url" id="addWebsite" required class="w-full bg-[#F5F8FC] dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-900 dark:text-slate-200" placeholder="https://example.com">
           </div>
           <div>
-            <label class="block font-medium text-slate-300 mb-1.5">Careers URL *</label>
-            <input type="url" id="addCareersUrl" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-200" placeholder="https://example.com/careers">
+            <label class="block font-medium text-slate-700 dark:text-slate-300 mb-1.5">Careers URL *</label>
+            <input type="url" id="addCareersUrl" required class="w-full bg-[#F5F8FC] dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-900 dark:text-slate-200" placeholder="https://example.com/careers">
           </div>
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block font-medium text-slate-300 mb-1.5">Industry Sector</label>
-            <select id="addIndustry" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-200">
+            <label class="block font-medium text-slate-700 dark:text-slate-300 mb-1.5">Industry Sector</label>
+            <select id="addIndustry" class="w-full bg-[#F5F8FC] dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-900 dark:text-slate-200">
               <option value="Cybersecurity & DevTools">Cybersecurity & DevTools</option>
               <option value="Enterprise B2B SaaS">Enterprise B2B SaaS</option>
               <option value="FinTech & Capital Markets">FinTech & Capital Markets</option>
@@ -360,8 +452,8 @@
             </select>
           </div>
           <div>
-            <label class="block font-medium text-slate-300 mb-1.5">Scale Tier</label>
-            <select id="addScaleTier" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-200">
+            <label class="block font-medium text-slate-700 dark:text-slate-300 mb-1.5">Scale Tier</label>
+            <select id="addScaleTier" class="w-full bg-[#F5F8FC] dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-900 dark:text-slate-200">
               <option value="Startup (1-20)">Startup (1-20)</option>
               <option value="Scaleup (20-100)">Scaleup (20-100)</option>
               <option value="Mid-Market (100-500)">Mid-Market (100-500)</option>
@@ -371,8 +463,8 @@
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block font-medium text-slate-300 mb-1.5">Funding / Ownership</label>
-            <select id="addFunding" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-200">
+            <label class="block font-medium text-slate-700 dark:text-slate-300 mb-1.5">Funding / Ownership</label>
+            <select id="addFunding" class="w-full bg-[#F5F8FC] dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-900 dark:text-slate-200">
               <option value="Bootstrapped / Private">Bootstrapped / Private</option>
               <option value="VC-backed">VC-backed</option>
               <option value="PE-backed">PE-backed</option>
@@ -380,96 +472,96 @@
             </select>
           </div>
           <div>
-            <label class="block font-medium text-slate-300 mb-1.5">Location (NI Town/City)</label>
-            <input type="text" id="addLocation" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-200" placeholder="e.g. Belfast">
+            <label class="block font-medium text-slate-700 dark:text-slate-300 mb-1.5">Location (NI Town/City)</label>
+            <input type="text" id="addLocation" required class="w-full bg-[#F5F8FC] dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-900 dark:text-slate-200" placeholder="e.g. Belfast">
           </div>
         </div>
         <div>
-          <label class="block font-medium text-slate-300 mb-1.5">About the Company</label>
-          <textarea id="addDescription" rows="3" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-200" placeholder="Brief summary of what they build and do..."></textarea>
+          <label class="block font-medium text-slate-700 dark:text-slate-300 mb-1.5">About the Company</label>
+          <textarea id="addDescription" rows="3" class="w-full bg-[#F5F8FC] dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-900 dark:text-slate-200" placeholder="Brief summary of what they build and do..."></textarea>
         </div>
 
-        <div class="pt-4 border-t border-slate-800 flex justify-end gap-3">
-          <button type="button" onclick="closeAddModal()" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl font-medium">Cancel</button>
-          <button type="submit" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl shadow-md shadow-emerald-600/20">Save Company</button>
+        <div class="pt-4 border-t border-slate-200 dark:border-slate-800 flex justify-end gap-3">
+          <button type="button" onclick="closeAddModal()" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-xl font-medium transition-colors">Cancel</button>
+          <button type="submit" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl shadow-md shadow-emerald-600/20 transition-colors">Save Company</button>
         </div>
       </form>
     </div>
   </div>
 
   <!-- About This Project Modal -->
-  <div id="aboutModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md transition-opacity">
-    <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-2xl w-full p-6 sm:p-8 space-y-6 shadow-2xl shadow-slate-950/90 max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
-      <!-- Modal Header -->
-      <div class="flex items-center justify-between border-b border-slate-800/80 pb-5">
+  <div id="aboutModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 dark:bg-slate-950/80 backdrop-blur-md transition-opacity" onclick="closeAboutModal()">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-2xl w-full flex flex-col max-h-[85vh] shadow-2xl overflow-hidden" onclick="event.stopPropagation()">
+      <!-- Modal Header (Fixed) -->
+      <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800/80 px-6 py-5 sm:px-8 shrink-0 bg-white dark:bg-slate-900">
         <div class="flex items-center gap-3.5">
-          <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-500 via-teal-400 to-emerald-300 flex items-center justify-center shadow-lg shadow-emerald-500/20 text-slate-950 border border-emerald-300/40">
-            <i class="fa-solid fa-crosshairs text-slate-950 text-2xl font-black"></i>
+          <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-emerald-500 via-teal-400 to-emerald-300 flex items-center justify-center shadow-lg shadow-emerald-500/20 text-slate-950 border border-emerald-300/40">
+            <i class="fa-solid fa-crosshairs text-slate-950 text-xl font-black"></i>
           </div>
-          <h3 class="text-2xl font-black text-slate-100 tracking-tight">About Northern Ireland Tech Radar</h3>
+          <h3 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-slate-100 tracking-tight">About Northern Ireland Tech Radar</h3>
         </div>
-        <button onclick="closeAboutModal()" class="w-9 h-9 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-slate-200 flex items-center justify-center transition-colors">
+        <button onclick="closeAboutModal()" class="w-9 h-9 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 flex items-center justify-center transition-colors">
           <i class="fa-solid fa-xmark text-base"></i>
         </button>
       </div>
 
-      <!-- Modal Body -->
-      <div class="space-y-6 text-base text-slate-300 leading-relaxed">
+      <!-- Modal Body (Scrollable Strictly Inside Modal) -->
+      <div class="p-6 sm:p-8 overflow-y-auto flex-1 space-y-6 text-base text-slate-700 dark:text-slate-300 leading-relaxed">
         <!-- Intro -->
         <div>
-          <h4 class="font-bold text-slate-100 text-lg mb-2 flex items-center gap-2">
-            <i class="fa-solid fa-compass text-emerald-400 text-sm"></i>
+          <h4 class="font-bold text-slate-900 dark:text-slate-100 text-lg mb-2 flex items-center gap-2">
+            <i class="fa-solid fa-compass text-emerald-600 dark:text-emerald-400 text-sm"></i>
             What is this and why build it?
           </h4>
-          <p class="text-slate-300">
+          <p class="text-slate-600 dark:text-slate-300">
             This started as a personal project to cut through generic job board noise and get a clear, unvarnished picture of Northern Ireland’s tech ecosystem. It tracks indigenous startups, scaleups, FDI tech hubs, and academic commercialisation centres across the region, specifically keeping an eye on open product leadership roles (Product Managers, Group PMs, Directors, and VPs).
           </p>
         </div>
 
         <!-- How it works -->
         <div class="space-y-3">
-          <h4 class="font-bold text-slate-100 text-lg flex items-center gap-2">
-            <i class="fa-solid fa-bolt text-emerald-400 text-sm"></i>
+          <h4 class="font-bold text-slate-900 dark:text-slate-100 text-lg flex items-center gap-2">
+            <i class="fa-solid fa-bolt text-emerald-600 dark:text-emerald-400 text-sm"></i>
             How does it work?
           </h4>
-          <p class="text-slate-300">
+          <p class="text-slate-600 dark:text-slate-300">
             A built-in scanner regularly queries public applicant tracking system (ATS) APIs and career feeds to pull verified live vacancies with direct application links.
           </p>
           <div>
-            <div class="text-sm font-semibold text-slate-200 mb-2.5">Automated checks supported on:</div>
+            <div class="text-sm font-semibold text-slate-800 dark:text-slate-200 mb-2.5">Automated checks supported on:</div>
             <div class="flex flex-wrap gap-2">
-              <span class="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">Greenhouse</span>
-              <span class="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">Ashby</span>
-              <span class="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">SmartRecruiters</span>
-              <span class="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">Workable</span>
-              <span class="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">Lever</span>
-              <span class="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">Teamtailor</span>
-              <span class="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">BambooHR</span>
-              <span class="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">Pinpoint</span>
-              <span class="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">Volcanic</span>
+              <span class="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-300 dark:border-emerald-500/20">Greenhouse</span>
+              <span class="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-300 dark:border-emerald-500/20">Ashby</span>
+              <span class="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-300 dark:border-emerald-500/20">SmartRecruiters</span>
+              <span class="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-300 dark:border-emerald-500/20">Workable</span>
+              <span class="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-300 dark:border-emerald-500/20">Lever</span>
+              <span class="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-300 dark:border-emerald-500/20">Teamtailor</span>
+              <span class="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-300 dark:border-emerald-500/20">BambooHR</span>
+              <span class="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-300 dark:border-emerald-500/20">Pinpoint</span>
+              <span class="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-300 dark:border-emerald-500/20">Volcanic</span>
             </div>
           </div>
-          <div class="text-sm text-slate-300 pt-1 leading-relaxed">
-            <strong class="font-semibold text-slate-200">What's not supported via direct API:</strong> Closed enterprise systems like Workday, Taleo, iTrent, or custom portals don't expose open feeds, so they're marked <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 font-mono text-xs">N/A (Portal)</span>. Use the 1-click <strong>Careers</strong> button or the <strong>LinkedIn</strong> search shortcut to check them directly.
+          <div class="text-sm text-slate-600 dark:text-slate-300 pt-1 leading-relaxed">
+            <strong class="font-semibold text-slate-800 dark:text-slate-200">What's not supported via direct API:</strong> Closed enterprise systems like Workday, Taleo, iTrent, or custom portals don't expose open feeds, so they're marked <span class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-mono text-xs border border-slate-200 dark:border-slate-700">N/A (Portal)</span>. Use the 1-click <strong>Careers</strong> button or the <strong>LinkedIn</strong> search shortcut to check them directly.
           </div>
         </div>
 
         <!-- How to contribute -->
         <div>
-          <h4 class="font-bold text-slate-100 text-lg mb-2 flex items-center gap-2">
-            <i class="fa-solid fa-code-pull-request text-emerald-400 text-sm"></i>
+          <h4 class="font-bold text-slate-900 dark:text-slate-100 text-lg mb-2 flex items-center gap-2">
+            <i class="fa-solid fa-code-pull-request text-emerald-600 dark:text-emerald-400 text-sm"></i>
             How to contribute or report updates
           </h4>
-          <p class="text-slate-300">
+          <p class="text-slate-600 dark:text-slate-300">
             Know a Northern Ireland tech company that should be on here, spotted an out-of-date link, or want to suggest a new ATS connector? Contributions are very welcome. The entire project is open source and can also be forked and tailored to track any other region, industry vertical, or job discipline.
           </p>
         </div>
 
         <!-- Get in touch / LinkedIn -->
-        <div class="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border border-emerald-500/20 rounded-2xl p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
+        <div class="bg-gradient-to-r from-slate-100 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 border border-emerald-500/30 rounded-2xl p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-5 shadow-sm dark:shadow-none">
           <div class="flex-1">
-            <div class="font-bold text-slate-100 text-base">Built by Mark Hamill</div>
-            <div class="text-sm text-slate-300 mt-1 leading-relaxed">
+            <div class="font-bold text-slate-900 dark:text-slate-100 text-base">Built by Mark Hamill</div>
+            <div class="text-sm text-slate-600 dark:text-slate-300 mt-1 leading-relaxed">
               Mark is a product guy, with a passion for technology and likes building things and meeting new people. Connect to strike up a conversation!
             </div>
           </div>
@@ -480,9 +572,14 @@
         </div>
       </div>
 
-      <!-- Modal Footer -->
-      <div class="pt-4 border-t border-slate-800 flex justify-end">
-        <button type="button" onclick="closeAboutModal()" class="px-6 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-base font-semibold transition-colors">
+      <!-- Modal Footer (Fixed) -->
+      <div class="px-6 py-4 sm:px-8 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between shrink-0 bg-slate-50/70 dark:bg-slate-950/60">
+        <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 font-mono">
+          <span class="px-2 py-0.5 rounded bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-semibold text-slate-700 dark:text-slate-300">v1.5.0</span>
+          <span>•</span>
+          <span>Build 2026.08</span>
+        </div>
+        <button type="button" onclick="closeAboutModal()" class="px-6 py-2.5 bg-white hover:bg-slate-100 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-700 rounded-xl text-sm font-semibold transition-colors shadow-sm">
           Close
         </button>
       </div>
@@ -491,6 +588,55 @@
 
   <!-- JavaScript Client -->
   <script>
+    // =========================================================================
+    // 🎨 THEME MANAGEMENT (LIGHT & DARK MODES)
+    // =========================================================================
+    function initTheme() {
+      const savedTheme = localStorage.getItem('ni_tech_radar_theme');
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const isDark = savedTheme ? savedTheme === 'dark' : prefersDark;
+      applyTheme(isDark);
+
+      if (window.matchMedia) {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+          if (!localStorage.getItem('ni_tech_radar_theme')) {
+            applyTheme(e.matches);
+          }
+        });
+      }
+    }
+
+    function applyTheme(isDark) {
+      if (isDark) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+      updateThemeIcons(isDark);
+    }
+
+    function updateThemeIcons(isDark) {
+      const icons = [document.getElementById('themeToggleIcon'), document.getElementById('themeToggleIconMobile')];
+      icons.forEach(icon => {
+        if (icon) {
+          if (isDark) {
+            icon.className = 'fa-solid fa-sun text-amber-400 text-sm group-hover:scale-110 transition-transform';
+            if (icon.parentElement) icon.parentElement.title = 'Switch to Light Mode';
+          } else {
+            icon.className = 'fa-solid fa-moon text-slate-700 text-sm group-hover:scale-110 transition-transform';
+            if (icon.parentElement) icon.parentElement.title = 'Switch to Dark Mode';
+          }
+        }
+      });
+    }
+
+    function toggleTheme() {
+      const isCurrentDark = document.documentElement.classList.contains('dark');
+      const newDark = !isCurrentDark;
+      localStorage.setItem('ni_tech_radar_theme', newDark ? 'dark' : 'light');
+      applyTheme(newDark);
+    }
+
     // =========================================================================
     // ⚙️ DEPLOYMENT & ENVIRONMENT CONFIGURATION SWITCH
     // =========================================================================
@@ -576,58 +722,171 @@
     }
 
     function getLatestCompanyTimestamp() {
-      let latest = null;
-      for (const c of allCompanies) {
+      if (!allCompanies || allCompanies.length === 0) return null;
+      let latestTime = 0;
+      let latestIso = null;
+
+      allCompanies.forEach(c => {
         if (c.last_checked) {
-          const d = new Date(c.last_checked);
-          if (!latest || d > latest) latest = d;
+          const t = new Date(c.last_checked).getTime();
+          if (!isNaN(t) && t > latestTime) {
+            latestTime = t;
+            latestIso = c.last_checked;
+          }
         }
-      }
-      return latest ? latest.toISOString() : null;
+      });
+
+      return latestIso;
     }
 
     function updateScanTimestamps() {
-      const lastScannedText = document.getElementById('lastScannedText');
-      const staticUpdatedText = document.getElementById('staticUpdatedText');
-
-      if (isLocal) {
-        const saved = localStorage.getItem('ni_tech_radar_last_scan') || getLatestCompanyTimestamp();
-        if (lastScannedText) {
-          lastScannedText.innerHTML = `<i class="fa-regular fa-clock text-[10px] text-slate-500"></i><span>Last scanned: ${saved ? formatLastUpdated(saved) : 'Never'}</span>`;
-        }
-      } else {
-        const latest = getLatestCompanyTimestamp();
-        if (staticUpdatedText) {
-          staticUpdatedText.innerText = `Updated: ${latest ? formatLastUpdated(latest) : 'Recently'}`;
-        }
+      const latestChecked = getLatestCompanyTimestamp();
+      const staticLabel = document.getElementById('staticUpdatedText');
+      if (staticLabel) {
+        staticLabel.innerText = `Updated: ${formatLastUpdated(latestChecked)}`;
       }
     }
 
     let allCompanies = [];
     let expandedRows = new Set();
     let favourites = new Set(isLocal ? JSON.parse(localStorage.getItem('ni_tech_radar_favourites') || '[]') : []);
+    let productRolesOnly = false;
+    let favouritesOnly = false;
+    let appliedOnly = false;
+    let currentSortColumn = null;
+    let currentSortDirection = null;
+
+    function getScaleTierRank(tier) {
+      if (!tier) return 0;
+      const t = tier.toLowerCase();
+      if (t.includes('startup')) return 1;
+      if (t.includes('scaleup')) return 2;
+      if (t.includes('mid-market')) return 3;
+      if (t.includes('enterprise') || t.includes('fdi') || t.includes('large')) return 4;
+      return 0;
+    }
+
+    function handleSort(col) {
+      if (currentSortColumn === col) {
+        if (currentSortDirection === 'asc') {
+          currentSortDirection = 'desc';
+        } else if (currentSortDirection === 'desc') {
+          // 3rd click: Clear sort
+          currentSortColumn = null;
+          currentSortDirection = null;
+        }
+      } else {
+        currentSortColumn = col;
+        // Default 1st click direction: roles and star default to 'desc' (highest / starred first), others to 'asc'
+        currentSortDirection = (col === 'roles' || col === 'star') ? 'desc' : 'asc';
+      }
+      updateSortHeaderIcons();
+      applyFilters();
+    }
+
+    const SORT_COLUMNS = ['star', 'name', 'domain', 'size', 'ownership', 'location', 'roles'];
+
+    function updateSortHeaderIcons() {
+      SORT_COLUMNS.forEach(col => {
+        const iconEl = document.getElementById(`sortIcon-${col}`);
+        if (!iconEl) return;
+        
+        if (currentSortColumn === col) {
+          if (currentSortDirection === 'asc') {
+            iconEl.innerHTML = '<i class="fa-solid fa-arrow-up-long text-[#059669] dark:text-emerald-400 text-xs"></i>';
+            iconEl.className = 'text-[#059669] dark:text-emerald-400';
+          } else if (currentSortDirection === 'desc') {
+            iconEl.innerHTML = '<i class="fa-solid fa-arrow-down-long text-[#059669] dark:text-emerald-400 text-xs"></i>';
+            iconEl.className = 'text-[#059669] dark:text-emerald-400';
+          }
+        } else {
+          iconEl.innerHTML = '<i class="fa-solid fa-sort text-[10px]"></i>';
+          iconEl.className = 'text-slate-300 dark:text-slate-700 group-hover:text-slate-500';
+        }
+      });
+    }
+
+    function toggleProductRoles() {
+      productRolesOnly = !productRolesOnly;
+      updateKPICardActiveStates();
+      applyFilters();
+    }
+
+    function toggleFavouritesFilter() {
+      if (!isLocal) return;
+      favouritesOnly = !favouritesOnly;
+      updateKPICardActiveStates();
+      applyFilters();
+    }
+
+    function toggleAppliedFilter() {
+      if (!isLocal) return;
+      appliedOnly = !appliedOnly;
+      updateKPICardActiveStates();
+      applyFilters();
+    }
+
+    function resetAllFilters() {
+      productRolesOnly = false;
+      favouritesOnly = false;
+      appliedOnly = false;
+      currentSortColumn = null;
+      currentSortDirection = null;
+      const search = document.getElementById('searchInput');
+      if (search) search.value = '';
+      ['filterScale', 'filterIndustry', 'filterFunding', 'filterLocation'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = 'ALL';
+      });
+      updateSortHeaderIcons();
+      updateKPICardActiveStates();
+      applyFilters();
+    }
+
+    function updateKPICardActiveStates() {
+      const rolesCard = document.getElementById('statProductRolesCard');
+      const favCard = document.getElementById('statFavouritesCard');
+      const appCard = document.getElementById('statAppliedCard');
+      const base = 'cursor-pointer select-none rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between shadow-sm transition-colors';
+
+      if (rolesCard) {
+        if (productRolesOnly) {
+          rolesCard.className = `${base} bg-emerald-100/90 dark:bg-emerald-950/60 border border-emerald-500 dark:border-emerald-500 ring-1 ring-emerald-500 dark:ring-emerald-500`;
+        } else {
+          rolesCard.className = `${base} bg-emerald-50/70 dark:bg-slate-900/70 border border-emerald-200 dark:border-emerald-900/40 hover:border-emerald-300 dark:hover:border-emerald-800/60`;
+        }
+      }
+
+      if (favCard && isLocal) {
+        if (favouritesOnly) {
+          favCard.className = `${base} bg-amber-100/90 dark:bg-amber-950/60 border border-amber-500 dark:border-amber-500 ring-1 ring-amber-500 dark:ring-amber-500`;
+        } else {
+          favCard.className = `${base} bg-amber-50/70 dark:bg-slate-900/70 border border-amber-200 dark:border-amber-900/30 hover:border-amber-300 dark:hover:border-amber-800/60`;
+        }
+      }
+
+      if (appCard && isLocal) {
+        if (appliedOnly) {
+          appCard.className = `${base} bg-blue-100/90 dark:bg-blue-950/60 border border-blue-500 dark:border-blue-500 ring-1 ring-blue-500 dark:ring-blue-500`;
+        } else {
+          appCard.className = `${base} bg-blue-50/70 dark:bg-slate-900/70 border border-blue-200 dark:border-blue-900/30 hover:border-blue-300 dark:hover:border-blue-800/60`;
+        }
+      }
+    }
 
     // Configure UI based on deployment environment
     function setupEnvironmentUI() {
-      const scanWrap = document.getElementById('scanBtnWrap');
-      const deployedUpdatedLabel = document.getElementById('deployedUpdatedLabel');
-      const addBtn = document.getElementById('addBtn');
+      const scanBtn = document.getElementById('scanBtn');
       const favCard = document.getElementById('statFavouritesCard');
       const appCard = document.getElementById('statAppliedCard');
-      const favFilter = document.getElementById('favouritesFilterWrap');
-      const appFilter = document.getElementById('appliedFilterWrap');
       const thStar = document.getElementById('thStar');
       const kpiContainer = document.getElementById('kpiContainer');
 
       if (!isLocal) {
         // Strictly force-hide server-dependent and private tracking elements in deployed state
-        if (scanWrap) scanWrap.style.display = 'none';
-        if (deployedUpdatedLabel) deployedUpdatedLabel.style.display = 'inline-flex';
-        if (addBtn) addBtn.style.display = 'none';
+        if (scanBtn) scanBtn.style.display = 'none';
         if (favCard) favCard.style.display = 'none';
         if (appCard) appCard.style.display = 'none';
-        if (favFilter) favFilter.style.display = 'none';
-        if (appFilter) appFilter.style.display = 'none';
         if (thStar) thStar.style.display = 'none';
 
         // Adjust KPI grid for deployed view
@@ -635,18 +894,20 @@
           kpiContainer.className = 'grid grid-cols-3 gap-2 sm:gap-4';
         }
       } else {
-        if (scanWrap) scanWrap.style.display = '';
-        if (deployedUpdatedLabel) deployedUpdatedLabel.style.display = 'none';
-        if (addBtn) addBtn.style.display = '';
+        if (scanBtn) scanBtn.style.display = '';
         if (favCard) favCard.style.display = '';
         if (appCard) appCard.style.display = '';
-        if (favFilter) favFilter.style.display = '';
-        if (appFilter) appFilter.style.display = '';
         if (thStar) thStar.style.display = '';
       }
     }
 
     async function loadCompanies() {
+      initTheme();
+      // On mobile screens, default Live Roles to ON so users get straight to the point
+      if (window.innerWidth < 768) {
+        productRolesOnly = true;
+      }
+      updateKPICardActiveStates();
       setupEnvironmentUI();
       try {
         let res;
@@ -707,29 +968,29 @@
     }
 
     function getScaleBadgeClass(scale) {
-      if (!scale) return 'bg-slate-800 text-slate-300 border-slate-700';
-      if (scale.includes('Startup')) return 'bg-sky-500/10 text-sky-400 border-sky-500/20';
-      if (scale.includes('Scaleup')) return 'bg-blue-500/10 text-blue-400 border-blue-500/20';
-      if (scale.includes('Mid-Market')) return 'bg-purple-500/10 text-purple-400 border-purple-500/20';
-      return 'bg-amber-500/10 text-amber-400 border-amber-500/20';
+      if (!scale) return 'bg-slate-100 text-slate-700 border-slate-300 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700';
+      if (scale.includes('Startup')) return 'bg-emerald-50 text-emerald-800 border-emerald-300 dark:bg-emerald-950/40 dark:text-emerald-400 dark:border-emerald-800/50';
+      if (scale.includes('Scaleup')) return 'bg-sky-50 text-sky-800 border-sky-300 dark:bg-sky-950/40 dark:text-sky-400 dark:border-sky-800/50';
+      if (scale.includes('Mid-Market')) return 'bg-indigo-50 text-indigo-800 border-indigo-300 dark:bg-indigo-950/40 dark:text-indigo-400 dark:border-indigo-800/50';
+      return 'bg-purple-50 text-purple-800 border-purple-300 dark:bg-purple-950/40 dark:text-purple-400 dark:border-purple-800/50';
     }
 
     function getPipelineStageBadge(stage) {
       if (!isLocal || !stage) return '';
       const s = stage.toLowerCase();
-      if (s === 'applied') {
-        return '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40"><i class="fa-solid fa-check text-[9px]"></i> Applied</span>';
+      if (s === 'applied' || s === 'tailoring') {
+        return '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-300 dark:bg-emerald-500/20 dark:text-emerald-400 dark:border-emerald-500/40"><i class="fa-solid fa-check text-[9px]"></i> Applied</span>';
       }
       if (s === 'rejected') {
-        return '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-rose-500/20 text-rose-400 border border-rose-500/40"><i class="fa-solid fa-ban text-[9px]"></i> Rejected</span>';
+        return '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-rose-50 text-rose-800 border border-rose-300 dark:bg-rose-500/20 dark:text-rose-400 dark:border-rose-500/40"><i class="fa-solid fa-ban text-[9px]"></i> Rejected</span>';
       }
       if (s.includes('phone') || s.includes('screen') || s.includes('panel') || s.includes('interview')) {
-        return '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/40 animate-pulse"><i class="fa-solid fa-user-tie text-[9px]"></i> Interviewing</span>';
+        return '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-purple-50 text-purple-800 border border-purple-300 dark:bg-purple-500/20 dark:text-purple-300 dark:border-purple-500/40 animate-pulse"><i class="fa-solid fa-user-tie text-[9px]"></i> Interviewing</span>';
       }
       if (s.includes('ghosted') || s.includes('closed')) {
-        return '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-slate-800 text-slate-400 border border-slate-700">Closed</span>';
+        return '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-slate-100 text-slate-700 border border-slate-300 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700">Closed</span>';
       }
-      return `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-blue-500/20 text-blue-400 border border-blue-500/40">${stage}</span>`;
+      return `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-blue-50 text-blue-800 border border-blue-300 dark:bg-blue-500/20 dark:text-blue-400 dark:border-blue-500/40">${stage}</span>`;
     }
 
     function toggleRow(id) {
@@ -746,7 +1007,10 @@
         if (chevronMob) {
           chevronMob.classList.remove('rotate-180');
           const btn = chevronMob.parentElement;
-          if (btn) btn.querySelector('span').innerText = 'Details';
+          if (btn) {
+            const span = btn.querySelector('span');
+            if (span) span.innerText = 'Details';
+          }
         }
       } else {
         expandedRows.add(id);
@@ -756,24 +1020,27 @@
         if (chevronMob) {
           chevronMob.classList.add('rotate-180');
           const btn = chevronMob.parentElement;
-          if (btn) btn.querySelector('span').innerText = 'Less';
+          if (btn) {
+            const span = btn.querySelector('span');
+            if (span) span.innerText = 'Less';
+          }
         }
       }
     }
 
     function applyFilters() {
-      const search = document.getElementById('searchInput').value.toLowerCase().trim();
-      const scale = document.getElementById('filterScale').value;
-      const industry = document.getElementById('filterIndustry').value;
-      const funding = document.getElementById('filterFunding').value;
-      const location = document.getElementById('filterLocation').value;
-      const productOnly = document.getElementById('toggleProductOnly').checked;
-      const appliedOnly = isLocal && document.getElementById('toggleAppliedOnly') && document.getElementById('toggleAppliedOnly').checked;
-      const favouritesOnly = isLocal && document.getElementById('toggleFavouritesOnly') && document.getElementById('toggleFavouritesOnly').checked;
+      const search = (document.getElementById('searchInput')?.value || '').toLowerCase().trim();
+      const scale = document.getElementById('filterScale')?.value || 'ALL';
+      const industry = document.getElementById('filterIndustry')?.value || 'ALL';
+      const funding = document.getElementById('filterFunding')?.value || 'ALL';
+      const location = document.getElementById('filterLocation')?.value || 'ALL';
+      const productOnly = productRolesOnly;
+      const favOnly = isLocal ? favouritesOnly : false;
+      const appOnly = isLocal ? appliedOnly : false;
 
       const filtered = allCompanies.filter(c => {
         // Favourites filter (Local only)
-        if (isLocal && favouritesOnly && !favourites.has(c.id)) return false;
+        if (isLocal && favOnly && !favourites.has(c.id)) return false;
 
         // Search filter
         if (search) {
@@ -800,19 +1067,50 @@
         return true;
       });
 
+      // Apply Column Sorting if active
+      if (currentSortColumn && currentSortDirection) {
+        filtered.sort((a, b) => {
+          let valA, valB;
+          if (currentSortColumn === 'star') {
+            valA = favourites.has(a.id) ? 1 : 0;
+            valB = favourites.has(b.id) ? 1 : 0;
+          } else if (currentSortColumn === 'name') {
+            valA = (a.name || '').toLowerCase();
+            valB = (b.name || '').toLowerCase();
+          } else if (currentSortColumn === 'domain') {
+            valA = (a.industry || '').toLowerCase();
+            valB = (b.industry || '').toLowerCase();
+          } else if (currentSortColumn === 'size') {
+            valA = getScaleTierRank(a.scale_tier);
+            valB = getScaleTierRank(b.scale_tier);
+          } else if (currentSortColumn === 'ownership') {
+            valA = (a.funding_type || '').toLowerCase();
+            valB = (b.funding_type || '').toLowerCase();
+          } else if (currentSortColumn === 'location') {
+            valA = (a.location || '').toLowerCase();
+            valB = (b.location || '').toLowerCase();
+          } else if (currentSortColumn === 'roles') {
+            valA = a.product_roles_count || 0;
+            valB = b.product_roles_count || 0;
+          }
+
+          if (valA < valB) return currentSortDirection === 'asc' ? -1 : 1;
+          if (valA > valB) return currentSortDirection === 'asc' ? 1 : -1;
+          return 0;
+        });
+      }
+
       render(filtered);
     }
 
     function render(companies) {
       const tbody = document.getElementById('companyTableBody');
       const mobileList = document.getElementById('mobileListContainer');
-      const grid = document.getElementById('gridContainer');
       const emptyState = document.getElementById('emptyState');
 
       if (companies.length === 0) {
         if (tbody) tbody.innerHTML = '';
         if (mobileList) mobileList.innerHTML = '';
-        if (grid) grid.innerHTML = '';
         emptyState.classList.remove('hidden');
         return;
       }
@@ -824,40 +1122,39 @@
         mobileList.innerHTML = companies.map(c => {
           const isExpanded = expandedRows.has(c.id);
           const hasProductRoles = (c.product_roles_count || 0) > 0;
-
           const hasDedicatedCareers = hasDedicatedCareersPage(c);
 
           let badgeHtml = '';
           if (hasProductRoles) {
             badgeHtml = `
-              <button onclick="event.stopPropagation(); viewCompanyRoles('${c.id}')" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 text-xs font-bold shadow-sm active:scale-95 transition-transform whitespace-nowrap">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <button onclick="event.stopPropagation(); viewCompanyRoles('${c.id}')" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#ECFDF5] text-[#059669] border border-[#059669] dark:bg-emerald-500/15 dark:text-emerald-300 dark:border-emerald-500/30 text-xs font-bold shadow-sm active:scale-95 transition-transform whitespace-nowrap">
+                <span class="w-1.5 h-1.5 rounded-full bg-[#059669] dark:bg-emerald-400 animate-pulse"></span>
                 <span>${c.product_roles_count} Open</span>
               </button>
             `;
           } else if (isAutomatedATS(c)) {
-            badgeHtml = `<span class="px-2 py-0.5 rounded-full bg-slate-900 text-slate-500 text-[11px] font-medium border border-slate-800" title="Scanned live via ${getAtsDisplayName(c.ats_type)} API. No active product roles currently open.">0 Open</span>`;
+            badgeHtml = `<span class="px-2 py-0.5 rounded-full bg-[#F5F8FC] dark:bg-slate-900 text-slate-500 text-[11px] font-medium border border-[#D1D9E6] dark:border-slate-800" title="Scanned live via ${getAtsDisplayName(c.ats_type)} API. No active product roles currently open.">0 Open</span>`;
           } else if (hasDedicatedCareers) {
-            badgeHtml = `<a href="${c.careers_url}" target="_blank" onclick="event.stopPropagation()" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-slate-900/80 text-slate-400 hover:text-emerald-300 hover:border-emerald-700/60 hover:bg-emerald-950/20 text-xs font-medium border border-slate-800 transition-colors" title="Check portal directly"><i class="fa-solid fa-arrow-up-right-from-square text-[9px] text-slate-500"></i> Portal</a>`;
+            badgeHtml = `<a href="${c.careers_url}" target="_blank" onclick="event.stopPropagation()" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#F5F8FC] dark:bg-slate-900/80 text-slate-600 dark:text-slate-400 hover:text-emerald-700 dark:hover:text-emerald-300 hover:border-emerald-300 dark:hover:border-emerald-700/60 hover:bg-emerald-50 dark:hover:bg-emerald-950/20 text-xs font-medium border border-[#D1D9E6] dark:border-slate-800 transition-colors" title="Check portal directly"><i class="fa-solid fa-arrow-up-right-from-square text-[9px] text-slate-400 dark:text-slate-500"></i> Portal</a>`;
           } else {
-            badgeHtml = `<a href="${c.website}" target="_blank" onclick="event.stopPropagation()" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-900/50 text-slate-500 hover:text-slate-300 text-[11px] font-medium border border-slate-800 transition-colors" title="No separate careers page - visit homepage"><i class="fa-solid fa-house text-[9px] text-slate-600"></i> Home</a>`;
+            badgeHtml = `<a href="${c.website}" target="_blank" onclick="event.stopPropagation()" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#F5F8FC]/60 dark:bg-slate-900/50 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 text-[11px] font-medium border border-[#D1D9E6]/80 dark:border-slate-800 transition-colors" title="No separate careers page - visit homepage"><i class="fa-solid fa-house text-[9px] text-slate-400 dark:text-slate-600"></i> Home</a>`;
           }
 
           return `
-            <div class="bg-slate-900/85 border border-slate-800 rounded-2xl p-4 transition-all shadow-md">
+            <div class="bg-white dark:bg-slate-900/85 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 transition-all shadow-sm dark:shadow-md">
               <!-- Mobile Card Header: Company Name & Status Badge -->
               <div class="flex items-start justify-between gap-2.5">
                 <div class="min-w-0 flex-1">
-                  <div class="font-bold text-base text-slate-100 flex items-center gap-2">
+                  <div class="font-bold text-base text-slate-900 dark:text-slate-100 flex items-center gap-2">
                     <span class="truncate">${c.name}</span>
-                    <a href="${c.website}" target="_blank" class="text-slate-500 hover:text-emerald-400 text-xs shrink-0" title="Visit website">
+                    <a href="${c.website}" target="_blank" class="text-slate-400 hover:text-emerald-600 dark:text-slate-500 dark:hover:text-emerald-400 text-xs shrink-0" title="Visit website">
                       <i class="fa-solid fa-arrow-up-right-from-square"></i>
                     </a>
                   </div>
-                  <div class="text-xs text-slate-400 mt-1 flex items-center gap-1.5 flex-wrap">
-                    <span><i class="fa-solid fa-location-dot text-slate-500 text-[10px]"></i> ${c.location}</span>
+                  <div class="text-xs text-slate-500 dark:text-slate-400 mt-1 flex items-center gap-1.5 flex-wrap">
+                    <span><i class="fa-solid fa-location-dot text-slate-400 dark:text-slate-500 text-[10px]"></i> ${c.location}</span>
                     <span>•</span>
-                    <span class="text-slate-300 font-medium">${c.industry}</span>
+                    <span class="text-slate-700 dark:text-slate-300 font-medium">${c.industry}</span>
                   </div>
                 </div>
                 <div class="shrink-0">
@@ -866,54 +1163,53 @@
               </div>
 
               <!-- Mobile Quick Actions Bar -->
-              <div class="flex items-center justify-between gap-2 mt-3 pt-3 border-t border-slate-800/80">
-                <div class="flex items-center gap-2">
-                  <a href="${getLinkedInSearchUrl(c.name)}" target="_blank" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-sky-400 bg-sky-950/50 border border-sky-800/60 hover:bg-sky-900/50 transition-colors" title="Search LinkedIn Jobs for ${c.name}">
-                    <i class="fa-brands fa-linkedin text-sm text-[#0a66c2]"></i>
-                    <span>LinkedIn</span>
-                  </a>
+              <div class="flex items-center justify-between gap-2 mt-3 pt-3 border-t border-slate-200 dark:border-slate-800/80">
+                <div class="flex items-center gap-2.5">
                   ${hasDedicatedCareers ? `
-                    <a href="${c.careers_url}" target="_blank" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm transition-colors">
+                    <a href="${c.careers_url}" target="_blank" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold bg-[#059669] hover:bg-[#047857] text-white shadow-sm shadow-emerald-600/20 transition-colors">
                       <span>Careers</span>
                       <i class="fa-solid fa-chevron-right text-[9px]"></i>
                     </a>
                   ` : `
-                    <a href="${c.website}" target="_blank" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-slate-200 bg-slate-950 border border-slate-800 transition-colors" title="No dedicated careers page - visit homepage">
-                      <i class="fa-solid fa-house text-slate-400 text-xs"></i>
+                    <a href="${c.website}" target="_blank" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 border border-slate-200 dark:text-slate-400 dark:hover:text-slate-200 dark:bg-slate-950 dark:border-slate-800 transition-colors" title="No dedicated careers page - visit homepage">
+                      <i class="fa-solid fa-house text-slate-500 dark:text-slate-400 text-xs"></i>
                       <span>Home</span>
                     </a>
                   `}
+                  <a href="${getLinkedInSearchUrl(c.name)}" target="_blank" class="inline-flex items-center justify-center p-1 text-[#0A66C2] hover:text-[#004182] hover:scale-110 active:scale-95 transition-transform" title="Search LinkedIn Jobs for ${c.name}" aria-label="Search LinkedIn Jobs for ${c.name}">
+                    <i class="fa-brands fa-linkedin text-2xl"></i>
+                  </a>
                 </div>
 
-                <button onclick="toggleRow('${c.id}')" class="inline-flex items-center gap-1 text-xs font-semibold text-slate-400 hover:text-slate-200 px-2.5 py-1.5 rounded-lg bg-slate-950 border border-slate-800 transition-colors">
+                <button onclick="toggleRow('${c.id}')" class="inline-flex items-center gap-1 text-xs font-semibold text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200 px-2.5 py-1.5 rounded-lg bg-slate-50 hover:bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 transition-colors">
                   <span>${isExpanded ? 'Less' : 'Details'}</span>
                   <i id="chevron-mob-${c.id}" class="fa-solid fa-chevron-down text-[10px] transition-transform ${isExpanded ? 'rotate-180' : ''}"></i>
                 </button>
               </div>
 
               <!-- Expandable Mobile Summary -->
-              <div id="details-mob-${c.id}" class="${isExpanded ? '' : 'hidden'} mt-3 pt-3 border-t border-slate-800/60 space-y-2.5 text-xs text-slate-300">
+              <div id="details-mob-${c.id}" class="${isExpanded ? '' : 'hidden'} mt-3 pt-3 border-t border-slate-200 dark:border-slate-800/60 space-y-2.5 text-xs text-slate-700 dark:text-slate-300">
                 ${hasProductRoles ? `
-                  <div class="p-3 bg-emerald-950/30 border border-emerald-800/40 rounded-xl space-y-2">
-                    <div class="text-[11px] font-bold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
-                      <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <div class="p-3 bg-emerald-50/70 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/40 rounded-xl space-y-2">
+                    <div class="text-[11px] font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-400 flex items-center gap-1.5">
+                      <span class="w-1.5 h-1.5 rounded-full bg-[#059669] dark:bg-emerald-400 animate-pulse"></span>
                       <span>Live Verified Openings (${c.product_roles_count})</span>
                     </div>
                     ${c.active_product_roles.map(r => `
-                      <a href="${r.url}" target="_blank" class="flex items-center justify-between p-2 rounded-lg bg-slate-900 border border-emerald-900/50 hover:border-emerald-500/50 transition-colors text-slate-100">
+                      <a href="${r.url}" target="_blank" class="flex items-center justify-between p-2 rounded-lg bg-white dark:bg-slate-900 border border-emerald-200 dark:border-emerald-900/50 hover:border-emerald-500/50 transition-colors text-slate-900 dark:text-slate-100">
                         <span class="font-bold truncate pr-2 text-xs">${r.title}</span>
-                        <span class="text-[11px] text-emerald-400 font-bold shrink-0">Apply ↗</span>
+                        <span class="text-[11px] text-emerald-700 dark:text-emerald-400 font-bold shrink-0">Apply ↗</span>
                       </a>
                     `).join('')}
                   </div>
                 ` : ''}
 
-                <p class="text-slate-300 leading-relaxed text-xs">${c.description || 'No detailed overview available yet.'}</p>
+                <p class="text-slate-600 dark:text-slate-300 leading-relaxed text-xs">${c.description || 'No detailed overview available yet.'}</p>
 
                 <div class="flex flex-wrap gap-1.5 pt-1">
-                  <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 text-[11px]">${c.scale_tier}</span>
-                  <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 text-[11px]">${c.funding_type || 'Private'}</span>
-                  ${c.headcount_estimate ? `<span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 text-[11px]">${c.headcount_estimate} team</span>` : ''}
+                  <span class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-[11px] border border-slate-200 dark:border-slate-700">${c.scale_tier}</span>
+                  <span class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-[11px] border border-slate-200 dark:border-slate-700">${c.funding_type || 'Private'}</span>
+                  ${c.headcount_estimate ? `<span class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-[11px] border border-slate-200 dark:border-slate-700">${c.headcount_estimate} team</span>` : ''}
                 </div>
               </div>
             </div>
@@ -933,10 +1229,10 @@
 
         return `
           <!-- Main Row -->
-          <tr class="hover:bg-slate-800/40 transition-colors cursor-pointer border-t border-slate-800/60 select-none ${isFav ? 'bg-amber-950/10' : ''}" onclick="toggleRow('${c.id}')">
+          <tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors cursor-pointer border-t border-slate-200 dark:border-slate-800/60 select-none ${isFav ? 'bg-amber-50/40 dark:bg-amber-950/10' : ''}" onclick="toggleRow('${c.id}')">
             <!-- Chevron Toggle -->
             <td class="py-4 px-3 text-center">
-              <button type="button" class="text-slate-500 hover:text-slate-300 transition-transform">
+              <button type="button" class="text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300 transition-transform">
                 <i id="chevron-${c.id}" class="fa-solid fa-chevron-right text-xs transition-transform ${isExpanded ? 'rotate-90' : ''}"></i>
               </button>
             </td>
@@ -944,45 +1240,45 @@
             <!-- Favourite Star Icon (Local only) -->
             ${isLocal ? `
               <td class="py-4 px-3 text-center" onclick="event.stopPropagation()">
-                <button onclick="toggleFavourite('${c.id}', event)" class="p-1 text-slate-600 hover:text-amber-400 transition-colors group" title="${isFav ? 'Remove from favourites' : 'Add to favourites'}">
-                  <i class="${isFav ? 'fa-solid fa-star text-amber-400' : 'fa-regular fa-star text-slate-500 group-hover:text-amber-400/80'} text-sm transition-transform active:scale-125"></i>
+                <button onclick="toggleFavourite('${c.id}', event)" class="p-1 text-slate-300 hover:text-amber-500 dark:text-slate-600 dark:hover:text-amber-400 transition-colors group" title="${isFav ? 'Remove from favourites' : 'Add to favourites'}">
+                  <i class="${isFav ? 'fa-solid fa-star text-amber-500 dark:text-amber-400' : 'fa-regular fa-star text-slate-300 dark:text-slate-500 group-hover:text-amber-500 dark:group-hover:text-amber-400/80'} text-sm transition-transform active:scale-125"></i>
                 </button>
               </td>
             ` : ''}
 
             <!-- Company Name & Snippet -->
             <td class="py-4 px-5">
-              <div class="font-bold text-base text-slate-100 flex items-center gap-2">
+              <div class="font-bold text-base text-slate-900 dark:text-slate-100 flex items-center gap-2">
                 <span>${c.name}</span>
-                <a href="${c.website}" target="_blank" onclick="event.stopPropagation()" class="text-slate-500 hover:text-emerald-400 text-xs" title="Open website">
+                <a href="${c.website}" target="_blank" onclick="event.stopPropagation()" class="text-slate-400 hover:text-emerald-600 dark:text-slate-500 dark:hover:text-emerald-400 text-xs" title="Open website">
                   <i class="fa-solid fa-arrow-up-right-from-square"></i>
                 </a>
                 ${latestApp ? getPipelineStageBadge(latestApp.current_stage) : ''}
               </div>
-              <div class="text-xs text-slate-400 line-clamp-1 max-w-sm mt-0.5">${c.description || ''}</div>
+              <div class="text-xs text-slate-500 dark:text-slate-400 line-clamp-1 max-w-sm mt-0.5">${c.description || ''}</div>
             </td>
 
             <!-- Sector & Domain -->
             <td class="py-4 px-5">
-              <span class="inline-block bg-slate-800 text-slate-200 text-xs px-2.5 py-1 rounded-lg font-medium">${c.industry}</span>
-              <div class="text-xs text-slate-500 mt-1">${c.sub_sector || ''}</div>
+              <span class="inline-block bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-200 text-xs px-2.5 py-1 rounded-lg font-medium border border-slate-200 dark:border-slate-700">${c.industry}</span>
+              <div class="text-xs text-slate-500 dark:text-slate-400 mt-1">${c.sub_sector || ''}</div>
             </td>
 
             <!-- Scale Tier -->
             <td class="py-4 px-5">
               <span class="inline-block border px-2.5 py-1 rounded-lg text-xs font-semibold ${getScaleBadgeClass(c.scale_tier)}">${c.scale_tier}</span>
-              <div class="text-xs text-slate-500 mt-1">${c.headcount_estimate || ''} team</div>
+              <div class="text-xs text-slate-500 dark:text-slate-400 mt-1">${c.headcount_estimate || ''} team</div>
             </td>
 
             <!-- Ownership -->
             <td class="py-4 px-5">
-              <span class="text-sm text-slate-300 font-medium">${c.funding_type || 'Private'}</span>
+              <span class="text-sm text-slate-700 dark:text-slate-300 font-medium">${c.funding_type || 'Private'}</span>
             </td>
 
             <!-- Location -->
             <td class="py-4 px-5">
-              <div class="text-sm text-slate-200 font-medium flex items-center gap-1.5">
-                <i class="fa-solid fa-location-dot text-slate-500 text-xs"></i>
+              <div class="text-sm text-slate-700 dark:text-slate-200 font-medium flex items-center gap-1.5">
+                <i class="fa-solid fa-location-dot text-slate-400 dark:text-slate-500 text-xs"></i>
                 ${c.location}
               </div>
             </td>
@@ -990,20 +1286,20 @@
             <!-- Live Product Roles Column -->
             <td class="py-4 px-4 text-center whitespace-nowrap">
               ${hasProductRoles ? `
-                <button onclick="event.stopPropagation(); viewCompanyRoles('${c.id}')" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 font-bold hover:bg-emerald-500/25 transition-all text-xs shadow-sm whitespace-nowrap">
-                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                <button onclick="event.stopPropagation(); viewCompanyRoles('${c.id}')" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#ECFDF5] text-[#059669] border border-[#059669] hover:bg-[#D1FAE5] dark:bg-emerald-500/15 dark:text-emerald-300 dark:border-emerald-500/30 dark:hover:bg-emerald-500/25 font-bold transition-all text-xs shadow-sm whitespace-nowrap">
+                  <span class="w-1.5 h-1.5 rounded-full bg-[#059669] dark:bg-emerald-400 animate-pulse"></span>
                   <span>${c.product_roles_count} Open</span>
                 </button>
               ` : (isAutomatedATS(c) ? `
-                <span class="inline-block px-2.5 py-1 rounded-full bg-slate-900 text-slate-500 text-xs font-medium border border-slate-800 whitespace-nowrap" title="Scanned live via ${getAtsDisplayName(c.ats_type)} API. No active product roles currently open.">0 Open</span>
+                <span class="inline-block px-2.5 py-1 rounded-full bg-[#F5F8FC] dark:bg-slate-900 text-slate-500 text-xs font-medium border border-[#D1D9E6] dark:border-slate-800 whitespace-nowrap" title="Scanned live via ${getAtsDisplayName(c.ats_type)} API. No active product roles currently open.">0 Open</span>
               ` : (hasDedicatedCareers ? `
-                <a href="${c.careers_url}" target="_blank" onclick="event.stopPropagation()" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-900/80 text-slate-400 hover:text-emerald-300 hover:border-emerald-700/60 hover:bg-emerald-950/20 text-xs font-medium border border-slate-800/90 transition-colors group whitespace-nowrap" title="Uses closed or enterprise recruitment portal (e.g. Workday / custom). Click to open careers portal.">
-                  <i class="fa-solid fa-arrow-up-right-from-square text-[9px] text-slate-500 group-hover:text-emerald-400 transition-colors"></i>
+                <a href="${c.careers_url}" target="_blank" onclick="event.stopPropagation()" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#F5F8FC] dark:bg-slate-900/80 text-slate-600 dark:text-slate-400 hover:text-emerald-700 dark:hover:text-emerald-300 hover:border-emerald-300 dark:hover:border-emerald-700/60 hover:bg-emerald-50 dark:hover:bg-emerald-950/20 text-xs font-medium border border-[#D1D9E6] dark:border-slate-800/90 transition-colors group whitespace-nowrap" title="Uses closed or enterprise recruitment portal (e.g. Workday / custom). Click to open careers portal.">
+                  <i class="fa-solid fa-arrow-up-right-from-square text-[9px] text-slate-400 dark:text-slate-500 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors"></i>
                   <span>N/A (Portal)</span>
                 </a>
               ` : `
-                <a href="${c.website}" target="_blank" onclick="event.stopPropagation()" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-900/50 text-slate-500 hover:text-slate-300 text-xs font-medium border border-slate-800/70 transition-colors group whitespace-nowrap" title="No dedicated careers portal. Visit homepage.">
-                  <i class="fa-solid fa-house text-[9px] text-slate-600 group-hover:text-slate-400 transition-colors"></i>
+                <a href="${c.website}" target="_blank" onclick="event.stopPropagation()" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#F5F8FC]/60 dark:bg-slate-900/50 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 text-xs font-medium border border-[#D1D9E6]/80 dark:border-slate-800/70 transition-colors group whitespace-nowrap" title="No dedicated careers portal. Visit homepage.">
+                  <i class="fa-solid fa-house text-[9px] text-slate-400 dark:text-slate-600 group-hover:text-slate-600 dark:group-hover:text-slate-400 transition-colors"></i>
                   <span>N/A (Home)</span>
                 </a>
               `))}
@@ -1011,46 +1307,45 @@
 
             <!-- Actions -->
             <td class="py-4 px-5 text-right whitespace-nowrap" onclick="event.stopPropagation()">
-              <div class="flex items-center justify-end gap-2">
-                <a href="${getLinkedInSearchUrl(c.name)}" target="_blank" class="inline-flex items-center gap-1.5 text-xs font-semibold text-sky-400 hover:text-sky-300 bg-sky-950/40 border border-sky-800/50 px-2.5 py-1.5 rounded-lg hover:bg-sky-900/40 transition-colors" title="Search LinkedIn Jobs for ${c.name}">
-                  <i class="fa-brands fa-linkedin text-sm text-[#0a66c2]"></i>
-                  <span class="hidden sm:inline">LinkedIn</span>
-                </a>
+              <div class="flex items-center justify-end gap-2.5">
                 ${hasDedicatedCareers ? `
-                  <a href="${c.careers_url}" target="_blank" class="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-400 hover:text-emerald-300 bg-emerald-950/40 border border-emerald-800/50 px-3.5 py-1.5 rounded-lg hover:bg-emerald-900/40 transition-colors" title="Open official careers portal">
+                  <a href="${c.careers_url}" target="_blank" class="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-[#059669] hover:bg-[#047857] border border-[#059669] px-3.5 py-1.5 rounded-lg shadow-sm shadow-emerald-600/20 transition-colors">
                     <span>Careers</span>
                     <i class="fa-solid fa-chevron-right text-[10px]"></i>
                   </a>
                 ` : `
-                  <a href="${c.website}" target="_blank" class="inline-flex items-center gap-1.5 text-xs font-medium text-slate-400 hover:text-slate-200 bg-slate-900/50 border border-slate-800 px-3 py-1.5 rounded-lg hover:bg-slate-800/50 transition-colors" title="No dedicated careers portal - visit homepage">
-                    <i class="fa-solid fa-house text-slate-400 text-xs"></i>
+                  <a href="${c.website}" target="_blank" class="inline-flex items-center gap-1.5 text-xs font-medium text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 border border-slate-200 dark:text-slate-400 dark:hover:text-slate-200 dark:bg-slate-900/50 dark:border-slate-800 px-3 py-1.5 rounded-lg dark:hover:bg-slate-800/50 transition-colors" title="No dedicated careers portal - visit homepage">
+                    <i class="fa-solid fa-house text-slate-500 dark:text-slate-400 text-xs"></i>
                     <span class="hidden lg:inline">Home</span>
                   </a>
                 `}
+                <a href="${getLinkedInSearchUrl(c.name)}" target="_blank" class="inline-flex items-center justify-center p-1 text-[#0A66C2] hover:text-[#004182] hover:scale-110 active:scale-95 transition-transform" title="Search LinkedIn Jobs for ${c.name}" aria-label="Search LinkedIn Jobs for ${c.name}">
+                  <i class="fa-brands fa-linkedin text-2xl"></i>
+                </a>
               </div>
             </td>
           </tr>
 
           <!-- Expandable Details Row -->
-          <tr id="details-${c.id}" class="${isExpanded ? '' : 'hidden'} bg-slate-950/90 border-b border-slate-800">
+          <tr id="details-${c.id}" class="${isExpanded ? '' : 'hidden'} bg-[#F5F8FC] dark:bg-slate-950/90 border-b border-slate-200 dark:border-slate-800">
             <td colspan="${isLocal ? 9 : 8}" class="p-6">
-              <div class="bg-slate-900/90 border border-slate-800/90 rounded-2xl p-6 space-y-5 shadow-inner">
+              <div class="bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800/90 rounded-2xl p-6 space-y-5 shadow-sm dark:shadow-inner">
                 
                 <!-- Pipeline Banner (Local only, if already applied or rejected) -->
                 ${(isLocal && trackedApps.length > 0) ? `
-                  <div class="p-4 rounded-xl border ${trackedApps[0].current_stage.toLowerCase() === 'rejected' ? 'bg-rose-950/40 border-rose-800/60 text-rose-200' : 'bg-emerald-950/40 border-emerald-800/60 text-emerald-200'} flex items-start justify-between">
+                  <div class="p-4 rounded-xl border ${trackedApps[0].current_stage.toLowerCase() === 'rejected' ? 'bg-rose-50 border-rose-200 text-rose-900 dark:bg-rose-950/40 dark:border-rose-800/60 dark:text-rose-200' : 'bg-emerald-50 border-emerald-200 text-emerald-900 dark:bg-emerald-950/40 dark:border-emerald-800/60 dark:text-emerald-200'} flex items-start justify-between">
                     <div>
                       <div class="flex items-center gap-2 font-bold text-sm">
-                        <i class="fa-solid ${trackedApps[0].current_stage.toLowerCase() === 'rejected' ? 'fa-ban text-rose-400' : 'fa-clipboard-check text-emerald-400'}"></i>
+                        <i class="fa-solid ${trackedApps[0].current_stage.toLowerCase() === 'rejected' ? 'fa-ban text-rose-500 dark:text-rose-400' : 'fa-clipboard-check text-emerald-600 dark:text-emerald-400'}"></i>
                         <span>Tracked Application: ${trackedApps[0].role_title}</span>
                         ${getPipelineStageBadge(trackedApps[0].current_stage)}
                       </div>
-                      <p class="text-xs text-slate-300 mt-1">
+                      <p class="text-xs text-slate-600 dark:text-slate-300 mt-1">
                         Applied: <strong>${trackedApps[0].date_applied || 'Recorded'}</strong>
-                        ${trackedApps[0].current_stage.toLowerCase() === 'rejected' ? ' • <span class="text-rose-300">Rejection on file. Do not duplicate cold applications.</span>' : ' • <span class="text-emerald-300">Active in pipeline.</span>'}
+                        ${trackedApps[0].current_stage.toLowerCase() === 'rejected' ? ' • <span class="text-rose-600 dark:text-rose-300">Rejection on file. Do not duplicate cold applications.</span>' : ' • <span class="text-emerald-600 dark:text-emerald-300">Active in pipeline.</span>'}
                       </p>
                     </div>
-                    <span class="text-[11px] font-mono text-slate-400 bg-slate-900 px-2.5 py-1 rounded border border-slate-800">
+                    <span class="text-[11px] font-mono text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-900 px-2.5 py-1 rounded border border-slate-200 dark:border-slate-800">
                       ${trackedApps[0].folder}
                     </span>
                   </div>
@@ -1058,50 +1353,50 @@
 
                 <!-- About & Description -->
                 <div>
-                  <h4 class="text-xs font-bold uppercase tracking-wider text-emerald-400 mb-2 flex items-center gap-2">
+                  <h4 class="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 mb-2 flex items-center gap-2">
                     <i class="fa-solid fa-circle-info"></i> About ${c.name}
                   </h4>
-                  <p class="text-sm text-slate-200 leading-relaxed">${c.description || 'No detailed overview available yet.'}</p>
+                  <p class="text-sm text-slate-700 dark:text-slate-200 leading-relaxed">${c.description || 'No detailed overview available yet.'}</p>
                 </div>
 
                 <!-- Products, Leadership & Location Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t border-slate-800/60 text-sm">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t border-slate-200 dark:border-slate-800/60 text-sm">
                   <div>
-                    <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Key Products & Technology</span>
-                    <p class="text-slate-200 font-medium">${(c.key_products && c.key_products.length > 0) ? c.key_products.join(', ') : 'Proprietary platform architecture'}</p>
+                    <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider block mb-1">Key Products & Technology</span>
+                    <p class="text-slate-800 dark:text-slate-200 font-medium">${(c.key_products && c.key_products.length > 0) ? c.key_products.join(', ') : 'Proprietary platform architecture'}</p>
                   </div>
                   <div>
-                    <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Leadership & Key People</span>
-                    <p class="text-slate-200 font-medium">${c.key_people || 'Executive leadership team'}</p>
+                    <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider block mb-1">Leadership & Key People</span>
+                    <p class="text-slate-800 dark:text-slate-200 font-medium">${c.key_people || 'Executive leadership team'}</p>
                   </div>
                   <div>
-                    <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">NI Base & Address</span>
-                    <p class="text-slate-200 font-medium">${c.address || c.location + ', Northern Ireland'}</p>
+                    <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider block mb-1">NI Base & Address</span>
+                    <p class="text-slate-800 dark:text-slate-200 font-medium">${c.address || c.location + ', Northern Ireland'}</p>
                   </div>
                 </div>
 
                 <!-- Live Product Roles inside Accordion -->
                 ${hasProductRoles ? `
-                  <div class="pt-4 border-t border-slate-800/60">
-                    <h5 class="text-xs font-bold uppercase tracking-wider text-emerald-400 mb-3 flex items-center gap-2">
+                  <div class="pt-4 border-t border-slate-200 dark:border-slate-800/60">
+                    <h5 class="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 mb-3 flex items-center gap-2">
                       <i class="fa-solid fa-briefcase"></i> Active Product Management Openings (${c.product_roles_count})
                     </h5>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       ${c.active_product_roles.map(r => {
                         const isThisRoleApplied = isLocal && trackedApps.some(app => app.role_title.toLowerCase().includes('principal') || app.role_title.toLowerCase() === r.title.toLowerCase());
                         return `
-                          <div class="p-4 bg-slate-950 border border-slate-800 rounded-xl flex items-center justify-between hover:border-slate-700 transition-all">
+                          <div class="p-4 bg-[#F5F8FC] dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl flex items-center justify-between hover:border-slate-300 dark:hover:border-slate-700 transition-all">
                             <div>
-                              <div class="font-bold text-sm text-slate-100 flex items-center gap-2">
+                              <div class="font-bold text-sm text-slate-900 dark:text-slate-100 flex items-center gap-2">
                                 <span>${r.title}</span>
-                                ${isThisRoleApplied ? '<span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-bold">Applied</span>' : ''}
+                                ${isThisRoleApplied ? '<span class="text-[10px] bg-emerald-100 text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-400 px-2 py-0.5 rounded font-bold">Applied</span>' : ''}
                               </div>
-                              <div class="text-xs text-slate-400 mt-1">
-                                <i class="fa-solid fa-location-dot text-slate-500 mr-1 text-xs"></i> ${r.location}
-                                ${r.date_posted ? ` • <span class="text-slate-500">Posted ${r.date_posted}</span>` : ''}
+                              <div class="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                                <i class="fa-solid fa-location-dot text-slate-400 dark:text-slate-500 mr-1 text-xs"></i> ${r.location}
+                                ${r.date_posted ? ` • <span class="text-slate-400 dark:text-slate-500">Posted ${r.date_posted}</span>` : ''}
                               </div>
                             </div>
-                            <a href="${r.url}" target="_blank" class="px-3.5 py-2 ${isThisRoleApplied ? 'bg-slate-800 hover:bg-slate-700 text-emerald-300' : 'bg-emerald-600 hover:bg-emerald-500 text-white'} rounded-lg text-xs font-bold shadow-sm shadow-emerald-600/20 whitespace-nowrap">
+                            <a href="${r.url}" target="_blank" class="px-3.5 py-2 ${isThisRoleApplied ? 'bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-emerald-800 dark:text-emerald-300' : 'bg-emerald-600 hover:bg-emerald-500 text-white'} rounded-lg text-xs font-bold shadow-sm shadow-emerald-600/20 whitespace-nowrap">
                               ${isThisRoleApplied ? 'View Submission' : 'Apply Direct'}
                             </a>
                           </div>
@@ -1110,38 +1405,38 @@
                     </div>
                   </div>
                 ` : (isAutomatedATS(c) ? `
-                  <div class="pt-2 flex items-center justify-between text-xs text-slate-400">
+                  <div class="pt-2 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
                     <span>Scanned live via ${c.ats_type.toUpperCase()} feed. No active product management roles currently detected. Check full board for engineering and other vacancies.</span>
-                    <a href="${c.careers_url}" target="_blank" class="text-emerald-400 hover:underline font-medium">Visit Careers Portal &rarr;</a>
+                    <a href="${c.careers_url}" target="_blank" class="text-emerald-600 dark:text-emerald-400 hover:underline font-semibold">Visit Careers Portal &rarr;</a>
                   </div>
                 ` : (hasDedicatedCareers ? `
-                  <div class="pt-2 flex items-center justify-between text-xs text-slate-400 bg-slate-950/70 p-3.5 rounded-xl border border-slate-800/80">
+                  <div class="pt-2 flex items-center justify-between text-xs text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-950/70 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800/80">
                     <div class="flex items-center gap-2">
-                      <i class="fa-solid fa-circle-info text-slate-500 text-sm"></i>
+                      <i class="fa-solid fa-circle-info text-slate-400 dark:text-slate-500 text-sm"></i>
                       <span>This employer uses an enterprise or custom ATS (${c.ats_type === 'workday' ? 'Workday' : 'proprietary careers portal'}) that does not provide a public API feed. Check their portal directly.</span>
                     </div>
-                    <a href="${c.careers_url}" target="_blank" class="text-emerald-400 hover:underline font-bold whitespace-nowrap ml-4">Check Careers Portal &rarr;</a>
+                    <a href="${c.careers_url}" target="_blank" class="text-emerald-600 dark:text-emerald-400 hover:underline font-bold whitespace-nowrap ml-4">Check Careers Portal &rarr;</a>
                   </div>
                 ` : `
-                  <div class="pt-2 flex items-center justify-between text-xs text-slate-400 bg-slate-950/70 p-3.5 rounded-xl border border-slate-800/80">
+                  <div class="pt-2 flex items-center justify-between text-xs text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-950/70 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800/80">
                     <div class="flex items-center gap-2">
-                      <i class="fa-solid fa-circle-info text-slate-500 text-sm"></i>
+                      <i class="fa-solid fa-circle-info text-slate-400 dark:text-slate-500 text-sm"></i>
                       <span>This employer does not host a dedicated careers portal. Vacancies are typically announced directly on LinkedIn or on their homepage.</span>
                     </div>
-                    <a href="${c.website}" target="_blank" class="text-emerald-400 hover:underline font-bold whitespace-nowrap ml-4">Visit Website &rarr;</a>
+                    <a href="${c.website}" target="_blank" class="text-emerald-600 dark:text-emerald-400 hover:underline font-bold whitespace-nowrap ml-4">Visit Website &rarr;</a>
                   </div>
                 `))}
 
                 <!-- Quick Action Bar in Drawer -->
-                <div class="pt-4 border-t border-slate-800/60 flex flex-wrap items-center justify-between gap-3 text-xs">
+                <div class="pt-4 border-t border-slate-200 dark:border-slate-800/60 flex flex-wrap items-center justify-between gap-3 text-xs">
                   <div class="flex items-center gap-2.5">
-                    <a href="${getLinkedInSearchUrl(c.name)}" target="_blank" class="inline-flex items-center gap-2 px-3.5 py-2 bg-sky-950/60 hover:bg-sky-900/60 text-sky-300 border border-sky-800/60 rounded-xl font-bold transition-all shadow-sm">
-                      <i class="fa-brands fa-linkedin text-base text-[#0a66c2]"></i>
+                    <a href="${getLinkedInSearchUrl(c.name)}" target="_blank" class="inline-flex items-center gap-2 px-3.5 py-2 bg-sky-50 hover:bg-sky-100 text-sky-700 border border-sky-200 dark:bg-sky-950/60 dark:hover:bg-sky-900/60 dark:text-sky-300 dark:border-sky-800/60 rounded-xl font-bold transition-all shadow-sm">
+                      <i class="fa-brands fa-linkedin text-base text-[#0A66C2]"></i>
                       <span>Search LinkedIn Jobs for ${c.name}</span>
                       <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
                     </a>
-                    <a href="${c.website}" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-2 bg-slate-950 hover:bg-slate-800 text-slate-300 border border-slate-800 rounded-xl font-medium transition-all">
-                      <i class="fa-solid fa-globe text-slate-500"></i>
+                    <a href="${c.website}" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 dark:bg-slate-950 dark:hover:bg-slate-800 dark:text-slate-300 dark:border-slate-800 rounded-xl font-medium transition-all">
+                      <i class="fa-solid fa-globe text-slate-400 dark:text-slate-500"></i>
                       <span>Website</span>
                     </a>
                   </div>
@@ -1182,12 +1477,12 @@
         `;
       } else {
         rolesList.innerHTML = company.active_product_roles.map(r => `
-          <div class="p-4 bg-slate-950 border border-slate-800 rounded-xl flex items-center justify-between hover:border-slate-700 transition-all">
+          <div class="p-4 bg-[#F5F8FC] dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl flex items-center justify-between hover:border-slate-300 dark:hover:border-slate-700 transition-all">
             <div>
-              <h5 class="text-sm font-bold text-slate-100">${r.title}</h5>
-              <p class="text-xs text-slate-400 mt-1">
-                <i class="fa-solid fa-location-dot text-slate-500 mr-1 text-xs"></i> ${r.location}
-                ${r.date_posted ? ` • <span class="text-slate-500">Posted ${r.date_posted}</span>` : ''}
+              <h5 class="text-sm font-bold text-slate-900 dark:text-slate-100">${r.title}</h5>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                <i class="fa-solid fa-location-dot text-slate-400 dark:text-slate-500 mr-1 text-xs"></i> ${r.location}
+                ${r.date_posted ? ` • <span class="text-slate-400 dark:text-slate-500">Posted ${r.date_posted}</span>` : ''}
               </p>
             </div>
             <a href="${r.url}" target="_blank" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold whitespace-nowrap shadow-sm shadow-emerald-600/20">
@@ -1260,7 +1555,7 @@
       const originalHtml = scanBtn.innerHTML;
       scanBtn.disabled = true;
       scanBtn.classList.add('opacity-80', 'cursor-wait');
-      scanBtn.innerHTML = '<i class="fa-solid fa-arrows-rotate animate-spin text-sm"></i><span>Scanning 114 Portals...</span>';
+      scanBtn.innerHTML = '<i class="fa-solid fa-arrows-rotate animate-spin text-sm"></i><span>Scanning Portals...</span>';
 
       try {
         const res = await fetch('/api/scan', { method: 'POST' });
@@ -1337,7 +1632,6 @@
         closeAboutModal();
         closeRoleModal();
         closeAddModal();
-        closeDetailsDrawer();
       }
     });
 

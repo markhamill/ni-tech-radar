@@ -1,6 +1,6 @@
 {
   "name": "ni-tech-radar",
-  "version": "1.0.0",
+  "version": "1.5.0",
   "description": "Local Northern Ireland Technology Ecosystem & Careers Dashboard",
   "main": "server.js",
   "scripts": {

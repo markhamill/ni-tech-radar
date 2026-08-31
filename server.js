@@ -61,18 +61,45 @@ function getTrackedApplications() {
   return apps;
 }
 
+function getTokens(str) {
+  return (str || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .split(/\s+/)
+    .filter(t => t.length > 0);
+}
+
 function matchCompanyApplications(companyName, companyId, trackedApps) {
   const normName = normalize(companyName);
   const normId = normalize(companyId);
+  const nameTokens = getTokens(companyName);
+  const idTokens = getTokens(companyId.replace(/-/g, ' '));
 
   return trackedApps.filter(app => {
-    const normAppCo = normalize(app.company);
-    return (
-      normAppCo.includes(normName) ||
-      normName.includes(normAppCo) ||
-      normAppCo.includes(normId) ||
-      normId.includes(normAppCo)
-    );
+    const normApp = normalize(app.company);
+    if (!normApp) return false;
+
+    // 1. Exact match
+    if (normApp === normName || normApp === normId) return true;
+
+    // 2. Prefix match if name is sufficiently distinctive
+    if (normApp.length >= 4 && (normName.startsWith(normApp) || normApp.startsWith(normName))) return true;
+
+    // 3. Token-based match
+    const appTokens = getTokens(app.company);
+    const primaryToken = appTokens.find(t => !['the', 'inc', 'ltd', 'limited', 'group', 'uk', 'ni', 'technologies', 'technology', 'systems'].includes(t));
+    if (primaryToken && primaryToken.length >= 3) {
+      if (nameTokens.includes(primaryToken) || idTokens.includes(primaryToken)) {
+        if (appTokens.length > 1) {
+          const secondToken = appTokens[1];
+          if (nameTokens.includes(secondToken) || idTokens.includes(secondToken)) return true;
+        } else {
+          return true;
+        }
+      }
+    }
+
+    return false;
   });
 }
 
