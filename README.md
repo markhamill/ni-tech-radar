@@ -240,3 +240,32 @@ function isTargetRole(title) {
 
 ### 3. Customise Sectors or Regional Locations
 Modify the dropdown `<select>` filters in [`public/index.html`](public/index.html) and add your target cities, scale categories, or specialised sectors.
+
+---
+
+## 🤝 Governance & Contributions Policy
+
+Northern Ireland Tech Radar is an independent portfolio project and regional community resource built, designed, and maintained solely by **Mark Hamill**.
+
+* **Open for Learning & Forking:** You are welcome to clone, fork, and adapt this project for your own region, industry vertical, or job discipline.
+* **No External Pull Requests:** To maintain strict security isolation and personal ownership over the deployment pipeline, this repository is operated as a solo-maintained project and does not accept external Pull Requests or third-party code contributions.
+* **Suggestions & Company Updates:** If you notice a Northern Ireland tech company that should be added, an out-of-date careers link, or want to say hello, please connect directly on [LinkedIn](https://www.linkedin.com/in/markhamill2/).
+
+---
+
+## 📄 License & Attribution (MIT)
+
+This project is licensed under the **[MIT License](LICENSE)** (Copyright (c) 2026 **Mark Hamill**).
+
+### What the MIT License Means in Plain English:
+* **Freedom to Use & Adapt:** You are free to inspect, download, run locally, fork, modify, and build upon this software for personal, educational, or commercial purposes.
+* **Attribution Requirement:** The original copyright notice (`Copyright (c) 2026 Mark Hamill`) and permission notice must be retained in all copies or substantial portions of the software and forks.
+* **No Warranty:** The software is provided "as is", without warranty of any kind.
+
+---
+
+## 👤 Author & Connect
+
+**Mark Hamill**  
+Product Leader with a passion for technology, building useful software, and growing Northern Ireland's tech ecosystem.  
+🔗 Connect on LinkedIn: [linkedin.com/in/markhamill2](https://www.linkedin.com/in/markhamill2/)
