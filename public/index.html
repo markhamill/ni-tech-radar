@@ -216,10 +216,16 @@
         <div class="text-xl sm:text-3xl font-extrabold font-mono tracking-tight text-blue-700 dark:text-blue-400 mt-1 sm:mt-2" id="statApplied">0</div>
         <div class="hidden sm:block text-xs text-blue-600/90 dark:text-blue-500/80 mt-1">Active tracked applications</div>
       </div>
-      <div class="bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between shadow-sm transition-colors">
-        <div class="text-[11px] sm:text-sm font-semibold text-slate-500 dark:text-slate-400 leading-tight">Scaleups</div>
-        <div class="text-xl sm:text-3xl font-extrabold font-mono tracking-tight text-sky-600 dark:text-sky-400 mt-1 sm:mt-2" id="statScaleups">0</div>
-        <div class="hidden sm:block text-xs text-slate-400 dark:text-slate-500 mt-1">Indigenous innovators</div>
+      <!-- 5. View Switcher Card (Reclaimed Scaleups Box) -->
+      <div id="viewModeCard" onclick="toggleViewMode()" class="cursor-pointer select-none bg-white dark:bg-slate-900/70 hover:bg-slate-50 dark:hover:bg-slate-800/80 border border-slate-200 dark:border-slate-800 rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between shadow-sm transition-all group" title="Click to toggle between Company Directory and Job-Centric list">
+        <div class="text-[11px] sm:text-sm font-semibold text-slate-500 dark:text-slate-400 leading-tight flex items-center justify-between">
+          <span id="viewModeLabel">View Mode</span>
+          <i id="viewModeIcon" class="fa-solid fa-briefcase text-xs text-slate-400 dark:text-slate-500 group-hover:text-emerald-500 transition-colors"></i>
+        </div>
+        <div class="text-base sm:text-2xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100 mt-1 sm:mt-2 flex items-center gap-1.5" id="viewModeTitle">
+          <span>Jobs View</span>
+        </div>
+        <div class="hidden sm:block text-xs text-slate-400 dark:text-slate-500 mt-1 truncate" id="viewModeSubtext">Click for role-first list</div>
       </div>
     </div>
 
@@ -315,7 +321,7 @@
     <div id="tableContainer" class="hidden md:block bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm dark:shadow-2xl transition-colors">
       <div class="overflow-x-auto">
         <table class="w-full text-left text-sm border-collapse">
-          <thead>
+          <thead id="tableHead">
             <tr class="border-b border-slate-200 dark:border-slate-800 bg-[#F5F8FC] dark:bg-slate-950/90 text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider text-xs">
               <th class="py-4 px-3 w-10 text-center"></th>
               <th id="thStar" class="py-4 px-3 w-10 text-center cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors select-none group" onclick="handleSort('star')" title="Sort by favourites">
@@ -575,11 +581,9 @@
             </div>
           </div>
 
-          <div class="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-400 shadow-sm">
-            <p class="leading-relaxed">
-              <strong class="font-bold text-slate-800 dark:text-slate-200">Closed enterprise portals</strong> like Workday, Taleo, and iTrent do not expose open feeds and are marked <span class="inline-block whitespace-nowrap px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 font-mono text-[11px] font-medium text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">N/A (Portal)</span>. Use the 1-click <strong>Careers</strong> button or the <strong>LinkedIn</strong> shortcut to check them directly.
-            </p>
-          </div>
+          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed pt-1">
+            <strong class="font-bold text-slate-800 dark:text-slate-200">Closed enterprise portals</strong> like Workday, Taleo, and iTrent do not expose open feeds and are marked <span class="inline-block whitespace-nowrap px-2 py-0.5 rounded bg-slate-200/70 dark:bg-slate-800 font-mono text-[11px] font-medium text-slate-700 dark:text-slate-300">N/A (Portal)</span>. Use the 1-click <strong>Careers</strong> button or the <strong>LinkedIn</strong> shortcut to check them directly.
+          </p>
         </div>
 
         <!-- Section 3: Contributions & Suggestions -->
@@ -757,6 +761,11 @@
       return `https://www.linkedin.com/jobs/search/?keywords=${encodeURIComponent('"' + cleanName + '"')}&location=United%20Kingdom`;
     }
 
+    function getGlassdoorUrl(companyName) {
+      const cleanName = (companyName || '').replace(/\s+(Belfast|Northern Ireland|\(NI\)).*$/i, '').trim();
+      return `https://www.google.com/search?q=${encodeURIComponent(cleanName + ' glassdoor reviews')}`;
+    }
+
     function formatLastUpdated(dateStr) {
       if (!dateStr) return 'Recently';
       try {
@@ -802,7 +811,9 @@
     }
 
     let allCompanies = [];
+    let currentViewMode = 'companies'; // 'companies' | 'jobs'
     let expandedRows = new Set();
+    let expandedJobRows = new Set();
     let favourites = new Set(isLocal ? JSON.parse(localStorage.getItem('ni_tech_radar_favourites') || '[]') : []);
     let productRolesOnly = false;
     let favouritesOnly = false;
@@ -831,14 +842,14 @@
         }
       } else {
         currentSortColumn = col;
-        // Default 1st click direction: roles and star default to 'desc' (highest / starred first), others to 'asc'
-        currentSortDirection = (col === 'roles' || col === 'star') ? 'desc' : 'asc';
+        // Default 1st click direction: roles, star, posted default to 'desc'
+        currentSortDirection = (col === 'roles' || col === 'star' || col === 'posted') ? 'desc' : 'asc';
       }
       updateSortHeaderIcons();
       applyFilters();
     }
 
-    const SORT_COLUMNS = ['star', 'name', 'domain', 'size', 'ownership', 'location', 'roles'];
+    const SORT_COLUMNS = ['star', 'name', 'domain', 'size', 'ownership', 'location', 'roles', 'role', 'company', 'posted'];
 
     function updateSortHeaderIcons() {
       SORT_COLUMNS.forEach(col => {
@@ -858,6 +869,166 @@
           iconEl.className = 'text-slate-300 dark:text-slate-700 group-hover:text-slate-500';
         }
       });
+    }
+
+    function renderTableHeader() {
+      const thead = document.getElementById('tableHead');
+      if (!thead) return;
+
+      if (currentViewMode === 'jobs') {
+        thead.innerHTML = `
+          <tr class="border-b border-slate-200 dark:border-slate-800 bg-[#F5F8FC] dark:bg-slate-950/90 text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider text-xs">
+            <th class="py-4 px-3 w-10 text-center"></th>
+            ${isLocal ? `
+              <th id="thStar" class="py-4 px-3 w-10 text-center cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors select-none group" onclick="handleSort('star')" title="Sort by favourites">
+                <span class="inline-flex items-center justify-center gap-1">
+                  <i class="fa-solid fa-star text-amber-500 dark:text-amber-400/60"></i>
+                  <span id="sortIcon-star" class="text-slate-300 dark:text-slate-700 group-hover:text-slate-500 text-[10px]"><i class="fa-solid fa-sort"></i></span>
+                </span>
+              </th>
+            ` : ''}
+            <th class="py-4 px-5 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors select-none group" onclick="handleSort('role')" title="Sort by job title">
+              <div class="flex items-center gap-1.5">
+                <span>Job Role</span>
+                <span id="sortIcon-role" class="text-slate-300 dark:text-slate-700 group-hover:text-slate-500 text-[10px]"><i class="fa-solid fa-sort"></i></span>
+              </div>
+            </th>
+            <th class="py-4 px-5 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors select-none group" onclick="handleSort('company')" title="Sort by company name">
+              <div class="flex items-center gap-1.5">
+                <span>Hiring Company</span>
+                <span id="sortIcon-company" class="text-slate-300 dark:text-slate-700 group-hover:text-slate-500 text-[10px]"><i class="fa-solid fa-sort"></i></span>
+              </div>
+            </th>
+            <th class="py-4 px-5 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors select-none group" onclick="handleSort('domain')" title="Sort by sector">
+              <div class="flex items-center gap-1.5">
+                <span>Sector</span>
+                <span id="sortIcon-domain" class="text-slate-300 dark:text-slate-700 group-hover:text-slate-500 text-[10px]"><i class="fa-solid fa-sort"></i></span>
+              </div>
+            </th>
+            <th class="py-4 px-5 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors select-none group" onclick="handleSort('size')" title="Sort by scale">
+              <div class="flex items-center gap-1.5">
+                <span>Scale Tier</span>
+                <span id="sortIcon-size" class="text-slate-300 dark:text-slate-700 group-hover:text-slate-500 text-[10px]"><i class="fa-solid fa-sort"></i></span>
+              </div>
+            </th>
+            <th class="py-4 px-5 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors select-none group" onclick="handleSort('location')" title="Sort by location">
+              <div class="flex items-center gap-1.5">
+                <span>Job Location</span>
+                <span id="sortIcon-location" class="text-slate-300 dark:text-slate-700 group-hover:text-slate-500 text-[10px]"><i class="fa-solid fa-sort"></i></span>
+              </div>
+            </th>
+            <th class="py-4 px-5 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors select-none group whitespace-nowrap" onclick="handleSort('posted')" title="Sort by date posted">
+              <div class="flex items-center gap-1.5">
+                <span>Posted</span>
+                <span id="sortIcon-posted" class="text-slate-300 dark:text-slate-700 group-hover:text-slate-500 text-[10px]"><i class="fa-solid fa-sort"></i></span>
+              </div>
+            </th>
+            <th class="py-4 px-5 text-right whitespace-nowrap">Apply</th>
+          </tr>
+        `;
+      } else {
+        thead.innerHTML = `
+          <tr class="border-b border-slate-200 dark:border-slate-800 bg-[#F5F8FC] dark:bg-slate-950/90 text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider text-xs">
+            <th class="py-4 px-3 w-10 text-center"></th>
+            ${isLocal ? `
+              <th id="thStar" class="py-4 px-3 w-10 text-center cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors select-none group" onclick="handleSort('star')" title="Sort by favourites">
+                <span class="inline-flex items-center justify-center gap-1">
+                  <i class="fa-solid fa-star text-amber-500 dark:text-amber-400/60"></i>
+                  <span id="sortIcon-star" class="text-slate-300 dark:text-slate-700 group-hover:text-slate-500 text-[10px]"><i class="fa-solid fa-sort"></i></span>
+                </span>
+              </th>
+            ` : ''}
+            <th class="py-4 px-5 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors select-none group" onclick="handleSort('name')" title="Sort alphabetically by company name">
+              <div class="flex items-center gap-1.5">
+                <span>Company</span>
+                <span id="sortIcon-name" class="text-slate-300 dark:text-slate-700 group-hover:text-slate-500 text-[10px]"><i class="fa-solid fa-sort"></i></span>
+              </div>
+            </th>
+            <th class="py-4 px-5 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors select-none group" onclick="handleSort('domain')" title="Sort by industry domain">
+              <div class="flex items-center gap-1.5">
+                <span>Domain</span>
+                <span id="sortIcon-domain" class="text-slate-300 dark:text-slate-700 group-hover:text-slate-500 text-[10px]"><i class="fa-solid fa-sort"></i></span>
+              </div>
+            </th>
+            <th class="py-4 px-5 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors select-none group" onclick="handleSort('size')" title="Sort by company scale tier">
+              <div class="flex items-center gap-1.5">
+                <span>Size</span>
+                <span id="sortIcon-size" class="text-slate-300 dark:text-slate-700 group-hover:text-slate-500 text-[10px]"><i class="fa-solid fa-sort"></i></span>
+              </div>
+            </th>
+            <th class="py-4 px-5 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors select-none group" onclick="handleSort('ownership')" title="Sort by funding and ownership">
+              <div class="flex items-center gap-1.5">
+                <span>Ownership</span>
+                <span id="sortIcon-ownership" class="text-slate-300 dark:text-slate-700 group-hover:text-slate-500 text-[10px]"><i class="fa-solid fa-sort"></i></span>
+              </div>
+            </th>
+            <th class="py-4 px-5 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors select-none group" onclick="handleSort('location')" title="Sort by location">
+              <div class="flex items-center gap-1.5">
+                <span>Location</span>
+                <span id="sortIcon-location" class="text-slate-300 dark:text-slate-700 group-hover:text-slate-500 text-[10px]"><i class="fa-solid fa-sort"></i></span>
+              </div>
+            </th>
+            <th class="py-4 px-4 text-center whitespace-nowrap min-w-[140px] cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors select-none group" onclick="handleSort('roles')" title="Sort by live product roles count">
+              <div class="flex items-center justify-center gap-1.5">
+                <span>Product Roles</span>
+                <span id="sortIcon-roles" class="text-slate-300 dark:text-slate-700 group-hover:text-slate-500 text-[10px]"><i class="fa-solid fa-sort"></i></span>
+              </div>
+            </th>
+            <th class="py-4 px-5 text-right whitespace-nowrap">Links</th>
+          </tr>
+        `;
+      }
+      updateSortHeaderIcons();
+    }
+
+    function toggleViewMode() {
+      currentViewMode = (currentViewMode === 'companies' ? 'jobs' : 'companies');
+      currentSortColumn = null;
+      currentSortDirection = null;
+      const search = document.getElementById('searchInput');
+      if (search) {
+        search.placeholder = (currentViewMode === 'jobs')
+          ? 'Search jobs by role title, company, technology, location, or keyword...'
+          : 'Search by company name, products, leadership, technology, or keywords...';
+      }
+      renderTableHeader();
+      updateKPICardActiveStates();
+      applyFilters();
+    }
+
+    function toggleJobRow(jobId) {
+      const detailsRow = document.getElementById(`job-details-${jobId}`);
+      const chevron = document.getElementById(`job-chevron-${jobId}`);
+      const detailsMob = document.getElementById(`job-details-mob-${jobId}`);
+      const chevronMob = document.getElementById(`job-chevron-mob-${jobId}`);
+
+      if (expandedJobRows.has(jobId)) {
+        expandedJobRows.delete(jobId);
+        if (detailsRow) detailsRow.classList.add('hidden');
+        if (chevron) chevron.classList.remove('rotate-90');
+        if (detailsMob) detailsMob.classList.add('hidden');
+        if (chevronMob) {
+          chevronMob.classList.remove('rotate-180');
+          const btn = chevronMob.parentElement;
+          if (btn) {
+            const span = btn.querySelector('span');
+            if (span) span.innerText = 'Company';
+          }
+        }
+      } else {
+        expandedJobRows.add(jobId);
+        if (detailsRow) detailsRow.classList.remove('hidden');
+        if (chevron) chevron.classList.add('rotate-90');
+        if (detailsMob) detailsMob.classList.remove('hidden');
+        if (chevronMob) {
+          chevronMob.classList.add('rotate-180');
+          const btn = chevronMob.parentElement;
+          if (btn) {
+            const span = btn.querySelector('span');
+            if (span) span.innerText = 'Less';
+          }
+        }
+      }
     }
 
     function toggleProductRoles() {
@@ -901,7 +1072,11 @@
       const rolesCard = document.getElementById('statProductRolesCard');
       const favCard = document.getElementById('statFavouritesCard');
       const appCard = document.getElementById('statAppliedCard');
-      const base = 'cursor-pointer select-none rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between shadow-sm transition-colors';
+      const viewCard = document.getElementById('viewModeCard');
+      const viewTitle = document.getElementById('viewModeTitle');
+      const viewSubtext = document.getElementById('viewModeSubtext');
+      const viewIcon = document.getElementById('viewModeIcon');
+      const base = 'cursor-pointer select-none rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between shadow-sm transition-all';
 
       if (rolesCard) {
         if (productRolesOnly) {
@@ -924,6 +1099,20 @@
           appCard.className = `${base} bg-blue-100/90 dark:bg-blue-950/60 border border-blue-500 dark:border-blue-500 ring-1 ring-blue-500 dark:ring-blue-500`;
         } else {
           appCard.className = `${base} bg-blue-50/70 dark:bg-slate-900/70 border border-blue-200 dark:border-blue-900/30 hover:border-blue-300 dark:hover:border-blue-800/60`;
+        }
+      }
+
+      if (viewCard) {
+        if (currentViewMode === 'jobs') {
+          viewCard.className = `${base} bg-emerald-50/90 dark:bg-emerald-950/60 border border-emerald-500 dark:border-emerald-500 ring-1 ring-emerald-500 dark:ring-emerald-500`;
+          if (viewTitle) viewTitle.innerHTML = '<span class="text-emerald-700 dark:text-emerald-400">Jobs Mode</span>';
+          if (viewSubtext) viewSubtext.innerText = 'Role-first list • Click for companies';
+          if (viewIcon) viewIcon.className = 'fa-solid fa-repeat text-xs text-emerald-600 dark:text-emerald-400';
+        } else {
+          viewCard.className = `${base} bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 hover:border-emerald-300 dark:hover:border-emerald-800/60`;
+          if (viewTitle) viewTitle.innerHTML = '<span>Jobs View</span>';
+          if (viewSubtext) viewSubtext.innerText = 'Click for role-first list';
+          if (viewIcon) viewIcon.className = 'fa-solid fa-briefcase text-xs text-slate-400 dark:text-slate-500';
         }
       }
     }
@@ -982,6 +1171,7 @@
 
         if (!res.ok) throw new Error('Failed to load companies data');
         allCompanies = await res.json();
+        renderTableHeader();
         updateKPIs();
         updateScanTimestamps();
         applyFilters();
@@ -1007,8 +1197,11 @@
       document.getElementById('statTotal').innerText = allCompanies.length;
       const productRoles = allCompanies.reduce((acc, c) => acc + (c.product_roles_count || 0), 0);
       document.getElementById('statProductRoles').innerText = productRoles;
-      const scaleups = allCompanies.filter(c => c.scale_tier && (c.scale_tier.includes('Startup') || c.scale_tier.includes('Scaleup'))).length;
-      document.getElementById('statScaleups').innerText = scaleups;
+      const scaleEl = document.getElementById('statScaleups');
+      if (scaleEl) {
+        const scaleups = allCompanies.filter(c => c.scale_tier && (c.scale_tier.includes('Startup') || c.scale_tier.includes('Scaleup'))).length;
+        scaleEl.innerText = scaleups;
+      }
 
       if (isLocal) {
         const favEl = document.getElementById('statFavourites');
@@ -1091,6 +1284,89 @@
       const productOnly = productRolesOnly;
       const favOnly = isLocal ? favouritesOnly : false;
       const appOnly = isLocal ? appliedOnly : false;
+
+      // Handle Jobs View Mode
+      if (currentViewMode === 'jobs') {
+        const allJobs = [];
+        allCompanies.forEach(c => {
+          if (c.active_product_roles && c.active_product_roles.length > 0) {
+            c.active_product_roles.forEach((r, idx) => {
+              allJobs.push({
+                job_id: `${c.id}_job_${idx}`,
+                company: c,
+                title: r.title,
+                location: r.location || c.location,
+                url: r.url || c.careers_url,
+                date_posted: r.date_posted || r.date_found || ''
+              });
+            });
+          }
+        });
+
+        const filteredJobs = allJobs.filter(j => {
+          const c = j.company;
+          // Favourites filter (Local only)
+          if (isLocal && favOnly && !favourites.has(c.id)) return false;
+
+          // Applied in Pipeline filter (Local only)
+          if (isLocal && appOnly && (!c.tracked_applications || c.tracked_applications.length === 0)) return false;
+
+          // Dropdown filters
+          if (scale !== 'ALL' && !c.scale_tier.toLowerCase().includes(scale.toLowerCase())) return false;
+          if (industry !== 'ALL' && !c.industry.toLowerCase().includes(industry.toLowerCase())) return false;
+          if (funding !== 'ALL' && !c.funding_type.toLowerCase().includes(funding.toLowerCase())) return false;
+          if (location !== 'ALL' && !c.location.toLowerCase().includes(location.toLowerCase()) && !j.location.toLowerCase().includes(location.toLowerCase())) return false;
+
+          // Search filter
+          if (search) {
+            const matchTitle = j.title.toLowerCase().includes(search);
+            const matchCompany = c.name.toLowerCase().includes(search);
+            const matchLoc = j.location.toLowerCase().includes(search);
+            const matchInd = (c.industry || '').toLowerCase().includes(search);
+            const matchDesc = (c.description || '').toLowerCase().includes(search);
+            const matchProducts = (c.key_products || []).join(' ').toLowerCase().includes(search);
+            if (!matchTitle && !matchCompany && !matchLoc && !matchInd && !matchDesc && !matchProducts) return false;
+          }
+
+          return true;
+        });
+
+        // Apply Column Sorting for Jobs View if active
+        if (currentSortColumn && currentSortDirection) {
+          filteredJobs.sort((a, b) => {
+            let valA, valB;
+            if (currentSortColumn === 'star') {
+              valA = favourites.has(a.company.id) ? 1 : 0;
+              valB = favourites.has(b.company.id) ? 1 : 0;
+            } else if (currentSortColumn === 'role') {
+              valA = a.title.toLowerCase();
+              valB = b.title.toLowerCase();
+            } else if (currentSortColumn === 'company' || currentSortColumn === 'name') {
+              valA = a.company.name.toLowerCase();
+              valB = b.company.name.toLowerCase();
+            } else if (currentSortColumn === 'domain') {
+              valA = (a.company.industry || '').toLowerCase();
+              valB = (b.company.industry || '').toLowerCase();
+            } else if (currentSortColumn === 'size') {
+              valA = getScaleTierRank(a.company.scale_tier);
+              valB = getScaleTierRank(b.company.scale_tier);
+            } else if (currentSortColumn === 'location') {
+              valA = a.location.toLowerCase();
+              valB = b.location.toLowerCase();
+            } else if (currentSortColumn === 'posted') {
+              valA = a.date_posted || '';
+              valB = b.date_posted || '';
+            }
+
+            if (valA < valB) return currentSortDirection === 'asc' ? -1 : 1;
+            if (valA > valB) return currentSortDirection === 'asc' ? 1 : -1;
+            return 0;
+          });
+        }
+
+        renderJobs(filteredJobs);
+        return;
+      }
 
       const filtered = allCompanies.filter(c => {
         // Favourites filter (Local only)
@@ -1483,10 +1759,15 @@
 
                 <!-- Quick Action Bar in Drawer -->
                 <div class="pt-4 border-t border-slate-200 dark:border-slate-800/60 flex flex-wrap items-center justify-between gap-3 text-xs">
-                  <div class="flex items-center gap-2.5">
+                  <div class="flex items-center gap-2.5 flex-wrap">
                     <a href="${getLinkedInSearchUrl(c.name)}" target="_blank" class="inline-flex items-center gap-2 px-3.5 py-2 bg-sky-50 hover:bg-sky-100 text-sky-700 border border-sky-200 dark:bg-sky-950/60 dark:hover:bg-sky-900/60 dark:text-sky-300 dark:border-sky-800/60 rounded-xl font-bold transition-all shadow-sm">
                       <i class="fa-brands fa-linkedin text-base text-[#0A66C2]"></i>
-                      <span>Search LinkedIn Jobs for ${c.name}</span>
+                      <span>LinkedIn Jobs</span>
+                      <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+                    </a>
+                    <a href="${getGlassdoorUrl(c.name)}" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 dark:bg-slate-950 dark:hover:bg-slate-800 dark:text-slate-300 dark:border-slate-800 rounded-xl font-medium transition-all" title="Search reviews and culture on Glassdoor">
+                      <i class="fa-solid fa-star text-amber-500 text-xs"></i>
+                      <span>Glassdoor Reviews</span>
                       <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
                     </a>
                     <a href="${c.website}" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 dark:bg-slate-950 dark:hover:bg-slate-800 dark:text-slate-300 dark:border-slate-800 rounded-xl font-medium transition-all">
@@ -1506,6 +1787,233 @@
             </td>
           </tr>
         `;
+        }).join('');
+      }
+    }
+
+    function renderJobs(jobs) {
+      const tbody = document.getElementById('companyTableBody');
+      const mobileList = document.getElementById('mobileListContainer');
+      const emptyState = document.getElementById('emptyState');
+      const emptyTitle = document.getElementById('emptyStateTitle');
+      const emptyText = document.getElementById('emptyStateText');
+
+      if (jobs.length === 0) {
+        if (tbody) tbody.innerHTML = '';
+        if (mobileList) mobileList.innerHTML = '';
+        if (emptyTitle) emptyTitle.innerText = 'No matching product roles found';
+        if (emptyText) emptyText.innerText = 'Try adjusting your search terms or switch back to Companies View.';
+        emptyState.classList.remove('hidden');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+
+      // Mobile Native Cards for Jobs View
+      if (mobileList) {
+        mobileList.innerHTML = jobs.map(j => {
+          const c = j.company;
+          const isExpanded = expandedJobRows.has(j.job_id);
+          const isFav = isLocal && favourites.has(c.id);
+          const trackedApps = isLocal ? (c.tracked_applications || []) : [];
+          const isThisRoleApplied = trackedApps.some(app => app.role_title.toLowerCase() === j.title.toLowerCase() || (app.role_title.toLowerCase().includes('principal') && j.title.toLowerCase().includes('principal')));
+
+          return `
+            <div class="bg-white dark:bg-slate-900/85 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 transition-all shadow-sm dark:shadow-md ${isFav ? 'bg-amber-50/20 dark:bg-amber-950/10' : ''}">
+              <!-- Role Title & Apply Button -->
+              <div class="flex items-start justify-between gap-2.5">
+                <div class="min-w-0 flex-1">
+                  <div class="font-bold text-base text-slate-900 dark:text-slate-100 flex items-center gap-1.5 flex-wrap">
+                    <span>${escapeHtml(j.title)}</span>
+                    ${isThisRoleApplied ? '<span class="text-[10px] bg-emerald-100 text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-400 px-2 py-0.5 rounded font-bold">Applied</span>' : ''}
+                  </div>
+                  <div class="text-xs text-slate-600 dark:text-slate-300 mt-1 flex items-center gap-1.5 flex-wrap font-medium">
+                    <span class="text-slate-900 dark:text-slate-100 font-bold">${escapeHtml(c.name)}</span>
+                    <span>•</span>
+                    <span><i class="fa-solid fa-location-dot text-slate-400 text-[10px]"></i> ${escapeHtml(j.location)}</span>
+                  </div>
+                </div>
+                <div class="shrink-0">
+                  <a href="${encodeURI(j.url)}" target="_blank" onclick="event.stopPropagation()" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold text-white bg-[#059669] hover:bg-[#047857] shadow-sm shadow-emerald-600/20 whitespace-nowrap">
+                    <span>Apply</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Tags / Badges Row -->
+              <div class="flex items-center justify-between gap-2 mt-3 pt-3 border-t border-slate-200 dark:border-slate-800/80">
+                <div class="flex items-center gap-1.5 flex-wrap">
+                  <span class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-[11px] border border-slate-200 dark:border-slate-700">${escapeHtml(c.industry)}</span>
+                  <span class="px-2 py-0.5 rounded text-[11px] border ${getScaleBadgeClass(c.scale_tier)}">${escapeHtml(c.scale_tier)}</span>
+                  ${j.date_posted ? `<span class="text-[11px] text-slate-400 dark:text-slate-500 font-mono">Posted ${escapeHtml(j.date_posted)}</span>` : ''}
+                </div>
+
+                <button onclick="toggleJobRow('${j.job_id}')" class="inline-flex items-center gap-1 text-xs font-semibold text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200 px-2 py-1 rounded-lg bg-slate-50 hover:bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 transition-colors shrink-0">
+                  <span>${isExpanded ? 'Less' : 'Company'}</span>
+                  <i id="job-chevron-mob-${j.job_id}" class="fa-solid fa-chevron-down text-[10px] transition-transform ${isExpanded ? 'rotate-180' : ''}"></i>
+                </button>
+              </div>
+
+              <!-- Expandable Company Details for Job -->
+              <div id="job-details-mob-${j.job_id}" class="${isExpanded ? '' : 'hidden'} mt-3 pt-3 border-t border-slate-200 dark:border-slate-800/60 space-y-3 text-xs text-slate-700 dark:text-slate-300">
+                <p class="text-slate-600 dark:text-slate-300 leading-relaxed text-xs">${escapeHtml(c.description || 'No detailed overview available.')}</p>
+                
+                ${(c.key_products && c.key_products.length > 0) ? `
+                  <div class="text-xs">
+                    <span class="font-semibold text-slate-500 dark:text-slate-400 block mb-0.5">Key Products:</span>
+                    <span class="text-slate-800 dark:text-slate-200">${escapeHtml(c.key_products.join(', '))}</span>
+                  </div>
+                ` : ''}
+
+                <div class="flex items-center gap-2 pt-1 flex-wrap">
+                  <a href="${getGlassdoorUrl(c.name)}" target="_blank" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 transition-colors">
+                    <i class="fa-solid fa-star text-amber-500"></i>
+                    <span>Glassdoor Reviews ↗</span>
+                  </a>
+                  <a href="${encodeURI(c.website)}" target="_blank" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 transition-colors">
+                    <i class="fa-solid fa-house text-slate-400 text-xs"></i>
+                    <span>Website ↗</span>
+                  </a>
+                  <a href="${getLinkedInSearchUrl(c.name)}" target="_blank" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold text-[#0A66C2] bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-900/40">
+                    <i class="fa-brands fa-linkedin text-sm"></i>
+                    <span>LinkedIn</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // Desktop Table for Jobs View
+      if (tbody) {
+        tbody.innerHTML = jobs.map(j => {
+          const c = j.company;
+          const isExpanded = expandedJobRows.has(j.job_id);
+          const isFav = isLocal && favourites.has(c.id);
+          const trackedApps = isLocal ? (c.tracked_applications || []) : [];
+          const isThisRoleApplied = trackedApps.some(app => app.role_title.toLowerCase() === j.title.toLowerCase() || (app.role_title.toLowerCase().includes('principal') && j.title.toLowerCase().includes('principal')));
+
+          return `
+            <!-- Main Job Row -->
+            <tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors cursor-pointer border-t border-slate-200 dark:border-slate-800/60 select-none ${isFav ? 'bg-amber-50/40 dark:bg-amber-950/10' : ''}" onclick="toggleJobRow('${j.job_id}')">
+              <!-- Chevron Toggle -->
+              <td class="py-4 px-3 text-center">
+                <button type="button" class="text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300 transition-transform">
+                  <i id="job-chevron-${j.job_id}" class="fa-solid fa-chevron-right text-xs transition-transform ${isExpanded ? 'rotate-90' : ''}"></i>
+                </button>
+              </td>
+
+              <!-- Favourite Star (Local only) -->
+              ${isLocal ? `
+                <td class="py-4 px-3 text-center" onclick="event.stopPropagation()">
+                  <button onclick="toggleFavourite('${c.id}', event)" class="p-1 text-slate-300 hover:text-amber-500 dark:text-slate-600 dark:hover:text-amber-400 transition-colors group" title="${isFav ? 'Remove from favourites' : 'Add to favourites'}">
+                    <i class="${isFav ? 'fa-solid fa-star text-amber-500 dark:text-amber-400' : 'fa-regular fa-star text-slate-300 dark:text-slate-500 group-hover:text-amber-500 dark:group-hover:text-amber-400/80'} text-sm transition-transform active:scale-125"></i>
+                  </button>
+                </td>
+              ` : ''}
+
+              <!-- Role Title -->
+              <td class="py-4 px-5">
+                <div class="flex items-center gap-2">
+                  <span class="font-bold text-base text-slate-900 dark:text-slate-100 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">${escapeHtml(j.title)}</span>
+                  ${isThisRoleApplied ? '<span class="text-[10px] bg-emerald-100 text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-400 px-2 py-0.5 rounded font-bold">Applied</span>' : ''}
+                </div>
+              </td>
+
+              <!-- Hiring Company & Glassdoor -->
+              <td class="py-4 px-5">
+                <div class="flex items-center gap-2 flex-wrap">
+                  <span class="font-semibold text-slate-900 dark:text-slate-100">${escapeHtml(c.name)}</span>
+                </div>
+              </td>
+
+              <!-- Domain -->
+              <td class="py-4 px-5">
+                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 whitespace-nowrap">${escapeHtml(c.industry)}</span>
+              </td>
+
+              <!-- Scale & Funding -->
+              <td class="py-4 px-5 whitespace-nowrap">
+                <div class="flex flex-col">
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border ${getScaleBadgeClass(c.scale_tier)} w-fit">${escapeHtml(c.scale_tier)}</span>
+                  <span class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">${escapeHtml(c.funding_type || 'Private')}</span>
+                </div>
+              </td>
+
+              <!-- Location -->
+              <td class="py-4 px-5">
+                <div class="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-400">
+                  <i class="fa-solid fa-location-dot text-slate-400 dark:text-slate-500 text-xs shrink-0"></i>
+                  <span class="truncate max-w-[180px]">${escapeHtml(j.location)}</span>
+                </div>
+              </td>
+
+              <!-- Posted Date -->
+              <td class="py-4 px-5 whitespace-nowrap">
+                <span class="text-xs text-slate-500 dark:text-slate-400 font-mono">${escapeHtml(j.date_posted || 'Recently')}</span>
+              </td>
+
+              <!-- Action: Apply Direct & LinkedIn -->
+              <td class="py-4 px-5 text-right whitespace-nowrap" onclick="event.stopPropagation()">
+                <div class="flex items-center justify-end gap-2.5">
+                  <a href="${encodeURI(j.url)}" target="_blank" class="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-[#059669] hover:bg-[#047857] border border-[#059669] px-3.5 py-1.5 rounded-lg shadow-sm shadow-emerald-600/20 transition-colors">
+                    <span>Apply</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                  </a>
+                  <a href="${getLinkedInSearchUrl(c.name)}" target="_blank" class="inline-flex items-center justify-center p-1 text-[#0A66C2] hover:text-[#004182] hover:scale-110 active:scale-95 transition-transform" title="Search LinkedIn Jobs for ${escapeHtml(c.name)}" aria-label="Search LinkedIn Jobs for ${escapeHtml(c.name)}">
+                    <i class="fa-brands fa-linkedin text-2xl"></i>
+                  </a>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Expandable Company Details Row for Job -->
+            <tr id="job-details-${j.job_id}" class="${isExpanded ? '' : 'hidden'} bg-[#F5F8FC] dark:bg-slate-950/90 border-b border-slate-200 dark:border-slate-800">
+              <td colspan="${isLocal ? 9 : 8}" class="p-6">
+                <div class="bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800/90 rounded-2xl p-6 space-y-4 shadow-sm dark:shadow-inner">
+                  <div class="flex items-start justify-between gap-4 flex-wrap">
+                    <div>
+                      <h4 class="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 mb-1 flex items-center gap-2">
+                        <i class="fa-solid fa-building"></i> About ${escapeHtml(c.name)}
+                      </h4>
+                      <p class="text-sm text-slate-700 dark:text-slate-200 leading-relaxed max-w-3xl">${escapeHtml(c.description || 'No detailed overview available.')}</p>
+                    </div>
+                    <div class="flex items-center gap-2 flex-wrap">
+                      <a href="${getGlassdoorUrl(c.name)}" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 transition-colors">
+                        <i class="fa-solid fa-star text-amber-500"></i>
+                        <span>Glassdoor Reviews ↗</span>
+                      </a>
+                      <a href="${encodeURI(c.website)}" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 transition-colors">
+                        <i class="fa-solid fa-house text-slate-400"></i>
+                        <span>Website ↗</span>
+                      </a>
+                      <a href="${encodeURI(c.careers_url)}" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/60 hover:bg-emerald-100 transition-colors">
+                        <i class="fa-solid fa-briefcase text-emerald-600 dark:text-emerald-400"></i>
+                        <span>All ${escapeHtml(c.name)} Vacancies (${c.open_roles_count || c.active_product_roles.length}) ↗</span>
+                      </a>
+                    </div>
+                  </div>
+
+                  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-3 border-t border-slate-200 dark:border-slate-800/60 text-sm">
+                    <div>
+                      <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider block mb-0.5">Key Products & Technology</span>
+                      <p class="text-slate-800 dark:text-slate-200 font-medium">${(c.key_products && c.key_products.length > 0) ? escapeHtml(c.key_products.join(', ')) : 'Proprietary platform architecture'}</p>
+                    </div>
+                    <div>
+                      <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider block mb-0.5">Scale & Team</span>
+                      <p class="text-slate-800 dark:text-slate-200 font-medium">${escapeHtml(c.scale_tier)} • ${escapeHtml(c.headcount_estimate || 'Confidential team')}</p>
+                    </div>
+                    <div>
+                      <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider block mb-0.5">Headquarters</span>
+                      <p class="text-slate-800 dark:text-slate-200 font-medium">${escapeHtml(c.address || c.location + ', Northern Ireland')}</p>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          `;
         }).join('');
       }
     }
