@@ -17,7 +17,7 @@
       "Emotics Emotion AI Platform"
     ],
     "key_people": "Chris Johnston (CEO)",
-    "last_checked": "2026-09-02T12:28:22.224Z",
+    "last_checked": "2026-09-08T22:00:01.660Z",
     "open_roles_count": 2,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -41,8 +41,8 @@
       "Aflac Cyber Defense Platform"
     ],
     "key_people": "Mark McCormack (Managing Director & VP)",
-    "last_checked": "2026-09-02T12:28:22.224Z",
-    "open_roles_count": 12,
+    "last_checked": "2026-09-08T22:00:01.661Z",
+    "open_roles_count": 10,
     "product_roles_count": 1,
     "active_product_roles": [
       {
@@ -50,7 +50,7 @@
         "location": "Belfast",
         "department": "Digital Services",
         "url": "https://aflacni.bamboohr.com/careers/93",
-        "date_found": "2026-09-02"
+        "date_found": "2026-09-08"
       }
     ],
     "ats_identifier": "aflacni"
@@ -74,7 +74,7 @@
       "Cloud Insight"
     ],
     "key_people": "Fortra Executive Leadership, Belfast Engineering Leads",
-    "last_checked": "2026-09-02T12:28:22.265Z",
+    "last_checked": "2026-09-08T22:00:01.698Z",
     "open_roles_count": 6,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -98,7 +98,7 @@
       "Enterprise Claims Engines"
     ],
     "key_people": "Stephen Lomas (Managing Director Allstate NI)",
-    "last_checked": "2026-09-02T12:28:22.265Z",
+    "last_checked": "2026-09-08T22:00:01.698Z",
     "open_roles_count": 0,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -122,7 +122,7 @@
       "TempEZ Cold Chain Software"
     ],
     "key_people": "Alan Armstrong (CEO Almac Group)",
-    "last_checked": "2026-09-02T12:28:22.265Z",
+    "last_checked": "2026-09-08T22:00:01.698Z",
     "open_roles_count": 38,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -145,7 +145,7 @@
       "Amdocs 5G Charging & Policy Controller"
     ],
     "key_people": "Shuky Sheffer (CEO Amdocs)",
-    "last_checked": "2026-09-02T12:28:22.265Z",
+    "last_checked": "2026-09-08T22:00:01.698Z",
     "open_roles_count": 5,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -168,7 +168,7 @@
       "Amphora Clinical Analytics Platform"
     ],
     "key_people": "Dr. Gary McDowell (CEO)",
-    "last_checked": "2026-09-02T12:28:22.265Z",
+    "last_checked": "2026-09-08T22:00:01.698Z",
     "open_roles_count": 1,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -191,7 +191,7 @@
       "MINERVA Knowledge Graph Platform"
     ],
     "key_people": "Dr. Scott Campbell (CEO)",
-    "last_checked": "2026-09-02T12:28:22.265Z",
+    "last_checked": "2026-09-08T22:00:01.698Z",
     "open_roles_count": 2,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -215,7 +215,7 @@
       "Smart Mobility Gateway"
     ],
     "key_people": "Steve Berry (Chairman), Yuri Andersson (CEO)",
-    "last_checked": "2026-09-02T12:28:22.265Z",
+    "last_checked": "2026-09-08T22:00:01.698Z",
     "open_roles_count": 4,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -241,7 +241,7 @@
       "Applied CSR24"
     ],
     "key_people": "Taylor Rhodes (CEO), Rich Howells (President, Applied Systems Europe)",
-    "last_checked": "2026-09-02T12:28:22.265Z",
+    "last_checked": "2026-09-08T22:00:01.698Z",
     "open_roles_count": 0,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -264,7 +264,7 @@
       "TorQ Data Architecture Framework for kdb+"
     ],
     "key_people": "Ronan Pairceir (CEO & Co-Founder)",
-    "last_checked": "2026-09-02T12:28:22.619Z",
+    "last_checked": "2026-09-08T22:00:02.061Z",
     "open_roles_count": 8,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -288,7 +288,7 @@
       "Automated Surgical Segmentation"
     ],
     "key_people": "Daniel Crawford (Founder), Roger Johnston (CEO)",
-    "last_checked": "2026-09-02T12:28:22.619Z",
+    "last_checked": "2026-09-08T22:00:02.061Z",
     "open_roles_count": 2,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -312,7 +312,7 @@
       "ECG Medical Firmware"
     ],
     "key_people": "Alan Foreman (CEO), Adrian Condon (CTO)",
-    "last_checked": "2026-09-02T12:28:22.619Z",
+    "last_checked": "2026-09-08T22:00:02.061Z",
     "open_roles_count": 3,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -321,8 +321,8 @@
     "id": "bazaarvoice",
     "name": "Bazaarvoice",
     "website": "https://www.bazaarvoice.com/",
-    "careers_url": "https://www.bazaarvoice.com/careers/",
-    "ats_type": "greenhouse",
+    "careers_url": "https://jobs.lever.co/bazaarvoice",
+    "ats_type": "lever",
     "industry": "Enterprise B2B SaaS",
     "sub_sector": "E-Commerce User Generated Content & Reviews",
     "scale_tier": "Mid-Market (100-500)",
@@ -336,8 +336,8 @@
       "Social Commerce Platform"
     ],
     "key_people": "Keith Nealon (CEO)",
-    "last_checked": "2026-09-02T12:28:22.619Z",
-    "open_roles_count": 8,
+    "last_checked": "2026-09-08T22:00:02.061Z",
+    "open_roles_count": 25,
     "product_roles_count": 0,
     "active_product_roles": [],
     "ats_identifier": "bazaarvoice"
@@ -360,7 +360,7 @@
       "Digital Health Product Design Practice"
     ],
     "key_people": "Damian Cranney (CEO & Founder)",
-    "last_checked": "2026-09-02T12:28:22.621Z",
+    "last_checked": "2026-09-08T22:00:02.062Z",
     "open_roles_count": 1,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -384,7 +384,7 @@
       "Wealth Management Platform"
     ],
     "key_people": "Richard Cook (CEO)",
-    "last_checked": "2026-09-02T12:28:22.621Z",
+    "last_checked": "2026-09-08T22:00:02.062Z",
     "open_roles_count": 3,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -407,7 +407,7 @@
       "BrainWaveBank EEG Cognitive Platform"
     ],
     "key_people": "Ronan Cunningham (CEO)",
-    "last_checked": "2026-09-02T12:28:22.621Z",
+    "last_checked": "2026-09-08T22:00:02.062Z",
     "open_roles_count": 1,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -430,7 +430,7 @@
       "Cadshare Aftermarket 3D Portal"
     ],
     "key_people": "Chris Acheson (CEO & Founder)",
-    "last_checked": "2026-09-02T12:28:22.621Z",
+    "last_checked": "2026-09-08T22:00:02.062Z",
     "open_roles_count": 1,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -453,7 +453,7 @@
       "CattleEye AI Computer Vision Platform"
     ],
     "key_people": "Terry Canning (CEO & Co-Founder), Adam Bradley (CTO)",
-    "last_checked": "2026-09-02T12:28:22.621Z",
+    "last_checked": "2026-09-08T22:00:02.062Z",
     "open_roles_count": 3,
     "product_roles_count": 1,
     "active_product_roles": [
@@ -485,7 +485,7 @@
       "VividPath Software"
     ],
     "key_people": "Hugh Cormican (CEO)",
-    "last_checked": "2026-09-02T12:28:22.623Z",
+    "last_checked": "2026-09-08T22:00:02.063Z",
     "open_roles_count": 3,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -510,7 +510,7 @@
       "Treasury & Trade Solutions Platforms"
     ],
     "key_people": "Leigh Meyer (Citi Belfast Site Head)",
-    "last_checked": "2026-09-02T12:28:23.029Z",
+    "last_checked": "2026-09-08T22:00:03.612Z",
     "open_roles_count": 2,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -534,7 +534,7 @@
       "Civica Digital Health Suite"
     ],
     "key_people": "Lee Hailwood (CEO Civica)",
-    "last_checked": "2026-09-02T12:28:23.029Z",
+    "last_checked": "2026-09-08T22:00:03.612Z",
     "open_roles_count": 0,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -557,7 +557,7 @@
       "Cloudfind Partner Intelligence Platform"
     ],
     "key_people": "Seb Kipman (CEO)",
-    "last_checked": "2026-09-02T12:28:23.029Z",
+    "last_checked": "2026-09-08T22:00:03.612Z",
     "open_roles_count": 1,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -581,17 +581,10 @@
       "Software Supply Chain Trust Engine"
     ],
     "key_people": "Glenn Weinstein (CEO), Alan Carson & Lee Skillen (Co-Founders)",
-    "last_checked": "2026-09-02T12:28:23.029Z",
-    "open_roles_count": 12,
-    "product_roles_count": 1,
-    "active_product_roles": [
-      {
-        "title": "Group Product Manager, Software Supply Chain Trust",
-        "location": "Belfast / Remote UK",
-        "url": "https://careers.cloudsmith.com/jobs/7830987-group-product-manager-software-supply-chain-trust",
-        "date_posted": "2026-09-02"
-      }
-    ],
+    "last_checked": "2026-09-08T22:00:03.612Z",
+    "open_roles_count": 9,
+    "product_roles_count": 0,
+    "active_product_roles": [],
     "ats_identifier": "https://careers.cloudsmith.com/jobs"
   },
   {
@@ -614,7 +607,7 @@
       "BrokerTec Fixed Income"
     ],
     "key_people": "Terry Duffy (Chairman & CEO)",
-    "last_checked": "2026-09-02T12:28:23.035Z",
+    "last_checked": "2026-09-08T22:00:03.613Z",
     "open_roles_count": 7,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -639,7 +632,7 @@
       "Contrast Serverless"
     ],
     "key_people": "Rick Fitz (CEO), Jeff Williams (Co-Founder & CTO)",
-    "last_checked": "2026-09-02T12:28:23.038Z",
+    "last_checked": "2026-09-08T22:00:03.614Z",
     "open_roles_count": 0,
     "product_roles_count": 0,
     "active_product_roles": [],
@@ -664,7 +657,7 @@
       "Prisoner Self-Service Software"
     ],
     "key_people": "Patricia O'Hagan MBE (CEO)",
-    "last_checked": "2026-09-02T12:28:23.040Z",
+    "last_checked": "2026-09-08T22:00:03.615Z",
     "open_roles_count": 2,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -687,7 +680,7 @@
       "Cumulus EEG Headset & Cloud Analytics Platform"
     ],
     "key_people": "Aman Bhatti (CEO)",
-    "last_checked": "2026-09-02T12:28:23.040Z",
+    "last_checked": "2026-09-08T22:00:03.615Z",
     "open_roles_count": 2,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -710,7 +703,7 @@
       "CV6-168 Oncology Drug Discovery Engine"
     ],
     "key_people": "Dr. Robert Ladner (CEO & Founder)",
-    "last_checked": "2026-09-02T12:28:23.040Z",
+    "last_checked": "2026-09-08T22:00:03.615Z",
     "open_roles_count": 2,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -734,7 +727,7 @@
       "Cyber Resilience Audits"
     ],
     "key_people": "Colin Topping (Managing Director)",
-    "last_checked": "2026-09-02T12:28:23.040Z",
+    "last_checked": "2026-09-08T22:00:03.615Z",
     "open_roles_count": 1,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -758,7 +751,7 @@
       "FlowDesigner"
     ],
     "key_people": "Stuart Harvey (CEO), Matt Flenley (Head of Product & Marketing)",
-    "last_checked": "2026-09-02T12:28:23.369Z",
+    "last_checked": "2026-09-08T22:00:03.887Z",
     "open_roles_count": 3,
     "product_roles_count": 0,
     "active_product_roles": [],
@@ -782,7 +775,7 @@
       "Deep Purple Agentic Platform"
     ],
     "key_people": "Conor O'Neill (CEO & Founder)",
-    "last_checked": "2026-09-02T12:28:23.372Z",
+    "last_checked": "2026-09-08T22:00:03.889Z",
     "open_roles_count": 2,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -806,7 +799,7 @@
       "Diagnostic Commercialisation Engine"
     ],
     "key_people": "Peter Keeling (Founder), Ryan Keeling (CEO)",
-    "last_checked": "2026-09-02T12:28:23.372Z",
+    "last_checked": "2026-09-08T22:00:03.889Z",
     "open_roles_count": 2,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -831,7 +824,7 @@
       "Launcher"
     ],
     "key_people": "Ed Morgan (CEO), Luke McSorley (CTO)",
-    "last_checked": "2026-09-02T12:28:23.372Z",
+    "last_checked": "2026-09-08T22:00:03.889Z",
     "open_roles_count": 2,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -856,7 +849,7 @@
       "Signalling Protection (SS7/Diameter/5G)"
     ],
     "key_people": "Teppo Paavola (CEO, Enea)",
-    "last_checked": "2026-09-02T12:28:23.372Z",
+    "last_checked": "2026-09-08T22:00:03.889Z",
     "open_roles_count": 0,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -881,7 +874,7 @@
       "ESO Hospital Insights"
     ],
     "key_people": "Eric Beck (CEO), Steven McComb (Director of Product, Belfast)",
-    "last_checked": "2026-09-02T12:28:23.372Z",
+    "last_checked": "2026-09-08T22:00:03.889Z",
     "open_roles_count": 10,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -904,7 +897,7 @@
       "KerusCloud Clinical Simulation Platform"
     ],
     "key_people": "Aiden Flynn (CEO & Founder)",
-    "last_checked": "2026-09-02T12:28:23.372Z",
+    "last_checked": "2026-09-08T22:00:03.889Z",
     "open_roles_count": 0,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -927,7 +920,7 @@
       "VetIMPRESS Veterinary Data Platform"
     ],
     "key_people": "George Brownlee (Founder & Managing Director)",
-    "last_checked": "2026-09-02T12:28:23.372Z",
+    "last_checked": "2026-09-08T22:00:03.889Z",
     "open_roles_count": 3,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -952,7 +945,7 @@
       "Kx Insights"
     ],
     "key_people": "Ashok Reddy (CEO of KX), Seamus Keating (CEO of FD Technologies)",
-    "last_checked": "2026-09-02T12:28:23.372Z",
+    "last_checked": "2026-09-08T22:00:03.889Z",
     "open_roles_count": 0,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -976,7 +969,7 @@
       "Subscriber Cloud Operations"
     ],
     "key_people": "Dominic Kearns (CEO)",
-    "last_checked": "2026-09-02T12:28:23.372Z",
+    "last_checked": "2026-09-08T22:00:03.889Z",
     "open_roles_count": 0,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -1000,7 +993,7 @@
       "TRU Digital KYC Engine"
     ],
     "key_people": "Darragh McCarthy (Founder & CEO)",
-    "last_checked": "2026-09-02T12:28:23.626Z",
+    "last_checked": "2026-09-08T22:00:04.122Z",
     "open_roles_count": 6,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -1023,7 +1016,7 @@
       "Flowlens Cloud MRP & Service Platform"
     ],
     "key_people": "Rich Dale (CEO)",
-    "last_checked": "2026-09-02T12:28:23.626Z",
+    "last_checked": "2026-09-08T22:00:04.122Z",
     "open_roles_count": 2,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -1046,7 +1039,7 @@
       "fscom RegTech Compliance Advisory"
     ],
     "key_people": "Jamie Cooke (Managing Director)",
-    "last_checked": "2026-09-02T12:28:23.626Z",
+    "last_checked": "2026-09-08T22:00:04.122Z",
     "open_roles_count": 1,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -1070,7 +1063,7 @@
       "Quantum-Inspired Computing"
     ],
     "key_people": "David Kerr (Managing Director Fujitsu NI)",
-    "last_checked": "2026-09-02T12:28:23.626Z",
+    "last_checked": "2026-09-08T22:00:04.122Z",
     "open_roles_count": 0,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -1093,7 +1086,7 @@
       "Custom Cloud Architecture & Product Engineering"
     ],
     "key_people": "Andrew Gough (Managing Director)",
-    "last_checked": "2026-09-02T12:28:23.626Z",
+    "last_checked": "2026-09-08T22:00:04.122Z",
     "open_roles_count": 3,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -1119,7 +1112,7 @@
       "Harness Security Testing"
     ],
     "key_people": "Jyoti Bansal (CEO & Co-Founder)",
-    "last_checked": "2026-09-02T12:28:23.626Z",
+    "last_checked": "2026-09-08T22:00:04.122Z",
     "open_roles_count": 0,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -1143,7 +1136,7 @@
       "Heywood Member Portal"
     ],
     "key_people": "Sankar Ramanathan (CEO)",
-    "last_checked": "2026-09-02T12:28:23.626Z",
+    "last_checked": "2026-09-08T22:00:04.122Z",
     "open_roles_count": 0,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -1166,7 +1159,7 @@
       "HireHive Recruiting Platform"
     ],
     "key_people": "John Ryan (CEO)",
-    "last_checked": "2026-09-02T12:28:23.626Z",
+    "last_checked": "2026-09-08T22:00:04.122Z",
     "open_roles_count": 1,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -1189,7 +1182,7 @@
       "Hurree Marketing Dashboard Cloud"
     ],
     "key_people": "Aaron Gibson (CEO & Founder)",
-    "last_checked": "2026-09-02T12:28:23.626Z",
+    "last_checked": "2026-09-08T22:00:04.122Z",
     "open_roles_count": 2,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -1198,8 +1191,8 @@
     "id": "imanage",
     "name": "iManage",
     "website": "https://imanage.com/",
-    "careers_url": "https://imanage.com/careers/",
-    "ats_type": "greenhouse",
+    "careers_url": "https://imanagecom.applytojob.com/apply/jobs/",
+    "ats_type": "jazzhr",
     "industry": "Enterprise B2B SaaS",
     "sub_sector": "Document Governance, Knowledge Work & AI",
     "scale_tier": "Mid-Market (100-500)",
@@ -1214,11 +1207,11 @@
       "iManage Security Policy Manager"
     ],
     "key_people": "Neil Araujo (CEO), Belfast Engineering Leadership",
-    "last_checked": "2026-09-02T12:28:23.626Z",
-    "open_roles_count": 1,
+    "last_checked": "2026-09-08T22:00:04.122Z",
+    "open_roles_count": 40,
     "product_roles_count": 0,
     "active_product_roles": [],
-    "ats_identifier": "imanage"
+    "ats_identifier": "imanagecom"
   },
   {
     "id": "imperva-thales",
@@ -1240,7 +1233,7 @@
       "Advanced Bot Protection"
     ],
     "key_people": "Pam Murphy (CEO Imperva), Belfast Site Leadership",
-    "last_checked": "2026-09-02T12:28:48.043Z",
+    "last_checked": "2026-09-08T22:00:04.405Z",
     "open_roles_count": 8,
     "product_roles_count": 1,
     "active_product_roles": [
@@ -1270,8 +1263,8 @@
       "Enterprise Software Engineering Practice"
     ],
     "key_people": "Tara Simpson (CEO & Founder)",
-    "last_checked": "2026-09-02T12:28:48.046Z",
-    "open_roles_count": 7,
+    "last_checked": "2026-09-08T22:00:04.408Z",
+    "open_roles_count": 6,
     "product_roles_count": 0,
     "active_product_roles": [],
     "ats_identifier": "instil"
@@ -1295,7 +1288,7 @@
       "Intelesens Wearable Cardiac Patch"
     ],
     "key_people": "Belfast Engineering Leadership",
-    "last_checked": "2026-09-02T12:28:48.049Z",
+    "last_checked": "2026-09-08T22:00:04.408Z",
     "open_roles_count": 2,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -1319,7 +1312,7 @@
       "iVerify Consumer App"
     ],
     "key_people": "Danny O'Brien (CEO), Belfast Engineering Team",
-    "last_checked": "2026-09-02T12:28:48.049Z",
+    "last_checked": "2026-09-08T22:00:04.408Z",
     "open_roles_count": 5,
     "product_roles_count": 0,
     "active_product_roles": [],
@@ -1345,7 +1338,7 @@
       "Kainos Smart Shield"
     ],
     "key_people": "Russell Sloan (CEO), Tom Gray (Director of Innovation)",
-    "last_checked": "2026-09-02T12:28:48.050Z",
+    "last_checked": "2026-09-08T22:00:04.410Z",
     "open_roles_count": 0,
     "product_roles_count": 0,
     "active_product_roles": [],
@@ -1370,7 +1363,7 @@
       "K-Track Sensor Telemetry Suite"
     ],
     "key_people": "Jackie Crooks (CEO), Joanne O'Doherty (Managing Director)",
-    "last_checked": "2026-09-02T12:28:48.051Z",
+    "last_checked": "2026-09-08T22:00:04.410Z",
     "open_roles_count": 2,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -1394,7 +1387,7 @@
       "Klipboard Mobile Engineer App"
     ],
     "key_people": "Drazen Dodik (CEO & Founder)",
-    "last_checked": "2026-09-02T12:28:48.051Z",
+    "last_checked": "2026-09-08T22:00:04.410Z",
     "open_roles_count": 2,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -1419,7 +1412,7 @@
       "Stream LXP"
     ],
     "key_people": "Benoit de La Tour (CEO), Louise McElvaney (People Director)",
-    "last_checked": "2026-09-02T12:28:48.051Z",
+    "last_checked": "2026-09-08T22:00:04.410Z",
     "open_roles_count": 0,
     "product_roles_count": 0,
     "active_product_roles": [],
@@ -1444,7 +1437,7 @@
       "Claims Automation AI"
     ],
     "key_people": "Tony Marron (Managing Director)",
-    "last_checked": "2026-09-02T12:28:48.052Z",
+    "last_checked": "2026-09-08T22:00:04.410Z",
     "open_roles_count": 7,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -1468,7 +1461,7 @@
       "Rota & Payment Management"
     ],
     "key_people": "Jonny Clarke (CEO & Founder)",
-    "last_checked": "2026-09-02T12:28:48.052Z",
+    "last_checked": "2026-09-08T22:00:04.410Z",
     "open_roles_count": 4,
     "product_roles_count": 0,
     "active_product_roles": [],
@@ -1493,7 +1486,7 @@
       "Merchant Insights Dashboard"
     ],
     "key_people": "Cormac Quinn (Founder & CEO)",
-    "last_checked": "2026-09-02T12:28:48.548Z",
+    "last_checked": "2026-09-08T22:00:04.832Z",
     "open_roles_count": 1,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -1517,7 +1510,7 @@
       "SpotX Video Ad Server"
     ],
     "key_people": "Michael Barrett (CEO Magnite), Belfast Engineering Leads",
-    "last_checked": "2026-09-02T12:28:48.548Z",
+    "last_checked": "2026-09-08T22:00:04.832Z",
     "open_roles_count": 5,
     "product_roles_count": 0,
     "active_product_roles": [],
@@ -1543,7 +1536,7 @@
       "MetaPrivacy Governance Suite"
     ],
     "key_people": "James Mackay (CEO), Robert O'Brien (Founder & Chief Evangelist)",
-    "last_checked": "2026-09-02T12:28:48.548Z",
+    "last_checked": "2026-09-08T22:00:04.832Z",
     "open_roles_count": 0,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -1568,7 +1561,7 @@
       "AI Anti-Money Laundering Engine"
     ],
     "key_people": "Greg Watson (CEO), Julian Dixon (Founder)",
-    "last_checked": "2026-09-02T12:28:48.548Z",
+    "last_checked": "2026-09-08T22:00:04.832Z",
     "open_roles_count": 0,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -1593,7 +1586,7 @@
       "Clinical Neurostimulation Hardware"
     ],
     "key_people": "Dr. Jason McKeown (CEO & Co-Founder)",
-    "last_checked": "2026-09-02T12:28:48.548Z",
+    "last_checked": "2026-09-08T22:00:04.832Z",
     "open_roles_count": 1,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -1602,8 +1595,8 @@
     "id": "nisos",
     "name": "Nisos",
     "website": "https://www.nisos.com/",
-    "careers_url": "https://www.nisos.com/careers/",
-    "ats_type": "greenhouse",
+    "careers_url": "https://nisos.applytojob.com/apply/jobs/",
+    "ats_type": "jazzhr",
     "industry": "Cybersecurity & DevTools",
     "sub_sector": "Managed Threat Intelligence & Cyber Investigations",
     "scale_tier": "Scaleup (20-100)",
@@ -1617,8 +1610,8 @@
       "Nisos Threat Exposure Portal"
     ],
     "key_people": "David Vance (CEO)",
-    "last_checked": "2026-09-02T12:28:48.548Z",
-    "open_roles_count": 3,
+    "last_checked": "2026-09-08T22:00:04.832Z",
+    "open_roles_count": 1,
     "product_roles_count": 0,
     "active_product_roles": [],
     "ats_identifier": "nisos"
@@ -1642,7 +1635,7 @@
       "AuditComply Risk & Quality Suite"
     ],
     "key_people": "Kevin Donaghy (Founder & Executive Leadership)",
-    "last_checked": "2026-09-02T12:28:48.549Z",
+    "last_checked": "2026-09-08T22:00:04.833Z",
     "open_roles_count": 2,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -1665,7 +1658,7 @@
       "Obbi Operations & Compliance Suite"
     ],
     "key_people": "Gareth Macklin (CEO & Founder)",
-    "last_checked": "2026-09-02T12:28:48.549Z",
+    "last_checked": "2026-09-08T22:00:04.833Z",
     "open_roles_count": 2,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -1689,7 +1682,7 @@
       "OpenText Content Cloud"
     ],
     "key_people": "Mark Barrenechea (CEO OpenText)",
-    "last_checked": "2026-09-02T12:28:48.549Z",
+    "last_checked": "2026-09-08T22:00:04.833Z",
     "open_roles_count": 7,
     "product_roles_count": 0,
     "active_product_roles": [],
@@ -1715,8 +1708,8 @@
       "Market Data Telemetry"
     ],
     "key_people": "Danny Moore (President & CEO)",
-    "last_checked": "2026-09-02T12:28:48.550Z",
-    "open_roles_count": 15,
+    "last_checked": "2026-09-08T22:00:04.834Z",
+    "open_roles_count": 16,
     "product_roles_count": 0,
     "active_product_roles": [],
     "ats_identifier": "options-it"
@@ -1740,7 +1733,7 @@
       "OSG Shield MDR"
     ],
     "key_people": "Terry Moore (CEO)",
-    "last_checked": "2026-09-02T12:28:49.426Z",
+    "last_checked": "2026-09-08T22:00:05.432Z",
     "open_roles_count": 2,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -1764,8 +1757,8 @@
       "Benchling In Vivo"
     ],
     "key_people": "Chris Armstrong (Founder), Graham Finch (Founder), Benchling Leadership",
-    "last_checked": "2026-09-02T12:28:49.427Z",
-    "open_roles_count": 51,
+    "last_checked": "2026-09-08T22:00:05.432Z",
+    "open_roles_count": 49,
     "product_roles_count": 4,
     "active_product_roles": [
       {
@@ -1815,7 +1808,7 @@
       "Omni-Channel API"
     ],
     "key_people": "James Oberman (CEO)",
-    "last_checked": "2026-09-02T12:28:49.427Z",
+    "last_checked": "2026-09-08T22:00:05.432Z",
     "open_roles_count": 4,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -1839,7 +1832,7 @@
       "Buyer Intent Engine"
     ],
     "key_people": "Christopher Rack (CEO MRP), Belfast Leadership",
-    "last_checked": "2026-09-02T12:28:49.427Z",
+    "last_checked": "2026-09-08T22:00:05.432Z",
     "open_roles_count": 5,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -1862,7 +1855,7 @@
       "Phion Peptide Delivery Platform"
     ],
     "key_people": "Prof. Helen McCarthy (CEO & Founder)",
-    "last_checked": "2026-09-02T12:28:49.427Z",
+    "last_checked": "2026-09-08T22:00:05.432Z",
     "open_roles_count": 1,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -1886,7 +1879,7 @@
       "Automated Floodlight / Access Control API"
     ],
     "key_people": "Shea O'Hagan (CEO), Chris Farrelly (CTO)",
-    "last_checked": "2026-09-02T12:28:49.427Z",
+    "last_checked": "2026-09-08T22:00:05.432Z",
     "open_roles_count": 1,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -1910,15 +1903,15 @@
       "PlotBox High-Res Drone Mapping Suite"
     ],
     "key_people": "Sean McAllister (CEO), Leona McAllister (CCO)",
-    "last_checked": "2026-09-02T12:28:49.427Z",
-    "open_roles_count": 2,
+    "last_checked": "2026-09-08T22:00:05.432Z",
+    "open_roles_count": 3,
     "product_roles_count": 1,
     "active_product_roles": [
       {
         "title": "Product Manager",
         "location": "Belfast / Remote UK",
         "url": "https://careers.plotbox.io/jobs/7396322-product-manager",
-        "date_posted": "2026-09-02"
+        "date_posted": "2026-09-08"
       }
     ],
     "ats_identifier": "plotbox"
@@ -1943,7 +1936,7 @@
       "Threat Response"
     ],
     "key_people": "Sumit Dhawan (CEO)",
-    "last_checked": "2026-09-02T12:28:49.429Z",
+    "last_checked": "2026-09-08T22:00:05.433Z",
     "open_roles_count": 0,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -1967,7 +1960,7 @@
       "PropertyPal Agent Cloud"
     ],
     "key_people": "Errol Maxwell (Managing Director), Jordan Buchanan (CEO)",
-    "last_checked": "2026-09-02T12:28:49.429Z",
+    "last_checked": "2026-09-08T22:00:05.433Z",
     "open_roles_count": 3,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -1992,8 +1985,8 @@
       "Puppet Bolt"
     ],
     "key_people": "Jim Ryan (CEO Perforce), Belfast Site Leadership",
-    "last_checked": "2026-09-02T12:28:49.429Z",
-    "open_roles_count": 13,
+    "last_checked": "2026-09-08T22:00:05.433Z",
+    "open_roles_count": 10,
     "product_roles_count": 0,
     "active_product_roles": [],
     "ats_identifier": "perforce"
@@ -2019,7 +2012,7 @@
       "AMIC (Advanced Manufacturing)"
     ],
     "key_people": "Prof Sir Ian Greer (President & Vice-Chancellor)",
-    "last_checked": "2026-09-02T12:28:50.720Z",
+    "last_checked": "2026-09-08T22:00:10.535Z",
     "open_roles_count": 45,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -2043,7 +2036,7 @@
       "Crypto Asset Processing Engine"
     ],
     "key_people": "Fergal Downey (VP & Belfast Lab Lead)",
-    "last_checked": "2026-09-02T12:28:50.720Z",
+    "last_checked": "2026-09-08T22:00:10.535Z",
     "open_roles_count": 4,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -2067,7 +2060,7 @@
       "Randox Acusera Data Management"
     ],
     "key_people": "Dr. Peter FitzGerald CBE (Managing Director)",
-    "last_checked": "2026-09-02T12:28:50.720Z",
+    "last_checked": "2026-09-08T22:00:10.535Z",
     "open_roles_count": 0,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -2092,7 +2085,7 @@
       "InsightConnect (SOAR)"
     ],
     "key_people": "Wael Mohamed (CEO), Corey Thomas (Executive Chairman), Belfast Engineering Leads",
-    "last_checked": "2026-09-02T12:28:50.720Z",
+    "last_checked": "2026-09-08T22:00:10.535Z",
     "open_roles_count": 0,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -2116,7 +2109,7 @@
       "Rail Intrusion Detection System (IDS)"
     ],
     "key_people": "Alex Cowan (CEO)",
-    "last_checked": "2026-09-02T12:28:50.720Z",
+    "last_checked": "2026-09-08T22:00:10.535Z",
     "open_roles_count": 3,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -2140,7 +2133,7 @@
       "OcuKross"
     ],
     "key_people": "Michael O'Rourke (CEO & President)",
-    "last_checked": "2026-09-02T12:28:50.720Z",
+    "last_checked": "2026-09-08T22:00:10.535Z",
     "open_roles_count": 1,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -2164,7 +2157,7 @@
       "VR Virtual Production Suite"
     ],
     "key_people": "Phil Morrow (CEO & Co-Founder), Jack Morrow (CTO & Co-Founder)",
-    "last_checked": "2026-09-02T12:28:50.720Z",
+    "last_checked": "2026-09-08T22:00:10.535Z",
     "open_roles_count": 0,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -2187,7 +2180,7 @@
       "Salt Secure Voice & Messaging Platform"
     ],
     "key_people": "Joe Boyle (CEO), Nicole Allen (Marketing Director)",
-    "last_checked": "2026-09-02T12:28:50.720Z",
+    "last_checked": "2026-09-08T22:00:10.535Z",
     "open_roles_count": 1,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -2211,7 +2204,7 @@
       "SAP Business Technology Platform"
     ],
     "key_people": "Christian Klein (CEO SAP)",
-    "last_checked": "2026-09-02T12:28:50.720Z",
+    "last_checked": "2026-09-08T22:00:10.535Z",
     "open_roles_count": 6,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -2235,7 +2228,7 @@
       "See.Sense Smart City Sensor Data Suite"
     ],
     "key_people": "Philip McAleese (CEO), Irene McAleese (CSO)",
-    "last_checked": "2026-09-02T12:28:50.720Z",
+    "last_checked": "2026-09-08T22:00:10.535Z",
     "open_roles_count": 1,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -2259,7 +2252,7 @@
       "Smart Vehicle Sensors"
     ],
     "key_people": "Jeff Cote (CEO Sensata)",
-    "last_checked": "2026-09-02T12:28:50.720Z",
+    "last_checked": "2026-09-08T22:00:10.535Z",
     "open_roles_count": 0,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -2283,7 +2276,7 @@
       "SideQuest Developer Portal"
     ],
     "key_people": "Shane Harris (CEO), Orla Harris (COO)",
-    "last_checked": "2026-09-02T12:28:50.720Z",
+    "last_checked": "2026-09-08T22:00:10.535Z",
     "open_roles_count": 2,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -2306,7 +2299,7 @@
       "SignVideo Web & Mobile VRS Platform"
     ],
     "key_people": "Belfast Operations & Engineering Team",
-    "last_checked": "2026-09-02T12:28:50.720Z",
+    "last_checked": "2026-09-08T22:00:10.535Z",
     "open_roles_count": 1,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -2330,11 +2323,11 @@
       "SOCVue Threat Intelligence"
     ],
     "key_people": "Maureen Perrelli (CEO SilverSky)",
-    "last_checked": "2026-09-02T12:28:50.720Z",
-    "open_roles_count": 4,
+    "last_checked": "2026-09-08T22:00:10.535Z",
+    "open_roles_count": 1,
     "product_roles_count": 0,
     "active_product_roles": [],
-    "ats_identifier": "embed"
+    "ats_identifier": "silversky"
   },
   {
     "id": "slice",
@@ -2356,11 +2349,11 @@
       "Slice Delivery Network"
     ],
     "key_people": "Ilir Sela (Founder & CEO)",
-    "last_checked": "2026-09-02T12:28:50.722Z",
+    "last_checked": "2026-09-08T22:00:10.537Z",
     "open_roles_count": 27,
     "product_roles_count": 0,
     "active_product_roles": [],
-    "ats_identifier": "embed"
+    "ats_identifier": "slice"
   },
   {
     "id": "somex-automation",
@@ -2380,7 +2373,7 @@
       "Custom Robotic Inspection & Assembly Systems"
     ],
     "key_people": "Michael Menary (Managing Director)",
-    "last_checked": "2026-09-02T12:28:50.724Z",
+    "last_checked": "2026-09-08T22:00:10.538Z",
     "open_roles_count": 1,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -2404,7 +2397,7 @@
       "Sonrai Cloud Platform"
     ],
     "key_people": "Dr. Darragh McArt (Founder & CEO)",
-    "last_checked": "2026-09-02T12:28:50.724Z",
+    "last_checked": "2026-09-08T22:00:10.538Z",
     "open_roles_count": 3,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -2427,7 +2420,7 @@
       "Staysure Digital Underwriting Cloud"
     ],
     "key_people": "Ryan Howsam (Founder & CEO)",
-    "last_checked": "2026-09-02T12:28:50.724Z",
+    "last_checked": "2026-09-08T22:00:10.538Z",
     "open_roles_count": 5,
     "product_roles_count": 0,
     "active_product_roles": [],
@@ -2453,7 +2446,7 @@
       "Stora App Marketplace"
     ],
     "key_people": "Gavin Shields (Founder & CEO)",
-    "last_checked": "2026-09-02T12:28:50.725Z",
+    "last_checked": "2026-09-08T22:00:10.538Z",
     "open_roles_count": 5,
     "product_roles_count": 1,
     "active_product_roles": [
@@ -2486,7 +2479,7 @@
       "Autonomous Stormwater Control"
     ],
     "key_people": "Brian Moloney (CEO & Founder)",
-    "last_checked": "2026-09-02T12:28:50.726Z",
+    "last_checked": "2026-09-08T22:00:10.539Z",
     "open_roles_count": 0,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -2510,7 +2503,7 @@
       "ProCuity Smart Bed Telemetry"
     ],
     "key_people": "Kevin Lobo (CEO Stryker)",
-    "last_checked": "2026-09-02T12:28:51.130Z",
+    "last_checked": "2026-09-08T22:00:11.246Z",
     "open_roles_count": 0,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -2534,7 +2527,7 @@
       "HyperScan Acceleration"
     ],
     "key_people": "Noel McKenna (Former CEO Titan IC / VP Nvidia), Belfast Lab Leadership",
-    "last_checked": "2026-09-02T12:28:51.134Z",
+    "last_checked": "2026-09-08T22:00:11.247Z",
     "open_roles_count": 6,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -2557,7 +2550,7 @@
       "Titan Shield Cyber Vulnerability Platform"
     ],
     "key_people": "Belfast Technical Team",
-    "last_checked": "2026-09-02T12:28:51.134Z",
+    "last_checked": "2026-09-08T22:00:11.247Z",
     "open_roles_count": 1,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -2583,7 +2576,7 @@
       "Connect Platform"
     ],
     "key_people": "Phil Race (CEO), Chrissi Jackson (Chief Product Officer)",
-    "last_checked": "2026-09-02T12:28:51.134Z",
+    "last_checked": "2026-09-08T22:00:11.247Z",
     "open_roles_count": 0,
     "product_roles_count": 0,
     "active_product_roles": [],
@@ -2608,7 +2601,7 @@
       "Parameta Data Engine"
     ],
     "key_people": "Nicolas Breteau (CEO TP ICAP)",
-    "last_checked": "2026-09-02T12:28:51.137Z",
+    "last_checked": "2026-09-08T22:00:11.248Z",
     "open_roles_count": 3,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -2633,7 +2626,7 @@
       "Cargo Security & Traceability"
     ],
     "key_people": "Kieran Kelly (Founder & CEO)",
-    "last_checked": "2026-09-02T12:28:51.137Z",
+    "last_checked": "2026-09-08T22:00:11.248Z",
     "open_roles_count": 0,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -2657,7 +2650,7 @@
       "Uleska Continuous AppSec Orchestration"
     ],
     "key_people": "Gary Robinson (Founder & Chief Architect)",
-    "last_checked": "2026-09-02T12:28:51.137Z",
+    "last_checked": "2026-09-08T22:00:11.248Z",
     "open_roles_count": 3,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -2683,7 +2676,7 @@
       "Derry Magee Tech & Health Innovation Hub"
     ],
     "key_people": "Prof Paul Bartholomew (Vice-Chancellor)",
-    "last_checked": "2026-09-02T12:28:51.137Z",
+    "last_checked": "2026-09-08T22:00:11.248Z",
     "open_roles_count": 6,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -2706,7 +2699,7 @@
       "AngioCell Vascular Therapeutics Platform"
     ],
     "key_people": "Christina O'Neill (CEO & Founder)",
-    "last_checked": "2026-09-02T12:28:51.139Z",
+    "last_checked": "2026-09-08T22:00:11.249Z",
     "open_roles_count": 1,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -2730,7 +2723,7 @@
       "Vela Direct Market Access (DMA)"
     ],
     "key_people": "David Taylor (CEO Exegy)",
-    "last_checked": "2026-09-02T12:28:51.139Z",
+    "last_checked": "2026-09-08T22:00:11.249Z",
     "open_roles_count": 5,
     "product_roles_count": 0,
     "active_product_roles": [],
@@ -2755,21 +2748,21 @@
       "Digital, Data & Cloud Transformation Practice"
     ],
     "key_people": "Tom O'Connor (CEO), Lorna McAdoo (NI Managing Director)",
-    "last_checked": "2026-09-02T12:28:52.296Z",
-    "open_roles_count": 153,
+    "last_checked": "2026-09-08T22:00:12.483Z",
+    "open_roles_count": 149,
     "product_roles_count": 3,
     "active_product_roles": [
+      {
+        "title": "Senior Product Manager",
+        "location": "London, Birmingham, Manchester, Newcastle upon Tyne, Edinburgh, Belfast",
+        "url": "https://jobs.smartrecruiters.com/Version1/744000147339146",
+        "date_posted": "2026-09-03"
+      },
       {
         "title": "Senior Product Manager - Day Rate Contract",
         "location": "London, Birmingham, Manchester, Newcastle upon Tyne, Edinburgh, Belfast",
         "url": "https://jobs.smartrecruiters.com/Version1/744000145911105",
         "date_posted": "2026-08-27"
-      },
-      {
-        "title": "Senior Product Manager",
-        "location": "London, Birmingham, Manchester, Newcastle upon Tyne, Edinburgh, Belfast",
-        "url": "https://jobs.smartrecruiters.com/Version1/744000145735987",
-        "date_posted": "2026-08-26"
       },
       {
         "title": "Principal Product Manager",
@@ -2797,8 +2790,8 @@
       "Cloud Security Assessment Practice"
     ],
     "key_people": "Simon Whittaker (CEO), Marc Kelly (COO)",
-    "last_checked": "2026-09-02T12:28:52.298Z",
-    "open_roles_count": 7,
+    "last_checked": "2026-09-08T22:00:12.483Z",
+    "open_roles_count": 6,
     "product_roles_count": 0,
     "active_product_roles": [],
     "ats_identifier": "instil"
@@ -2822,7 +2815,7 @@
       "Weev Mobile Driver App"
     ],
     "key_people": "Philip Rainey (CEO), Thomas O'Boyle (COO)",
-    "last_checked": "2026-09-02T12:28:52.299Z",
+    "last_checked": "2026-09-08T22:00:12.483Z",
     "open_roles_count": 5,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -2845,7 +2838,7 @@
       "Whitepot Interactive Simulation Engines"
     ],
     "key_people": "Peter Jack (CEO), Adam Whiteside (CTO)",
-    "last_checked": "2026-09-02T12:28:52.299Z",
+    "last_checked": "2026-09-08T22:00:12.483Z",
     "open_roles_count": 1,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -2868,7 +2861,7 @@
       "Whitespace AI Sandbox Platform"
     ],
     "key_people": "Nick Wright (CEO)",
-    "last_checked": "2026-09-02T12:28:52.299Z",
+    "last_checked": "2026-09-08T22:00:12.483Z",
     "open_roles_count": 1,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -2892,7 +2885,7 @@
       "Workpal Engineer App"
     ],
     "key_people": "Ian Megahey (Commercial Director)",
-    "last_checked": "2026-09-02T12:28:52.299Z",
+    "last_checked": "2026-09-08T22:00:12.483Z",
     "open_roles_count": 2,
     "product_roles_count": 0,
     "active_product_roles": []
@@ -2915,7 +2908,7 @@
       "Workplus Talent Platform"
     ],
     "key_people": "Richard Kirk (CEO & Founder)",
-    "last_checked": "2026-09-02T12:28:52.299Z",
+    "last_checked": "2026-09-08T22:00:12.483Z",
     "open_roles_count": 1,
     "product_roles_count": 0,
     "active_product_roles": []

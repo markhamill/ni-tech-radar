@@ -331,6 +331,61 @@ async function scanCompany(company) {
       }
     }
 
+    // 9. JazzHR Parser (e.g. Nisos, iManage)
+    if (company.ats_type === 'jazzhr' || (company.careers_url && company.careers_url.includes('applytojob.com'))) {
+      try {
+        const res = await fetch(company.careers_url, {
+          headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+          }
+        });
+        if (res.ok) {
+          const html = await res.text();
+          const rowRegex = /<tr[^>]*class=["']resumator_(?:even|odd)_row["'][^>]*>([\s\S]*?)<\/tr>/gi;
+          let m;
+          const found = [];
+          const host = new URL(company.careers_url).host;
+          while ((m = rowRegex.exec(html)) !== null) {
+            const rowHtml = m[1];
+            const linkMatch = rowHtml.match(/<a[^>]+class=["']job_title_link["'][^>]+href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/i);
+            const tds = rowHtml.match(/<td[^>]*>([\s\S]*?)<\/td>/gi) || [];
+            const loc = tds.length > 1 ? tds[1].replace(/<[^>]+>/g, '').trim() : (company.location || 'Belfast / Remote UK');
+            if (linkMatch) {
+              const rawTitle = linkMatch[2].replace(/<[^>]+>/g, '').trim();
+              const jobUrl = linkMatch[1].startsWith('http') ? linkMatch[1] : `https://${host}${linkMatch[1]}`;
+              if (rawTitle && !found.some(f => f.url === jobUrl)) {
+                found.push({ title: rawTitle, location: loc, url: jobUrl });
+              }
+            }
+          }
+          if (found.length > 0) {
+            result.open_roles_count = found.length;
+            const prodJobs = found.filter(j => {
+              if (!isProductRole(j.title)) return false;
+              const locLower = (j.location || '').toLowerCase();
+              if (locLower.includes('belfast') || locLower.includes('northern ireland') || locLower.includes('uk') || locLower.includes('united kingdom') || locLower.includes('remote') || locLower.includes('hybrid')) {
+                return true;
+              }
+              if (locLower.includes('chicago') || locLower.includes('new york') || locLower.includes('toronto') || locLower.includes('san francisco') || locLower.includes('il') || locLower.includes('ca')) {
+                return false;
+              }
+              return true;
+            });
+            result.product_roles_count = prodJobs.length;
+            result.active_product_roles = prodJobs.map(j => ({
+              title: j.title,
+              location: j.location,
+              url: j.url,
+              date_posted: new Date().toISOString().split('T')[0]
+            }));
+            return result;
+          }
+        }
+      } catch (jErr) {
+        console.error(`JazzHR fetch error for ${company.name}:`, jErr.message);
+      }
+    }
+
     // Retain existing active roles if manually verified or if scraper didn't run
     if (!result.active_product_roles) {
       result.active_product_roles = [];
