@@ -98,25 +98,35 @@ async function scanCompany(company) {
     if (company.ats_type === 'smartrecruiters' || (company.careers_url && company.careers_url.includes('smartrecruiters.com')) || company.id === 'version1') {
       const companyId = company.ats_identifier || (company.id === 'version1' ? 'Version1' : null);
       if (companyId) {
-        const res = await fetch(`https://api.smartrecruiters.com/v1/companies/${companyId}/postings?limit=100`);
-        if (res.ok) {
+        let allJobs = [];
+        let offset = 0;
+        const limit = 100;
+        let totalFound = 0;
+        do {
+          const res = await fetch(`https://api.smartrecruiters.com/v1/companies/${companyId}/postings?limit=${limit}&offset=${offset}`);
+          if (!res.ok) break;
           const data = await res.json();
-          const allJobs = data.content || [];
-          result.open_roles_count = data.totalFound || allJobs.length;
-          const prodJobs = allJobs.filter(j => isProductRole(j.name));
-          result.product_roles_count = prodJobs.length;
-          result.active_product_roles = prodJobs.map(j => {
-            let loc = 'Belfast / UK Hybrid';
-            if (j.location && j.location.city) loc = j.location.city;
-            return {
-              title: j.name,
-              location: loc,
-              url: `https://jobs.smartrecruiters.com/${companyId}/${j.id}`,
-              date_posted: j.releasedDate ? j.releasedDate.split('T')[0] : new Date().toISOString().split('T')[0]
-            };
-          });
-          return result;
-        }
+          totalFound = data.totalFound || 0;
+          const content = data.content || [];
+          allJobs.push(...content);
+          offset += limit;
+          if (content.length === 0 || allJobs.length >= totalFound) break;
+        } while (offset < totalFound && offset < 500);
+
+        result.open_roles_count = totalFound || allJobs.length;
+        const prodJobs = allJobs.filter(j => isProductRole(j.name));
+        result.product_roles_count = prodJobs.length;
+        result.active_product_roles = prodJobs.map(j => {
+          let loc = 'Belfast / UK Hybrid';
+          if (j.location && j.location.city) loc = j.location.city;
+          return {
+            title: j.name,
+            location: loc,
+            url: `https://jobs.smartrecruiters.com/${companyId}/${j.id}`,
+            date_posted: j.releasedDate ? j.releasedDate.split('T')[0] : new Date().toISOString().split('T')[0]
+          };
+        });
+        return result;
       }
     }
 
