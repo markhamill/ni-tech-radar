@@ -733,6 +733,32 @@
     "active_product_roles": []
   },
   {
+    "id": "dailypay",
+    "name": "DailyPay",
+    "website": "https://www.dailypay.com",
+    "careers_url": "https://jobs.ashbyhq.com/dailypay",
+    "ats_type": "ashby",
+    "ats_identifier": "dailypay",
+    "industry": "Fintech & Payments",
+    "sub_sector": "Earned Wage Access (EWA) & On-Demand Pay FinTech",
+    "scale_tier": "Large Enterprise / FDI Hub (500+)",
+    "headcount_estimate": "1,000+ (Belfast Hub: 150-300)",
+    "funding_type": "VC-backed (00M+ raised)",
+    "location": "Belfast",
+    "address": "McAuley House, 2-14 Castle Street, Belfast BT1 1HB",
+    "description": "New York-headquartered financial technology scaleup and pioneer of on-demand pay (earned wage access). Established a major £24M international technology, product, and operations hub in Belfast.",
+    "key_products": [
+      "DailyPay On-Demand Pay Platform",
+      "DailyPay Balance",
+      "Friday Card & App"
+    ],
+    "key_people": "Kevin Coop (CEO), Stacy Greiner (COO)",
+    "last_checked": "2026-09-21T09:18:58.541Z",
+    "open_roles_count": 22,
+    "product_roles_count": 0,
+    "active_product_roles": []
+  },
+  {
     "id": "datactics",
     "name": "Datactics",
     "website": "https://datactics.com/",
@@ -2732,6 +2758,33 @@
     "active_product_roles": []
   },
   {
+    "id": "upwind-security",
+    "name": "Upwind Security",
+    "website": "https://www.upwind.io/",
+    "careers_url": "https://www.upwind.io/careers",
+    "ats_type": "comeet",
+    "ats_identifier": "49.004",
+    "ats_token": "94440DC0944094401BCC12882510",
+    "industry": "Cybersecurity & InfoSec",
+    "sub_sector": "Cloud Security, CNAPP & Runtime Threat Protection",
+    "scale_tier": "Mid-Market (100-500)",
+    "headcount_estimate": "150-250 (Belfast Hub: 20-40)",
+    "funding_type": "VC-backed ($100M+ raised from Cyberstarts, Greylock, Craft Ventures, Leaders Fund, TCV)",
+    "location": "Belfast",
+    "address": "Custom House Square, Belfast",
+    "description": "Cloud security platform leveraging real-time runtime insights to protect cloud infrastructure, Kubernetes, and containerised workloads with CNAPP, CWPP, and threat detection capabilities.",
+    "key_products": [
+      "Upwind Cloud Security Platform",
+      "Upwind Runtime CNAPP & CWPP",
+      "Upwind API & Container Security"
+    ],
+    "key_people": "Amiram Shachar (CEO & Co-Founder), Liran Polak (CTO & Co-Founder)",
+    "last_checked": "2026-09-21T09:49:01.312Z",
+    "open_roles_count": 73,
+    "product_roles_count": 0,
+    "active_product_roles": []
+  },
+  {
     "id": "vascversa",
     "name": "VascVersa",
     "website": "https://vascversa.com/",
@@ -2954,32 +3007,6 @@
     "key_people": "Richard Kirk (CEO & Founder)",
     "last_checked": "2026-09-21T09:18:58.541Z",
     "open_roles_count": 1,
-    "product_roles_count": 0,
-    "active_product_roles": []
-  },
-  {
-    "id": "dailypay",
-    "name": "DailyPay",
-    "website": "https://www.dailypay.com",
-    "careers_url": "https://jobs.ashbyhq.com/dailypay",
-    "ats_type": "ashby",
-    "ats_identifier": "dailypay",
-    "industry": "Fintech & Payments",
-    "sub_sector": "Earned Wage Access (EWA) & On-Demand Pay FinTech",
-    "scale_tier": "Large Enterprise / FDI Hub (500+)",
-    "headcount_estimate": "1,000+ (Belfast Hub: 150-300)",
-    "funding_type": "VC-backed (00M+ raised)",
-    "location": "Belfast",
-    "address": "McAuley House, 2-14 Castle Street, Belfast BT1 1HB",
-    "description": "New York-headquartered financial technology scaleup and pioneer of on-demand pay (earned wage access). Established a major £24M international technology, product, and operations hub in Belfast.",
-    "key_products": [
-      "DailyPay On-Demand Pay Platform",
-      "DailyPay Balance",
-      "Friday Card & App"
-    ],
-    "key_people": "Kevin Coop (CEO), Stacy Greiner (COO)",
-    "last_checked": "2026-09-21T09:18:58.541Z",
-    "open_roles_count": 22,
     "product_roles_count": 0,
     "active_product_roles": []
   }

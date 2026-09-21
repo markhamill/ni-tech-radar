@@ -2311,6 +2311,32 @@
     "ats_identifier": ""
   },
   {
+    "id": "cybsafe",
+    "name": "CybSafe",
+    "website": "https://www.cybsafe.com",
+    "careers_url": "https://cybsafe.bamboohr.com/careers",
+    "ats_type": "bamboohr",
+    "ats_identifier": "cybsafe",
+    "industry": "Cybersecurity & Behavioural Risk",
+    "sub_sector": "Human Risk Management (HRM) & Security Awareness",
+    "scale_tier": "Scaleup (50-150)",
+    "headcount_estimate": "80-120",
+    "funding_type": "Series B (8M funded)",
+    "location": "London (Remote / Hybrid)",
+    "address": "London, UK",
+    "description": "Behavioural security platform measuring and reducing human cyber risk with AI-driven behavioural analytics.",
+    "key_products": [
+      "CybSafe Human Risk Platform",
+      "SebDB",
+      "Behavioural Risk Analytics"
+    ],
+    "key_people": "Executive Leadership",
+    "last_checked": "2026-09-21T09:19:06.722Z",
+    "open_roles_count": 1,
+    "product_roles_count": 0,
+    "active_product_roles": []
+  },
+  {
     "id": "cyfor",
     "name": "CYFOR",
     "website": "https://cyforsecure.co.uk/services/cyber-assessment/cyber-essentials",
@@ -3195,6 +3221,39 @@
     "active_product_roles": []
   },
   {
+    "id": "netcraft",
+    "name": "Netcraft",
+    "website": "https://www.netcraft.com",
+    "careers_url": "https://boards.greenhouse.io/netcraft",
+    "ats_type": "greenhouse",
+    "ats_identifier": "netcraft",
+    "industry": "Cybersecurity & Threat Intelligence",
+    "sub_sector": "Anti-Phishing, Cybercrime Detection & Digital Risk Protection",
+    "scale_tier": "Scaleup (100-250)",
+    "headcount_estimate": "150-250",
+    "funding_type": "Private Equity",
+    "location": "Bath & London (Hybrid)",
+    "address": "Bath, Somerset / London, UK",
+    "description": "Global leader in cybercrime detection, anti-phishing, takedown services, and internet security intelligence.",
+    "key_products": [
+      "Netcraft Anti-Phishing Platform",
+      "Cybercrime Takedown Services",
+      "Browser Security Extension"
+    ],
+    "key_people": "Executive Leadership",
+    "last_checked": "2026-09-21T09:19:06.722Z",
+    "open_roles_count": 17,
+    "product_roles_count": 1,
+    "active_product_roles": [
+      {
+        "title": "Product Marketing Manager ",
+        "location": "UK (Bath, London, Manchester) ",
+        "url": "https://job-boards.eu.greenhouse.io/netcraft/jobs/4935294101",
+        "date_posted": "2026-09-15"
+      }
+    ]
+  },
+  {
     "id": "outthink",
     "name": "OutThink",
     "website": "https://outthink.io",
@@ -3787,6 +3846,33 @@
     "ats_identifier": ""
   },
   {
+    "id": "upwind-security",
+    "name": "Upwind Security",
+    "website": "https://www.upwind.io/",
+    "careers_url": "https://www.upwind.io/careers",
+    "ats_type": "comeet",
+    "ats_identifier": "49.004",
+    "ats_token": "94440DC0944094401BCC12882510",
+    "industry": "Cybersecurity & Information Security",
+    "sub_sector": "Cloud Security, CNAPP & Runtime Protection",
+    "scale_tier": "Mid-Market (100-500)",
+    "headcount_estimate": "150-250",
+    "funding_type": "VC-backed ($100M+ raised from Cyberstarts, Greylock, Craft Ventures, Leaders Fund, TCV)",
+    "location": "Belfast / UK Remote",
+    "address": "Custom House Square, Belfast / UK Remote",
+    "description": "Developer of a comprehensive cloud security platform that uses runtime data to secure cloud architecture, containerised workloads, Kubernetes, and APIs against advanced threats.",
+    "key_products": [
+      "Upwind Cloud Security Platform",
+      "Upwind Runtime CNAPP & CWPP",
+      "Upwind API & Container Security"
+    ],
+    "key_people": "Amiram Shachar (CEO & Co-Founder), Liran Polak (CTO & Co-Founder)",
+    "last_checked": "2026-09-21T09:49:01.312Z",
+    "open_roles_count": 73,
+    "product_roles_count": 0,
+    "active_product_roles": []
+  },
+  {
     "id": "vciso-soc2-amp-iso-27001-services-for-smbs",
     "name": "vCISO, SOC2 &amp; ISO 27001 Services for SMBs",
     "website": "https://secureleap.tech",
@@ -3809,64 +3895,5 @@
     "product_roles_count": 0,
     "active_product_roles": [],
     "ats_identifier": ""
-  },
-  {
-    "id": "netcraft",
-    "name": "Netcraft",
-    "website": "https://www.netcraft.com",
-    "careers_url": "https://boards.greenhouse.io/netcraft",
-    "ats_type": "greenhouse",
-    "ats_identifier": "netcraft",
-    "industry": "Cybersecurity & Threat Intelligence",
-    "sub_sector": "Anti-Phishing, Cybercrime Detection & Digital Risk Protection",
-    "scale_tier": "Scaleup (100-250)",
-    "headcount_estimate": "150-250",
-    "funding_type": "Private Equity",
-    "location": "Bath & London (Hybrid)",
-    "address": "Bath, Somerset / London, UK",
-    "description": "Global leader in cybercrime detection, anti-phishing, takedown services, and internet security intelligence.",
-    "key_products": [
-      "Netcraft Anti-Phishing Platform",
-      "Cybercrime Takedown Services",
-      "Browser Security Extension"
-    ],
-    "key_people": "Executive Leadership",
-    "last_checked": "2026-09-21T09:19:06.722Z",
-    "open_roles_count": 17,
-    "product_roles_count": 1,
-    "active_product_roles": [
-      {
-        "title": "Product Marketing Manager ",
-        "location": "UK (Bath, London, Manchester) ",
-        "url": "https://job-boards.eu.greenhouse.io/netcraft/jobs/4935294101",
-        "date_posted": "2026-09-15"
-      }
-    ]
-  },
-  {
-    "id": "cybsafe",
-    "name": "CybSafe",
-    "website": "https://www.cybsafe.com",
-    "careers_url": "https://cybsafe.bamboohr.com/careers",
-    "ats_type": "bamboohr",
-    "ats_identifier": "cybsafe",
-    "industry": "Cybersecurity & Behavioural Risk",
-    "sub_sector": "Human Risk Management (HRM) & Security Awareness",
-    "scale_tier": "Scaleup (50-150)",
-    "headcount_estimate": "80-120",
-    "funding_type": "Series B (8M funded)",
-    "location": "London (Remote / Hybrid)",
-    "address": "London, UK",
-    "description": "Behavioural security platform measuring and reducing human cyber risk with AI-driven behavioural analytics.",
-    "key_products": [
-      "CybSafe Human Risk Platform",
-      "SebDB",
-      "Behavioural Risk Analytics"
-    ],
-    "key_people": "Executive Leadership",
-    "last_checked": "2026-09-21T09:19:06.722Z",
-    "open_roles_count": 1,
-    "product_roles_count": 0,
-    "active_product_roles": []
   }
 ]

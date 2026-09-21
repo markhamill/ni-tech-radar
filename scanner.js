@@ -74,6 +74,7 @@ function isUkOrNiRelevant(location, company) {
     'sydney', 'melbourne', 'australia', 'singapore', 'tokyo', 'japan',
     'india', 'bengaluru', 'bangalore', 'pune', 'hyderabad',
     'germany', 'berlin', 'munich', 'frankfurt', 'france', 'paris',
+    'israel', 'tel aviv', 'ramat gan', 'herzliya', 'haifa', 'jerusalem',
     'brazil', 'sao paulo', 'netherlands', 'amsterdam', 'rijswijk',
     'united states', 'usa', 'u.s.', 'us-remote', 'us remote', 'usa remote', 'remote - us', 'remote (us)'
   ];
@@ -584,6 +585,37 @@ async function scanCompany(company) {
           }
         } catch (wdErr) {
           console.error(`Workday fetch error for ${company.name}:`, wdErr.message);
+        }
+      }
+    }
+
+    // 12. Comeet API Handler (e.g. Upwind Security)
+    if (company.ats_type === 'comeet') {
+      const uid = company.ats_identifier;
+      const token = company.ats_token;
+      if (uid && token) {
+        try {
+          const res = await fetch(`https://www.comeet.co/careers-api/2.0/company/${uid}/positions?token=${token}`);
+          if (res.ok) {
+            const allJobs = await res.json();
+            result.open_roles_count = allJobs.length;
+            const prodJobs = allJobs.filter(j => {
+              if (!isProductRole(j.name)) return false;
+              const locParts = [j.location?.city, j.location?.name, j.location?.country, j.workplace_type].filter(Boolean).join(', ');
+              const loc = locParts || company.location || 'UK / Hybrid';
+              return isUkOrNiRelevant(loc, company);
+            });
+            result.product_roles_count = prodJobs.length;
+            result.active_product_roles = prodJobs.map(j => ({
+              title: j.name,
+              location: (j.location && (j.location.city || j.location.name)) || company.location || 'UK / Hybrid',
+              url: j.url_active_page || j.url_comeet_hosted_page || company.careers_url,
+              date_posted: (j.time_updated || new Date().toISOString()).split('T')[0]
+            }));
+            return result;
+          }
+        } catch (cErr) {
+          console.error(`Comeet fetch error for ${company.name}:`, cErr.message);
         }
       }
     }
