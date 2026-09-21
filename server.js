@@ -4,9 +4,33 @@ const path = require('path');
 const { runScanner } = require('./scanner');
 
 const PORT = process.env.PORT || 3333;
-const DB_PATH = path.join(__dirname, 'public', 'data', 'companies.json');
+const DEFAULT_DB_PATH = path.join(__dirname, 'public', 'data', 'companies.json');
+const CYBER_DB_PATH = path.join(__dirname, 'public', 'data', 'cyber_companies.json');
+const DB_PATH = DEFAULT_DB_PATH;
 const PUBLIC_DIR = path.join(__dirname, 'public');
 const APPLICATIONS_DIR = path.join(__dirname, '..', 'applications');
+
+function getDbPath(dataset) {
+  if (dataset === 'cyber' || dataset === 'cybersecurity') {
+    return CYBER_DB_PATH;
+  }
+  return DEFAULT_DB_PATH;
+}
+
+function readJsonBody(req) {
+  return new Promise(resolve => {
+    let data = '';
+    req.on('data', chunk => { data += chunk; });
+    req.on('end', () => {
+      if (!data.trim()) return resolve({});
+      try {
+        resolve(JSON.parse(data));
+      } catch (err) {
+        resolve({});
+      }
+    });
+  });
+}
 
 const MIME_TYPES = {
   '.html': 'text/html; charset=utf-8',
@@ -107,10 +131,18 @@ const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, `http://${req.headers.host}`);
   const pathname = url.pathname;
 
-  // API: Get all companies enriched with live local application tracking
-  if (req.method === 'GET' && pathname === '/api/companies') {
+  // API: Get companies enriched with live local application tracking
+  if (req.method === 'GET' && (pathname === '/api/companies' || pathname === '/api/cyber-companies')) {
+    const requestedDataset = pathname === '/api/cyber-companies' ? 'cyber' : (url.searchParams.get('dataset') || 'ni');
+    const targetDbPath = getDbPath(requestedDataset);
+
     try {
-      const data = fs.readFileSync(DB_PATH, 'utf-8');
+      if (!fs.existsSync(targetDbPath)) {
+        res.writeHead(404, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: `Database file not found for dataset '${requestedDataset}'` }));
+        return;
+      }
+      const data = fs.readFileSync(targetDbPath, 'utf-8');
       const companies = JSON.parse(data);
       const trackedApps = getTrackedApplications();
 
@@ -134,8 +166,19 @@ const server = http.createServer(async (req, res) => {
   // API: Trigger scanner
   if (req.method === 'POST' && pathname === '/api/scan') {
     try {
-      await runScanner();
-      const data = fs.readFileSync(DB_PATH, 'utf-8');
+      const body = await readJsonBody(req);
+      const requestedDataset = body.dataset || url.searchParams.get('dataset') || 'ni';
+
+      if (requestedDataset === 'all') {
+        await runScanner(DEFAULT_DB_PATH);
+        await runScanner(CYBER_DB_PATH);
+      } else {
+        const targetDbPath = getDbPath(requestedDataset);
+        await runScanner(targetDbPath);
+      }
+
+      const returnDbPath = getDbPath(requestedDataset);
+      const data = fs.readFileSync(returnDbPath, 'utf-8');
       const companies = JSON.parse(data);
       const trackedApps = getTrackedApplications();
       const enriched = companies.map(c => ({
@@ -144,7 +187,7 @@ const server = http.createServer(async (req, res) => {
       }));
 
       res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ status: 'success', message: 'Scan completed', data: enriched }));
+      res.end(JSON.stringify({ status: 'success', message: 'Scan completed', dataset: requestedDataset, data: enriched }));
     } catch (err) {
       res.writeHead(500, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ error: 'Failed to run scanner', details: err.message }));
@@ -154,32 +197,32 @@ const server = http.createServer(async (req, res) => {
 
   // API: Add new company
   if (req.method === 'POST' && pathname === '/api/companies') {
-    let body = '';
-    req.on('data', chunk => { body += chunk; });
-    req.on('end', () => {
-      try {
-        const newCompany = JSON.parse(body);
-        if (!newCompany.id || !newCompany.name) {
-          res.writeHead(400, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ error: 'Missing required company id or name' }));
-          return;
-        }
-        const companies = JSON.parse(fs.readFileSync(DB_PATH, 'utf-8'));
-        companies.push({
-          ...newCompany,
-          last_checked: new Date().toISOString(),
-          active_product_roles: newCompany.active_product_roles || [],
-          open_roles_count: newCompany.open_roles_count || 0,
-          product_roles_count: newCompany.product_roles_count || 0
-        });
-        fs.writeFileSync(DB_PATH, JSON.stringify(companies, null, 2), 'utf-8');
-        res.writeHead(201, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ status: 'success', data: newCompany }));
-      } catch (err) {
+    try {
+      const body = await readJsonBody(req);
+      const newCompany = body;
+      const targetDataset = body.dataset || url.searchParams.get('dataset') || 'ni';
+      const targetDbPath = getDbPath(targetDataset);
+
+      if (!newCompany.id || !newCompany.name) {
         res.writeHead(400, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ error: 'Invalid JSON payload', details: err.message }));
+        res.end(JSON.stringify({ error: 'Missing required company id or name' }));
+        return;
       }
-    });
+      const companies = JSON.parse(fs.readFileSync(targetDbPath, 'utf-8'));
+      companies.push({
+        ...newCompany,
+        last_checked: new Date().toISOString(),
+        active_product_roles: newCompany.active_product_roles || [],
+        open_roles_count: newCompany.open_roles_count || 0,
+        product_roles_count: newCompany.product_roles_count || 0
+      });
+      fs.writeFileSync(targetDbPath, JSON.stringify(companies, null, 2), 'utf-8');
+      res.writeHead(201, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ status: 'success', data: newCompany }));
+    } catch (err) {
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Invalid JSON payload', details: err.message }));
+    }
     return;
   }
 

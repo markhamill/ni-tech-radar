@@ -8,7 +8,9 @@
   },
   "scripts": {
     "start": "node server.js",
-    "scan": "node scanner.js"
+    "scan": "node scanner.js",
+    "scan:cyber": "node scanner.js --cyber",
+    "scan:all": "node scanner.js --all"
   },
   "keywords": ["northern-ireland", "tech-radar", "job-tracker", "careers"],
   "author": "",

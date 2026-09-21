@@ -128,18 +128,39 @@
 
   <!-- Top Navigation (Mobile Streamlined & Widescreen Optimized) -->
   <header class="border-b border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 backdrop-blur sticky top-0 z-40 shadow-sm dark:shadow-none transition-colors">
-    <div class="max-w-[1700px] mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-0 sm:h-20 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-4">
+    <div class="max-w-[1700px] mx-auto px-3 sm:px-6 lg:px-8 py-2.5 sm:py-0 sm:h-20 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-4">
       <!-- Main Brand Row -->
-      <div class="flex items-center space-x-3 sm:space-x-4">
-        <!-- Target / Crosshairs Logo Icon -->
-        <div class="w-9 h-9 sm:w-14 sm:h-14 shrink-0 rounded-xl sm:rounded-2xl bg-gradient-to-tr from-emerald-500 via-teal-400 to-emerald-300 flex items-center justify-center shadow-lg shadow-emerald-500/20 text-slate-950 border border-emerald-300/50">
-          <i class="fa-solid fa-crosshairs text-slate-950 text-lg sm:text-[32px] font-black"></i>
+      <div class="flex items-center justify-between sm:justify-start space-x-3 sm:space-x-4">
+        <div class="flex items-center space-x-3 sm:space-x-4">
+          <!-- Target / Crosshairs Logo Icon -->
+          <div id="brandIconBox" class="w-9 h-9 sm:w-14 sm:h-14 shrink-0 rounded-xl sm:rounded-2xl bg-gradient-to-tr from-emerald-500 via-teal-400 to-emerald-300 flex items-center justify-center shadow-lg shadow-emerald-500/20 text-slate-950 border border-emerald-300/50 transition-all">
+            <i id="brandIcon" class="fa-solid fa-crosshairs text-slate-950 text-lg sm:text-[32px] font-black"></i>
+          </div>
+          <div>
+            <h1 id="headerTitle" class="font-extrabold text-base sm:text-xl text-slate-900 dark:text-slate-50 tracking-tight whitespace-nowrap">
+              Northern Ireland Tech Radar
+            </h1>
+            <p id="headerSubtitle" class="hidden sm:block text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">Directory &amp; Automated Product Role Intelligence across Northern Ireland</p>
+          </div>
         </div>
-        <div>
-          <h1 class="font-extrabold text-base sm:text-xl text-slate-900 dark:text-slate-50 tracking-tight whitespace-nowrap">
-            Northern Ireland Tech Radar
-          </h1>
-          <p class="hidden sm:block text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">Directory & Automated Product Role Intelligence across Northern Ireland</p>
+
+        <!-- Mobile-only Theme Toggle -->
+        <button id="themeToggleBtnMobile" onclick="toggleTheme()" class="sm:hidden h-9 w-9 rounded-xl inline-flex items-center justify-center text-xs font-semibold leading-none bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700/80 transition-all shadow-sm shrink-0" title="Toggle Light / Dark Mode">
+          <i id="themeToggleIconMobile" class="fa-solid fa-moon text-amber-500 dark:text-amber-300 text-sm"></i>
+        </button>
+      </div>
+
+      <!-- Center: Dataset Switcher (NI Tech vs UK Cyber) -->
+      <div class="flex items-center justify-center w-full sm:w-auto">
+        <div class="inline-flex p-1 bg-slate-100 dark:bg-slate-800/90 rounded-2xl border border-slate-200 dark:border-slate-700/80 shadow-inner w-full sm:w-auto">
+          <button id="tabNi" onclick="switchDataset('ni')" class="flex-1 sm:flex-initial px-3.5 sm:px-4 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-2 shadow-sm bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200/80 dark:border-slate-700" title="Switch to Northern Ireland Tech Ecosystem">
+            <i id="tabNiIcon" class="fa-solid fa-compass text-emerald-600 dark:text-emerald-400 text-xs sm:text-sm"></i>
+            <span>NI Tech</span>
+          </button>
+          <button id="tabCyber" onclick="switchDataset('cyber')" class="flex-1 sm:flex-initial px-3.5 sm:px-4 py-1.5 rounded-xl text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all flex items-center justify-center gap-2 border border-transparent" title="Switch to UK Cybersecurity Radar">
+            <i id="tabCyberIcon" class="fa-solid fa-shield-halved text-slate-400 dark:text-slate-500 text-xs sm:text-sm"></i>
+            <span>UK Cyber</span>
+          </button>
         </div>
       </div>
 
@@ -166,11 +187,11 @@
         <!-- 4. Scan Button (Local Mode, Desktop only) -->
         <button id="scanBtn" onclick="triggerScan()" class="h-9 sm:h-10 px-3.5 sm:px-4 rounded-xl hidden sm:inline-flex items-center justify-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-bold leading-none bg-emerald-600 hover:bg-emerald-500 text-white border border-emerald-600 hover:border-emerald-500 shadow-md shadow-emerald-600/20 transition-all shrink-0 box-border" title="Scan live ATS portals for open product roles">
           <i class="fa-solid fa-arrows-rotate text-xs sm:text-sm" id="scanIcon"></i>
-          <span>Scan</span>
+          <span id="scanBtnText">Scan</span>
         </button>
 
-        <!-- 5. Light/Dark Mode Toggle (Rightmost position) -->
-        <button id="themeToggleBtn" onclick="toggleTheme()" class="h-9 w-9 sm:h-10 sm:w-10 rounded-xl inline-flex items-center justify-center text-xs font-semibold leading-none bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700/80 transition-all shadow-sm group shrink-0 box-border" title="Toggle Light / Dark Mode">
+        <!-- 5. Light/Dark Mode Toggle (Desktop) -->
+        <button id="themeToggleBtn" onclick="toggleTheme()" class="hidden sm:inline-flex h-9 w-9 sm:h-10 sm:w-10 rounded-xl items-center justify-center text-xs font-semibold leading-none bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700/80 transition-all shadow-sm group shrink-0 box-border" title="Toggle Light / Dark Mode">
           <i id="themeToggleIcon" class="fa-solid fa-moon text-amber-500 dark:text-amber-300 text-sm group-hover:scale-110 transition-transform"></i>
         </button>
       </div>
@@ -188,7 +209,7 @@
           <i class="fa-solid fa-layer-group text-xs text-slate-400 dark:text-slate-500"></i>
         </div>
         <div class="text-xl sm:text-3xl font-extrabold font-mono tracking-tight text-slate-900 dark:text-slate-100 mt-1 sm:mt-2" id="statTotal">0</div>
-        <div class="hidden sm:block text-xs text-slate-400 dark:text-slate-500 mt-1">Tracked across Northern Ireland</div>
+        <div id="statTotalSubtext" class="hidden sm:block text-xs text-slate-400 dark:text-slate-500 mt-1">Tracked across Northern Ireland</div>
       </div>
       <div id="statProductRolesCard" onclick="toggleProductRoles()" class="cursor-pointer select-none bg-emerald-50/70 dark:bg-slate-900/70 border border-emerald-200 dark:border-emerald-900/40 rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between shadow-sm transition-colors" title="Click to toggle live product roles">
         <div class="text-[11px] sm:text-sm font-semibold text-emerald-700 dark:text-emerald-400 flex items-center justify-between leading-tight">
@@ -261,15 +282,15 @@
           </div>
         </div>
         <div>
-          <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1.5">Industry / Sector</label>
+          <label id="filterIndustryLabel" class="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1.5">Industry / Sector</label>
           <div class="relative">
             <select id="filterIndustry" class="w-full appearance-none bg-[#F5F8FC] dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl pl-3.5 pr-9 py-2.5 text-sm text-slate-800 dark:text-slate-200 focus:outline-none focus:border-emerald-500 cursor-pointer" onchange="applyFilters()">
               <option value="ALL">All Industries</option>
-              <option value="Cybersecurity">Cybersecurity & DevTools</option>
+              <option value="Cybersecurity">Cybersecurity &amp; DevTools</option>
               <option value="Enterprise B2B SaaS">Enterprise B2B SaaS</option>
-              <option value="FinTech">FinTech, Trading & RegTech</option>
-              <option value="HealthTech">HealthTech & Life Sciences</option>
-              <option value="Data">Data, AI & Analytics</option>
+              <option value="FinTech">FinTech, Trading &amp; RegTech</option>
+              <option value="HealthTech">HealthTech &amp; Life Sciences</option>
+              <option value="Data">Data, AI &amp; Analytics</option>
             </select>
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3.5 text-slate-400 dark:text-slate-500">
               <i class="fa-solid fa-chevron-down text-xs"></i>
@@ -292,17 +313,10 @@
           </div>
         </div>
         <div>
-          <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1.5">Location</label>
+          <label id="filterLocationLabel" class="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1.5">Location</label>
           <div class="relative">
             <select id="filterLocation" class="w-full appearance-none bg-[#F5F8FC] dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl pl-3.5 pr-9 py-2.5 text-sm text-slate-800 dark:text-slate-200 focus:outline-none focus:border-emerald-500 cursor-pointer" onchange="applyFilters()">
-              <option value="ALL">All NI Locations</option>
-              <option value="Belfast">Belfast</option>
-              <option value="Derry">Derry / Londonderry</option>
-              <option value="Lisburn">Lisburn</option>
-              <option value="Newry">Newry</option>
-              <option value="Ballymena">Ballymena</option>
-              <option value="Antrim">Antrim</option>
-              <option value="Craigavon">Craigavon</option>
+              <option value="ALL">All Locations</option>
             </select>
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3.5 text-slate-400 dark:text-slate-500">
               <i class="fa-solid fa-chevron-down text-xs"></i>
@@ -523,7 +537,7 @@
             <h4 class="font-bold text-slate-900 dark:text-slate-100 text-base">What is this and why build it?</h4>
           </div>
           <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
-            This started as a personal project to cut through generic job board noise and get a clear, unvarnished picture of Northern Ireland’s tech ecosystem. It tracks indigenous startups, scaleups, FDI tech hubs, and academic commercialisation centres across the region, specifically keeping an eye on open product leadership roles (Product Managers, Group PMs, Directors, and VPs).
+            This started as a personal project to cut through generic job board noise and get a clear, unvarnished picture of Northern Ireland’s tech ecosystem. It tracks indigenous startups, scaleups, FDI tech hubs, and academic commercialisation centres across the region, specifically keeping an eye on open product leadership roles (Product Managers, Group PMs, Directors, and VPs). It also includes a dedicated UK Cybersecurity Radar tracking specialised security product companies nationwide.
           </p>
         </div>
 
@@ -715,7 +729,7 @@
 
     const isLocal = isLocalEnvironment();
 
-    const SUPPORTED_ATS = new Set(['greenhouse', 'ashby', 'smartrecruiters', 'workable', 'lever', 'teamtailor', 'pinpoint', 'bamboohr', 'volcanic']);
+    const SUPPORTED_ATS = new Set(['greenhouse', 'ashby', 'smartrecruiters', 'workable', 'lever', 'teamtailor', 'pinpoint', 'bamboohr', 'volcanic', 'workday', 'jazzhr']);
 
     function isAutomatedATS(company) {
       if (!company || !company.ats_type) return false;
@@ -733,7 +747,9 @@
         'teamtailor': 'Teamtailor',
         'bamboohr': 'BambooHR',
         'pinpoint': 'Pinpoint',
-        'volcanic': 'Volcanic'
+        'volcanic': 'Volcanic',
+        'workday': 'Workday',
+        'jazzhr': 'JazzHR'
       };
       return map[atsType.toLowerCase()] || (atsType.charAt(0).toUpperCase() + atsType.slice(1));
     }
@@ -810,6 +826,7 @@
       }
     }
 
+    let currentDataset = localStorage.getItem('ni_tech_radar_dataset') || 'ni';
     let allCompanies = [];
     let currentViewMode = 'companies'; // 'companies' | 'jobs'
     let expandedRows = new Set();
@@ -1144,6 +1161,143 @@
       }
     }
 
+    function updateDatasetUI(type) {
+      const isCyber = type === 'cyber';
+
+      document.title = isCyber
+        ? 'UK Cybersecurity Radar | Product Leadership & Industry Tracker'
+        : 'Northern Ireland Tech Radar | Ecosystem & Careers Tracker';
+
+      const titleEl = document.getElementById('headerTitle');
+      const subEl = document.getElementById('headerSubtitle');
+      if (titleEl) {
+        titleEl.innerText = isCyber ? 'UK Cybersecurity Radar' : 'Northern Ireland Tech Radar';
+      }
+      if (subEl) {
+        subEl.innerText = isCyber
+          ? 'Directory & Automated Product Role Intelligence across UK Cybersecurity'
+          : 'Directory & Automated Product Role Intelligence across Northern Ireland';
+      }
+
+      const brandBox = document.getElementById('brandIconBox');
+      const brandIcon = document.getElementById('brandIcon');
+      if (brandBox && brandIcon) {
+        if (isCyber) {
+          brandBox.className = 'w-9 h-9 sm:w-14 sm:h-14 shrink-0 rounded-xl sm:rounded-2xl bg-gradient-to-tr from-cyan-500 via-blue-500 to-indigo-500 flex items-center justify-center shadow-lg shadow-cyan-500/20 text-white border border-cyan-300/50 transition-all';
+          brandIcon.className = 'fa-solid fa-shield-halved text-white text-lg sm:text-[30px] font-black';
+        } else {
+          brandBox.className = 'w-9 h-9 sm:w-14 sm:h-14 shrink-0 rounded-xl sm:rounded-2xl bg-gradient-to-tr from-emerald-500 via-teal-400 to-emerald-300 flex items-center justify-center shadow-lg shadow-emerald-500/20 text-slate-950 border border-emerald-300/50 transition-all';
+          brandIcon.className = 'fa-solid fa-crosshairs text-slate-950 text-lg sm:text-[30px] font-black';
+        }
+      }
+
+      const statTotalSub = document.getElementById('statTotalSubtext');
+      if (statTotalSub) {
+        statTotalSub.innerText = isCyber ? 'Tracked across the UK' : 'Tracked across Northern Ireland';
+      }
+
+      const scanBtn = document.getElementById('scanBtn');
+      if (scanBtn) {
+        scanBtn.title = isCyber
+          ? 'Scan live ATS portals for UK cybersecurity product roles'
+          : 'Scan live ATS portals for Northern Ireland product roles';
+      }
+
+      const tabNi = document.getElementById('tabNi');
+      const tabCyber = document.getElementById('tabCyber');
+      const tabNiIcon = document.getElementById('tabNiIcon');
+      const tabCyberIcon = document.getElementById('tabCyberIcon');
+
+      const activeClass = 'flex-1 sm:flex-initial px-3.5 sm:px-4 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-2 shadow-sm bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200/80 dark:border-slate-700';
+      const inactiveClass = 'flex-1 sm:flex-initial px-3.5 sm:px-4 py-1.5 rounded-xl text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all flex items-center justify-center gap-2 border border-transparent';
+
+      if (tabNi && tabCyber) {
+        if (isCyber) {
+          tabNi.className = inactiveClass;
+          tabCyber.className = activeClass;
+          if (tabNiIcon) tabNiIcon.className = 'fa-solid fa-compass text-slate-400 dark:text-slate-500 text-xs sm:text-sm';
+          if (tabCyberIcon) tabCyberIcon.className = 'fa-solid fa-shield-halved text-cyan-600 dark:text-cyan-400 text-xs sm:text-sm';
+        } else {
+          tabNi.className = activeClass;
+          tabCyber.className = inactiveClass;
+          if (tabNiIcon) tabNiIcon.className = 'fa-solid fa-compass text-emerald-600 dark:text-emerald-400 text-xs sm:text-sm';
+          if (tabCyberIcon) tabCyberIcon.className = 'fa-solid fa-shield-halved text-slate-400 dark:text-slate-500 text-xs sm:text-sm';
+        }
+      }
+    }
+
+    function updateFilterDropdowns() {
+      const isCyber = currentDataset === 'cyber';
+
+      // 1. Industry / Specialisation dropdown
+      const indSelect = document.getElementById('filterIndustry');
+      const indLabel = document.getElementById('filterIndustryLabel');
+      if (indSelect) {
+        const previousValue = indSelect.value;
+        if (isCyber) {
+          if (indLabel) indLabel.innerText = 'Specialisation';
+          const subSectors = Array.from(new Set(allCompanies.map(c => c.sub_sector).filter(Boolean))).sort();
+          let html = '<option value="ALL">All Specialisations</option>';
+          subSectors.forEach(sub => {
+            html += `<option value="${escapeHtml(sub)}">${escapeHtml(sub)}</option>`;
+          });
+          indSelect.innerHTML = html;
+          if (subSectors.includes(previousValue)) {
+            indSelect.value = previousValue;
+          }
+        } else {
+          if (indLabel) indLabel.innerText = 'Industry / Sector';
+          const industries = Array.from(new Set(allCompanies.map(c => c.industry).filter(Boolean))).sort();
+          let html = '<option value="ALL">All Industries</option>';
+          industries.forEach(ind => {
+            html += `<option value="${escapeHtml(ind)}">${escapeHtml(ind)}</option>`;
+          });
+          indSelect.innerHTML = html;
+          if (industries.includes(previousValue)) {
+            indSelect.value = previousValue;
+          }
+        }
+      }
+
+      // 2. Location dropdown
+      const locSelect = document.getElementById('filterLocation');
+      if (locSelect) {
+        const previousValue = locSelect.value;
+        const locations = Array.from(new Set(allCompanies.map(c => c.location).filter(Boolean))).sort();
+        const allLabel = isCyber ? 'All UK Locations' : 'All NI Locations';
+        let html = `<option value="ALL">${allLabel}</option>`;
+        locations.forEach(loc => {
+          html += `<option value="${escapeHtml(loc)}">${escapeHtml(loc)}</option>`;
+        });
+        locSelect.innerHTML = html;
+        if (locations.includes(previousValue)) {
+          locSelect.value = previousValue;
+        }
+      }
+    }
+
+    async function switchDataset(type) {
+      if (type !== 'ni' && type !== 'cyber') type = 'ni';
+      if (currentDataset === type && allCompanies.length > 0) return;
+      currentDataset = type;
+      localStorage.setItem('ni_tech_radar_dataset', currentDataset);
+      updateDatasetUI(type);
+
+      // Reset filter inputs when toggling dataset
+      const search = document.getElementById('searchInput');
+      if (search) search.value = '';
+      const scale = document.getElementById('filterScale');
+      if (scale) scale.value = 'ALL';
+      const funding = document.getElementById('filterFunding');
+      if (funding) funding.value = 'ALL';
+      const ind = document.getElementById('filterIndustry');
+      if (ind) ind.value = 'ALL';
+      const loc = document.getElementById('filterLocation');
+      if (loc) loc.value = 'ALL';
+
+      await loadCompanies();
+    }
+
     async function loadCompanies() {
       initTheme();
       // On mobile screens, default Live Roles to ON so users get straight to the point
@@ -1152,25 +1306,30 @@
       }
       updateKPICardActiveStates();
       setupEnvironmentUI();
+      updateDatasetUI(currentDataset);
+
       try {
         let res;
+        const filename = currentDataset === 'cyber' ? 'cyber_companies.json' : 'companies.json';
+
         if (isLocal) {
           try {
-            res = await fetch('/api/companies');
+            res = await fetch(`/api/companies?dataset=${currentDataset}`);
             if (!res.ok) throw new Error('API route unavailable');
           } catch (apiErr) {
             // Fallback to static JSON file if server API not responding
-            res = await fetch('./data/companies.json').catch(() => fetch('data/companies.json'));
+            res = await fetch(`./data/${filename}`).catch(() => fetch(`data/${filename}`));
           }
         } else {
           // In deployed static state, fetch static JSON (supports subpaths and root paths)
-          res = await fetch('./data/companies.json')
-            .catch(() => fetch('data/companies.json'))
-            .catch(() => fetch('../data/companies.json'));
+          res = await fetch(`./data/${filename}`)
+            .catch(() => fetch(`data/${filename}`))
+            .catch(() => fetch(`../data/${filename}`));
         }
 
         if (!res.ok) throw new Error('Failed to load companies data');
         allCompanies = await res.json();
+        updateFilterDropdowns();
         renderTableHeader();
         updateKPIs();
         updateScanTimestamps();
@@ -1313,7 +1472,12 @@
 
           // Dropdown filters
           if (scale !== 'ALL' && !c.scale_tier.toLowerCase().includes(scale.toLowerCase())) return false;
-          if (industry !== 'ALL' && !c.industry.toLowerCase().includes(industry.toLowerCase())) return false;
+          if (industry !== 'ALL') {
+            const indLower = industry.toLowerCase();
+            const matchInd = (c.industry || '').toLowerCase().includes(indLower);
+            const matchSub = (c.sub_sector || '').toLowerCase().includes(indLower);
+            if (!matchInd && !matchSub) return false;
+          }
           if (funding !== 'ALL' && !c.funding_type.toLowerCase().includes(funding.toLowerCase())) return false;
           if (location !== 'ALL' && !c.location.toLowerCase().includes(location.toLowerCase()) && !j.location.toLowerCase().includes(location.toLowerCase())) return false;
 
@@ -1384,7 +1548,12 @@
 
         // Dropdown filters
         if (scale !== 'ALL' && !c.scale_tier.toLowerCase().includes(scale.toLowerCase())) return false;
-        if (industry !== 'ALL' && !c.industry.toLowerCase().includes(industry.toLowerCase())) return false;
+        if (industry !== 'ALL') {
+          const indLower = industry.toLowerCase();
+          const matchInd = (c.industry || '').toLowerCase().includes(indLower);
+          const matchSub = (c.sub_sector || '').toLowerCase().includes(indLower);
+          if (!matchInd && !matchSub) return false;
+        }
         if (funding !== 'ALL' && !c.funding_type.toLowerCase().includes(funding.toLowerCase())) return false;
         if (location !== 'ALL' && !c.location.toLowerCase().includes(location.toLowerCase())) return false;
 
@@ -1743,7 +1912,7 @@
                   <div class="pt-2 flex items-center justify-between text-xs text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-950/70 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800/80">
                     <div class="flex items-center gap-2">
                       <i class="fa-solid fa-circle-info text-slate-400 dark:text-slate-500 text-sm"></i>
-                      <span>This employer uses an enterprise or custom ATS (${c.ats_type === 'workday' ? 'Workday' : 'proprietary careers portal'}) that does not provide a public API feed. Check their portal directly.</span>
+                      <span>This employer uses a custom or proprietary careers portal without a public API feed. Check their portal directly.</span>
                     </div>
                     <a href="${c.careers_url}" target="_blank" class="text-emerald-600 dark:text-emerald-400 hover:underline font-bold whitespace-nowrap ml-4">Check Careers Portal &rarr;</a>
                   </div>
@@ -2092,7 +2261,8 @@
         scale_tier: document.getElementById('addScaleTier').value,
         funding_type: document.getElementById('addFunding').value,
         location: document.getElementById('addLocation').value,
-        description: document.getElementById('addDescription').value
+        description: document.getElementById('addDescription').value,
+        dataset: currentDataset
       };
 
       try {
@@ -2120,7 +2290,11 @@
       scanBtn.innerHTML = '<i class="fa-solid fa-arrows-rotate animate-spin text-sm"></i><span>Scanning Portals...</span>';
 
       try {
-        const res = await fetch('/api/scan', { method: 'POST' });
+        const res = await fetch('/api/scan', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ dataset: currentDataset })
+        });
         if (!res.ok) {
           throw new Error(`Server returned HTTP ${res.status}`);
         }
@@ -2128,7 +2302,8 @@
         if (data.data && Array.isArray(data.data)) {
           allCompanies = data.data;
           const nowIso = new Date().toISOString();
-          localStorage.setItem('ni_tech_radar_last_scan', nowIso);
+          localStorage.setItem(`ni_tech_radar_last_scan_${currentDataset}`, nowIso);
+          updateFilterDropdowns();
           updateKPIs();
           updateScanTimestamps();
           applyFilters();
@@ -2147,6 +2322,9 @@
 
     function exportCSV() {
       if (!allCompanies || allCompanies.length === 0) return;
+      const isCyber = currentDataset === 'cyber';
+      const filePrefix = isCyber ? 'uk_cyber_radar' : 'ni_tech_radar';
+
       const headers = isLocal 
         ? ['Name', 'Industry', 'Scale Tier', 'Funding Type', 'Location', 'Website', 'Careers URL', 'Product Roles Count', 'Application Status', 'Is Favourite']
         : ['Name', 'Industry', 'Scale Tier', 'Funding Type', 'Location', 'Website', 'Careers URL', 'Product Roles Count'];
@@ -2182,7 +2360,7 @@
       const encodedUri = encodeURI(csvContent);
       const link = document.createElement('a');
       link.setAttribute('href', encodedUri);
-      link.setAttribute('download', `ni_tech_radar_${new Date().toISOString().split('T')[0]}.csv`);
+      link.setAttribute('download', `${filePrefix}_${new Date().toISOString().split('T')[0]}.csv`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);

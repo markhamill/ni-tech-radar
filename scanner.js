@@ -9,13 +9,19 @@
 const fs = require('fs');
 const path = require('path');
 
-const DB_PATH = path.join(__dirname, 'public', 'data', 'companies.json');
+const DEFAULT_DB_PATH = path.join(__dirname, 'public', 'data', 'companies.json');
+const CYBER_DB_PATH = path.join(__dirname, 'public', 'data', 'cyber_companies.json');
+const DB_PATH = DEFAULT_DB_PATH;
 
 const PRODUCT_KEYWORDS = [
   'product manager',
   'head of product',
   'director of product',
+  'director, product',
+  'product director',
   'vp product',
+  'vp of product',
+  'vp, product',
   'vice president, product',
   'vice president of product',
   'group product manager',
@@ -28,6 +34,10 @@ const PRODUCT_KEYWORDS = [
   'product owner',
   'product champion',
   'product specialist',
+  'product marketing manager',
+  'director, product marketing',
+  'principal product consultant',
+  'product consultant',
   'chief product officer',
   'cpo'
 ];
@@ -36,6 +46,48 @@ function isProductRole(title) {
   if (!title) return false;
   const lower = title.toLowerCase();
   return PRODUCT_KEYWORDS.some(keyword => lower.includes(keyword));
+}
+
+function isUkOrNiRelevant(location, company) {
+  if (!location) return true;
+  const loc = location.toLowerCase().trim();
+
+  // Positive UK / NI indicators
+  const ukPositives = [
+    'belfast', 'derry', 'londonderry', 'northern ireland', 'antrim', 'down', 'armagh', 'tyrone', 'fermanagh',
+    'uk', 'united kingdom', 'great britain', 'england', 'scotland', 'wales',
+    'london', 'manchester', 'birmingham', 'edinburgh', 'glasgow', 'bristol', 'leeds', 'newcastle', 'cambridge', 'oxford', 'bath', 'knutsford',
+    'homeworker---uk', 'home worker', 'remote - uk', 'uk remote', 'remote (uk)', 'uk (remote)', 'remote, uk'
+  ];
+  if (ukPositives.some(p => loc.includes(p))) {
+    return true;
+  }
+
+  // Explicit foreign excludes (e.g. San Francisco, US states, Canada, etc.)
+  const foreignExcludes = [
+    'san francisco', 'california', ', ca', ' ca ', 'ca,', 'los angeles',
+    'new york', 'nyc', ', ny', ' ny ', 'ny,', 'boston', ', ma', ' ma ',
+    'chicago', ', il', ' il ', 'seattle', ', wa', ' wa ',
+    'austin', ', tx', ' tx ', 'denver', ', co', 'colorado', 'utah', 'lehi',
+    'toronto', 'vancouver', 'montreal', 'canada', 'ontario',
+    'manila', 'philippines', 'buenos aires', 'argentina',
+    'sydney', 'melbourne', 'australia', 'singapore', 'tokyo', 'japan',
+    'india', 'bengaluru', 'bangalore', 'pune', 'hyderabad',
+    'germany', 'berlin', 'munich', 'frankfurt', 'france', 'paris',
+    'brazil', 'sao paulo', 'netherlands', 'amsterdam', 'rijswijk',
+    'united states', 'usa', 'u.s.', 'us-remote', 'us remote', 'usa remote', 'remote - us', 'remote (us)'
+  ];
+  if (foreignExcludes.some(f => loc.includes(f))) {
+    return false;
+  }
+
+  // Generic remote or multi-location tags
+  const genericTerms = ['remote', 'hybrid', 'anywhere', 'emea', 'flexible', 'locations'];
+  if (genericTerms.some(g => loc.includes(g))) {
+    return true;
+  }
+
+  return true;
 }
 
 async function isJobUrlLive(url) {
@@ -114,7 +166,11 @@ async function scanCompany(company) {
         } while (offset < totalFound && offset < 500);
 
         result.open_roles_count = totalFound || allJobs.length;
-        const prodJobs = allJobs.filter(j => isProductRole(j.name));
+        const prodJobs = allJobs.filter(j => {
+          if (!isProductRole(j.name)) return false;
+          let loc = (j.location && j.location.city) || 'Belfast / UK Hybrid';
+          return isUkOrNiRelevant(loc, company);
+        });
         result.product_roles_count = prodJobs.length;
         result.active_product_roles = prodJobs.map(j => {
           let loc = 'Belfast / UK Hybrid';
@@ -144,7 +200,11 @@ async function scanCompany(company) {
           const data = await res.json();
           const allJobs = data.jobs || [];
           result.open_roles_count = allJobs.length;
-          const prodJobs = allJobs.filter(j => isProductRole(j.title));
+          const prodJobs = allJobs.filter(j => {
+            if (!isProductRole(j.title)) return false;
+            const loc = (j.location ? j.location.name : '') || company.location || 'Remote / Hybrid';
+            return isUkOrNiRelevant(loc, company);
+          });
           result.product_roles_count = prodJobs.length;
           result.active_product_roles = prodJobs.map(j => ({
             title: j.title,
@@ -170,7 +230,11 @@ async function scanCompany(company) {
           const data = await res.json();
           const allJobs = data.jobs || [];
           result.open_roles_count = allJobs.length;
-          const prodJobs = allJobs.filter(j => isProductRole(j.title));
+          const prodJobs = allJobs.filter(j => {
+            if (!isProductRole(j.title)) return false;
+            const loc = j.location || company.location || 'Remote / Hybrid';
+            return isUkOrNiRelevant(loc, company);
+          });
           result.product_roles_count = prodJobs.length;
           result.active_product_roles = prodJobs.map(j => ({
             title: j.title,
@@ -196,11 +260,27 @@ async function scanCompany(company) {
           const data = await res.json();
           const allJobs = data.jobs || [];
           result.open_roles_count = allJobs.length;
-          const prodJobs = allJobs.filter(j => isProductRole(j.title));
-          result.product_roles_count = prodJobs.length;
-          result.active_product_roles = prodJobs.map(j => ({
+          const allProdJobs = allJobs.filter(j => isProductRole(j.title));
+          const ukOrRemote = allProdJobs.filter(j => {
+            const locStr = `${j.city || ''} ${j.country || ''} ${j.region || ''} ${j.state || ''}`.toLowerCase();
+            return locStr.includes('united kingdom') || locStr.includes('uk') || locStr.includes('london') || locStr.includes('belfast') || j.telecommuting;
+          });
+          const prodJobs = ukOrRemote.length > 0 ? ukOrRemote : allProdJobs;
+          prodJobs.sort((a, b) => {
+            const aUk = `${a.city || ''} ${a.country || ''}`.toLowerCase().includes('london') || `${a.country || ''}`.toLowerCase().includes('united kingdom');
+            const bUk = `${b.city || ''} ${b.country || ''}`.toLowerCase().includes('london') || `${b.country || ''}`.toLowerCase().includes('united kingdom');
+            return (bUk ? 1 : 0) - (aUk ? 1 : 0);
+          });
+          const uniqueProdJobs = [];
+          for (const j of prodJobs) {
+            if (!uniqueProdJobs.some(u => u.url === j.url)) {
+              uniqueProdJobs.push(j);
+            }
+          }
+          result.product_roles_count = uniqueProdJobs.length;
+          result.active_product_roles = uniqueProdJobs.map(j => ({
             title: j.title,
-            location: j.city ? `${j.city}, ${j.country}` : 'Remote / Hybrid',
+            location: j.city ? `${j.city}, ${j.country}` : (j.country || 'Remote / Hybrid'),
             url: j.url || company.careers_url,
             date_posted: j.published_on || new Date().toISOString().split('T')[0]
           }));
@@ -221,7 +301,11 @@ async function scanCompany(company) {
         if (res.ok) {
           const allJobs = await res.json();
           result.open_roles_count = allJobs.length;
-          const prodJobs = allJobs.filter(j => isProductRole(j.text));
+          const prodJobs = allJobs.filter(j => {
+            if (!isProductRole(j.text)) return false;
+            const loc = (j.categories && j.categories.location) || company.location || 'Remote / Hybrid';
+            return isUkOrNiRelevant(loc, company);
+          });
           result.product_roles_count = prodJobs.length;
           result.active_product_roles = prodJobs.map(j => ({
             title: j.text,
@@ -256,8 +340,8 @@ async function scanCompany(company) {
             result.product_roles_count = prodJobs.length;
             result.active_product_roles = prodJobs.map(j => ({
               title: j.title,
-              location: 'Belfast / Remote UK',
-              url: j.url.startsWith('http') ? j.url : `https://careers.cloudsmith.com${j.url}`,
+              location: company.location || 'Belfast / Remote UK',
+              url: j.url.startsWith('http') ? j.url : new URL(j.url, targetUrl).href,
               date_posted: new Date().toISOString().split('T')[0]
             }));
             return result;
@@ -323,12 +407,15 @@ async function scanCompany(company) {
           if (res.ok) {
             const data = await res.json();
             const jobs = data.result || [];
-            result.open_roles_count = jobs.length;
-            const prodJobs = jobs.filter(j => isProductRole(j.jobOpeningName));
+            const prodJobs = jobs.filter(j => {
+              if (!isProductRole(j.jobOpeningName)) return false;
+              const loc = (j.location && j.location.city) || company.location || 'Belfast (Hybrid)';
+              return isUkOrNiRelevant(loc, company);
+            });
             result.product_roles_count = prodJobs.length;
             result.active_product_roles = prodJobs.map(j => ({
               title: j.jobOpeningName,
-              location: (j.location && j.location.city) || 'Belfast (Hybrid)',
+              location: (j.location && j.location.city) || company.location || 'Belfast (Hybrid)',
               department: j.departmentLabel || 'Digital Services',
               url: `https://${subdomain}.bamboohr.com/careers/${j.id}`,
               date_found: new Date().toISOString().split('T')[0]
@@ -396,6 +483,111 @@ async function scanCompany(company) {
       }
     }
 
+    // 10. Pinpoint API Handler (e.g. NCC Group)
+    if (company.ats_type === 'pinpoint' || (company.careers_url && company.careers_url.includes('pinpointhq.com'))) {
+      let slug = company.ats_identifier;
+      if (!slug && company.careers_url) {
+        const pMatch = company.careers_url.match(/https?:\/\/([^.]+)\.pinpointhq\.com/);
+        if (pMatch) slug = pMatch[1];
+      }
+      if (slug) {
+        try {
+          const res = await fetch(`https://${slug}.pinpointhq.com/postings.json`, {
+            headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' }
+          });
+          if (res.ok) {
+            const data = await res.json();
+            const allJobs = (data.data || []).filter(j => {
+              const divName = (j.job && j.job.division && j.job.division.name) || '';
+              return divName !== 'ACME' && !((j.benefits || '').includes('lumbersexual'));
+            });
+            result.open_roles_count = allJobs.length;
+            const prodJobs = allJobs.filter(j => {
+              if (!isProductRole(j.title)) return false;
+              const loc = (j.location && (j.location.city || j.location.name)) || company.location || 'UK / Hybrid';
+              return isUkOrNiRelevant(loc, company);
+            });
+            result.product_roles_count = prodJobs.length;
+            result.active_product_roles = prodJobs.map(j => ({
+              title: j.title,
+              location: (j.location && (j.location.city || j.location.name)) || company.location || 'UK / Hybrid',
+              url: j.url || `https://${slug}.pinpointhq.com/en/postings/${j.id}`,
+              date_posted: (j.deadline_at || new Date().toISOString()).split('T')[0]
+            }));
+            return result;
+          }
+        } catch (pErr) {
+          console.error(`Pinpoint fetch error for ${company.name}:`, pErr.message);
+        }
+      }
+    }
+
+    // 11. Workday CXS API Handler (e.g. Darktrace, Proofpoint, Kainos)
+    if (company.ats_type === 'workday' || (company.careers_url && company.careers_url.includes('myworkdayjobs.com'))) {
+      let host = '';
+      let subdomain = '';
+      let site = '';
+
+      if (company.careers_url) {
+        try {
+          const u = new URL(company.careers_url);
+          host = u.host;
+          subdomain = u.host.split('.')[0];
+          site = u.pathname.split('/').filter(Boolean)[0] || '';
+        } catch (e) {}
+      }
+
+      if (!site && company.ats_identifier && company.ats_identifier.includes('/')) {
+        [subdomain, site] = company.ats_identifier.split('/');
+        host = `${subdomain}.myworkdayjobs.com`;
+      }
+
+      if (host && subdomain && site) {
+        try {
+          let allJobs = [];
+          let offset = 0;
+          const limit = 20;
+          let total = 1;
+          while (offset < total && offset < 200) {
+            const wdUrl = `https://${host}/wday/cxs/${subdomain}/${site}/jobs`;
+            const res = await fetch(wdUrl, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+              },
+              body: JSON.stringify({ appliedFacets: {}, limit, offset, searchText: '' })
+            });
+            if (!res.ok) break;
+            const data = await res.json();
+            total = data.total || 0;
+            const postings = data.jobPostings || [];
+            allJobs.push(...postings);
+            offset += limit;
+            if (postings.length === 0) break;
+          }
+          if (allJobs.length > 0 || total > 0) {
+            result.open_roles_count = total || allJobs.length;
+            const prodJobs = allJobs.filter(j => {
+              if (!isProductRole(j.title)) return false;
+              const loc = j.locationsText || company.location || 'UK / Hybrid';
+              return isUkOrNiRelevant(loc, company);
+            });
+            result.product_roles_count = prodJobs.length;
+            result.active_product_roles = prodJobs.map(j => ({
+              title: j.title,
+              location: j.locationsText || company.location || 'UK / Hybrid',
+              url: `https://${host}/${site}${j.externalPath}`,
+              date_posted: (j.postedOn || new Date().toISOString()).split('T')[0]
+            }));
+            return result;
+          }
+        } catch (wdErr) {
+          console.error(`Workday fetch error for ${company.name}:`, wdErr.message);
+        }
+      }
+    }
+
     // Retain existing active roles if manually verified or if scraper didn't run
     if (!result.active_product_roles) {
       result.active_product_roles = [];
@@ -408,16 +600,18 @@ async function scanCompany(company) {
   }
 }
 
-async function runScanner() {
-  console.log('🚀 Starting Northern Ireland Tech Radar Scanner...');
-  if (!fs.existsSync(DB_PATH)) {
-    console.error(`Database not found at ${DB_PATH}`);
+async function runScanner(targetPath = DEFAULT_DB_PATH) {
+  const isCyber = targetPath.includes('cyber_companies.json');
+  const label = isCyber ? 'UK Cybersecurity' : 'Northern Ireland Tech';
+  console.log(`🚀 Starting ${label} Role Scanner...`);
+  if (!fs.existsSync(targetPath)) {
+    console.error(`Database not found at ${targetPath}`);
     process.exit(1);
   }
 
-  const raw = fs.readFileSync(DB_PATH, 'utf-8');
+  const raw = fs.readFileSync(targetPath, 'utf-8');
   const companies = JSON.parse(raw);
-  console.log(`Loaded ${companies.length} companies from database.`);
+  console.log(`Loaded ${companies.length} companies from ${path.basename(targetPath)}.`);
 
   const updatedCompanies = [];
   const BATCH_SIZE = 10;
@@ -427,13 +621,23 @@ async function runScanner() {
     updatedCompanies.push(...results);
   }
 
-  fs.writeFileSync(DB_PATH, JSON.stringify(updatedCompanies, null, 2), 'utf-8');
+  fs.writeFileSync(targetPath, JSON.stringify(updatedCompanies, null, 2), 'utf-8');
   const liveCount = updatedCompanies.reduce((acc, c) => acc + (c.product_roles_count || 0), 0);
-  console.log(`✅ Scan completed. Found ${liveCount} live verified product roles across NI companies.`);
+  console.log(`✅ Scan completed. Found ${liveCount} live verified product roles across ${companies.length} companies.`);
+  return { targetPath, totalCompanies: companies.length, liveCount };
 }
 
 if (require.main === module) {
-  runScanner();
+  (async () => {
+    if (process.argv.includes('--cyber')) {
+      await runScanner(CYBER_DB_PATH);
+    } else if (process.argv.includes('--all')) {
+      await runScanner(DEFAULT_DB_PATH);
+      await runScanner(CYBER_DB_PATH);
+    } else {
+      await runScanner(DEFAULT_DB_PATH);
+    }
+  })();
 }
 
 module.exports = { scanCompany, runScanner };
