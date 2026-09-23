@@ -150,18 +150,6 @@
         </button>
       </div>
 
-      <!-- Center: Dataset Switcher (NI Tech vs UK Cyber) -->
-      <div class="flex items-center justify-center w-full sm:w-auto">
-        <div class="inline-flex p-1 bg-slate-100 dark:bg-slate-800/90 rounded-2xl border border-slate-200 dark:border-slate-700/80 shadow-inner w-full sm:w-auto">
-          <button id="tabNi" onclick="switchDataset('ni')" class="flex-1 sm:flex-initial px-3.5 sm:px-4 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-2 shadow-sm bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200/80 dark:border-slate-700" title="Switch to Northern Ireland Tech Ecosystem">
-            <i id="tabNiIcon" class="fa-solid fa-compass text-emerald-600 dark:text-emerald-400 text-xs sm:text-sm"></i>
-            <span>NI Tech</span>
-          </button>
-          <button id="tabCyber" onclick="switchDataset('cyber')" class="flex-1 sm:flex-initial px-3.5 sm:px-4 py-1.5 rounded-xl text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all flex items-center justify-center gap-2 border border-transparent" title="Switch to UK Cybersecurity Radar">
-            <i id="tabCyberIcon" class="fa-solid fa-shield-halved text-slate-400 dark:text-slate-500 text-xs sm:text-sm"></i>
-            <span>UK Cyber</span>
-          </button>
-        </div>
       </div>
 
       <!-- Action & Controls Cluster (Order: About, Updated, Export, Scan, Light/Dark) -->
@@ -201,53 +189,73 @@
   <!-- Main Container (Widescreen Optimized) -->
   <main class="flex-1 max-w-[1700px] w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8 space-y-4 sm:space-y-6">
 
-    <!-- KPI Metric Cards (Interactive Toggles) -->
-    <div id="kpiContainer" class="grid grid-cols-3 sm:grid-cols-5 gap-2 sm:gap-4">
-      <div id="statTotalCard" onclick="resetAllFilters()" class="cursor-pointer select-none bg-white dark:bg-slate-900/70 hover:bg-slate-50 dark:hover:bg-slate-800/80 border border-slate-200 dark:border-slate-800 rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between shadow-sm transition-colors" title="Click to view all companies">
+    <!-- KPI Controls & Metric Cards -->
+    <div id="kpiContainer" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-4">
+      
+      <!-- 1. View Mode Button (First Button, Default: Role) -->
+      <button type="button" id="viewModeCard" onclick="toggleViewMode()" class="cursor-pointer select-none text-left bg-emerald-500/10 dark:bg-emerald-950/40 hover:bg-emerald-500/15 dark:hover:bg-emerald-950/60 border border-emerald-500/40 dark:border-emerald-500/50 rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between shadow-sm transition-all group focus:outline-none focus:ring-2 focus:ring-emerald-500/50" title="Toggle between Role-First list and Company Directory">
+        <div class="w-full text-[11px] sm:text-sm font-semibold text-emerald-800 dark:text-emerald-300 leading-tight flex items-center justify-between">
+          <span id="viewModeLabel">View Mode</span>
+          <i id="viewModeIcon" class="fa-solid fa-repeat text-xs text-emerald-600 dark:text-emerald-400 group-hover:rotate-180 transition-transform duration-300"></i>
+        </div>
+        <div class="text-base sm:text-2xl font-extrabold tracking-tight text-emerald-900 dark:text-emerald-100 mt-1 sm:mt-2 flex items-center gap-1.5" id="viewModeTitle">
+          <span>Role View</span>
+        </div>
+        <div class="hidden sm:block text-xs text-emerald-700/90 dark:text-emerald-400/80 mt-1 truncate" id="viewModeSubtext">Role-first • Click for Companies</div>
+      </button>
+
+      <!-- 2. Region Button (Next Button, Default: NI Only, Option: UK Cyber) -->
+      <button type="button" id="regionCard" onclick="toggleRegion()" class="cursor-pointer select-none text-left bg-white dark:bg-slate-900/70 hover:bg-slate-50 dark:hover:bg-slate-800/80 border border-slate-200 dark:border-slate-800 rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between shadow-sm transition-all group focus:outline-none focus:ring-2 focus:ring-emerald-500/50" title="Flick region between Northern Ireland and UK Cyber">
+        <div class="w-full text-[11px] sm:text-sm font-semibold text-slate-600 dark:text-slate-400 leading-tight flex items-center justify-between">
+          <span id="regionLabel">Region</span>
+          <i id="regionIcon" class="fa-solid fa-location-dot text-xs text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform"></i>
+        </div>
+        <div class="text-base sm:text-2xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100 mt-1 sm:mt-2 flex items-center gap-1.5" id="regionTitle">
+          <span>NI Only</span>
+        </div>
+        <div class="hidden sm:block text-xs text-slate-400 dark:text-slate-500 mt-1 truncate" id="regionSubtext">Default mode • Click for UK Cyber</div>
+      </button>
+
+      <!-- 3. Total Companies Data Point (Informational Card, Not a Button) -->
+      <div id="statTotalCard" class="select-none bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between shadow-sm">
         <div class="text-[11px] sm:text-sm font-semibold text-slate-500 dark:text-slate-400 leading-tight flex items-center justify-between">
           <span>Total Companies</span>
           <i class="fa-solid fa-layer-group text-xs text-slate-400 dark:text-slate-500"></i>
         </div>
         <div class="text-xl sm:text-3xl font-extrabold font-mono tracking-tight text-slate-900 dark:text-slate-100 mt-1 sm:mt-2" id="statTotal">0</div>
-        <div id="statTotalSubtext" class="hidden sm:block text-xs text-slate-400 dark:text-slate-500 mt-1">Tracked across Northern Ireland</div>
+        <div id="statTotalSubtext" class="hidden sm:block text-xs text-slate-400 dark:text-slate-500 mt-1 truncate">Tracked across Northern Ireland</div>
       </div>
-      <div id="statProductRolesCard" onclick="toggleProductRoles()" class="cursor-pointer select-none bg-emerald-50/70 dark:bg-slate-900/70 border border-emerald-200 dark:border-emerald-900/40 rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between shadow-sm transition-colors" title="Click to toggle live product roles">
+
+      <!-- 4. Live Roles Data Point (Informational Card, Not a Button) -->
+      <div id="statProductRolesCard" class="select-none bg-emerald-50/70 dark:bg-slate-900/70 border border-emerald-200 dark:border-emerald-900/40 rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between shadow-sm">
         <div class="text-[11px] sm:text-sm font-semibold text-emerald-700 dark:text-emerald-400 flex items-center justify-between leading-tight">
           <span>Live Roles</span>
           <span class="w-2 h-2 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse"></span>
         </div>
         <div class="text-xl sm:text-3xl font-extrabold font-mono tracking-tight text-emerald-700 dark:text-emerald-400 mt-1 sm:mt-2" id="statProductRoles">0</div>
-        <div class="hidden sm:block text-xs text-emerald-600/90 dark:text-emerald-500/80 mt-1">VP, Director, Group & Senior PMs</div>
+        <div id="statProductRolesSubtext" class="hidden sm:block text-xs text-emerald-600/90 dark:text-emerald-500/80 mt-1 truncate">Verified product roles</div>
       </div>
-      <!-- Local-only Favourites Card (Click to filter) -->
-      <div id="statFavouritesCard" onclick="toggleFavouritesFilter()" class="cursor-pointer select-none bg-amber-50/70 dark:bg-slate-900/70 border border-amber-200 dark:border-amber-900/30 rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between shadow-sm transition-colors" title="Click to toggle shortlisted favourites">
-        <div class="text-[11px] sm:text-sm font-semibold text-amber-700 dark:text-amber-400 flex items-center justify-between leading-tight">
+
+      <!-- 5. Favourites Card (Local-Only Interactive Filter) -->
+      <button type="button" id="statFavouritesCard" onclick="toggleFavouritesFilter()" class="cursor-pointer select-none text-left bg-amber-50/70 dark:bg-slate-900/70 hover:bg-amber-100/50 dark:hover:bg-slate-800/80 border border-amber-200 dark:border-amber-900/30 rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between shadow-sm transition-colors focus:outline-none" title="Filter by shortlisted favourites">
+        <div class="w-full text-[11px] sm:text-sm font-semibold text-amber-700 dark:text-amber-400 flex items-center justify-between leading-tight">
           <span>Favourites</span>
           <i class="fa-solid fa-star text-xs text-amber-500 dark:text-amber-400"></i>
         </div>
         <div class="text-xl sm:text-3xl font-extrabold font-mono tracking-tight text-amber-700 dark:text-amber-400 mt-1 sm:mt-2" id="statFavourites">0</div>
-        <div class="hidden sm:block text-xs text-amber-600/90 dark:text-amber-500/80 mt-1">Shortlisted companies</div>
-      </div>
-      <!-- Local-only Pipeline Card (Click to filter) -->
-      <div id="statAppliedCard" onclick="toggleAppliedFilter()" class="cursor-pointer select-none bg-blue-50/70 dark:bg-slate-900/70 border border-blue-200 dark:border-blue-900/30 rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between shadow-sm transition-colors" title="Click to toggle tracked applications">
-        <div class="text-[11px] sm:text-sm font-semibold text-blue-700 dark:text-blue-400 flex items-center justify-between leading-tight">
+        <div class="hidden sm:block text-xs text-amber-600/90 dark:text-amber-500/80 mt-1 truncate">Shortlisted companies</div>
+      </button>
+
+      <!-- 6. Applied Card (Local-Only Interactive Filter) -->
+      <button type="button" id="statAppliedCard" onclick="toggleAppliedFilter()" class="cursor-pointer select-none text-left bg-blue-50/70 dark:bg-slate-900/70 hover:bg-blue-100/50 dark:hover:bg-slate-800/80 border border-blue-200 dark:border-blue-900/30 rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between shadow-sm transition-colors focus:outline-none" title="Filter by active pipeline applications">
+        <div class="w-full text-[11px] sm:text-sm font-semibold text-blue-700 dark:text-blue-400 flex items-center justify-between leading-tight">
           <span>Applied</span>
           <i class="fa-solid fa-clipboard-check text-xs text-blue-500 dark:text-blue-400"></i>
         </div>
         <div class="text-xl sm:text-3xl font-extrabold font-mono tracking-tight text-blue-700 dark:text-blue-400 mt-1 sm:mt-2" id="statApplied">0</div>
-        <div class="hidden sm:block text-xs text-blue-600/90 dark:text-blue-500/80 mt-1">Active tracked applications</div>
-      </div>
-      <!-- 5. View Switcher Card (Reclaimed Scaleups Box) -->
-      <div id="viewModeCard" onclick="toggleViewMode()" class="cursor-pointer select-none bg-white dark:bg-slate-900/70 hover:bg-slate-50 dark:hover:bg-slate-800/80 border border-slate-200 dark:border-slate-800 rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between shadow-sm transition-all group" title="Click to toggle between Company Directory and Job-Centric list">
-        <div class="text-[11px] sm:text-sm font-semibold text-slate-500 dark:text-slate-400 leading-tight flex items-center justify-between">
-          <span id="viewModeLabel">View Mode</span>
-          <i id="viewModeIcon" class="fa-solid fa-briefcase text-xs text-slate-400 dark:text-slate-500 group-hover:text-emerald-500 transition-colors"></i>
-        </div>
-        <div class="text-base sm:text-2xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100 mt-1 sm:mt-2 flex items-center gap-1.5" id="viewModeTitle">
-          <span>Jobs View</span>
-        </div>
-        <div class="hidden sm:block text-xs text-slate-400 dark:text-slate-500 mt-1 truncate" id="viewModeSubtext">Click for role-first list</div>
-      </div>
+        <div class="hidden sm:block text-xs text-blue-600/90 dark:text-blue-500/80 mt-1 truncate">Active applications</div>
+      </button>
+
     </div>
 
     <!-- Filter & Search Toolbar (Desktop Only) -->
@@ -258,7 +266,7 @@
         <input 
           type="text" 
           id="searchInput" 
-          placeholder="Search by company name, products, leadership, technology, or keywords..." 
+          placeholder="Search jobs by role title, company, technology, location, or keyword..." 
           class="w-full pl-12 pr-4 py-3 bg-[#F5F8FC] dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-base text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all"
           oninput="applyFilters()"
         />
@@ -828,7 +836,7 @@
 
     let currentDataset = localStorage.getItem('ni_tech_radar_dataset') || 'ni';
     let allCompanies = [];
-    let currentViewMode = 'companies'; // 'companies' | 'jobs'
+    let currentViewMode = 'jobs'; // 'jobs' | 'companies' - Default is role-first!
     let expandedRows = new Set();
     let expandedJobRows = new Set();
     let favourites = new Set(isLocal ? JSON.parse(localStorage.getItem('ni_tech_radar_favourites') || '[]') : []);
@@ -999,7 +1007,7 @@
     }
 
     function toggleViewMode() {
-      currentViewMode = (currentViewMode === 'companies' ? 'jobs' : 'companies');
+      currentViewMode = (currentViewMode === 'jobs' ? 'companies' : 'jobs');
       currentSortColumn = null;
       currentSortDirection = null;
       const search = document.getElementById('searchInput');
@@ -1011,6 +1019,11 @@
       renderTableHeader();
       updateKPICardActiveStates();
       applyFilters();
+    }
+
+    function toggleRegion() {
+      const nextDataset = (currentDataset === 'ni' ? 'cyber' : 'ni');
+      switchDataset(nextDataset);
     }
 
     function toggleJobRow(jobId) {
@@ -1086,50 +1099,40 @@
     }
 
     function updateKPICardActiveStates() {
-      const rolesCard = document.getElementById('statProductRolesCard');
       const favCard = document.getElementById('statFavouritesCard');
       const appCard = document.getElementById('statAppliedCard');
       const viewCard = document.getElementById('viewModeCard');
       const viewTitle = document.getElementById('viewModeTitle');
       const viewSubtext = document.getElementById('viewModeSubtext');
       const viewIcon = document.getElementById('viewModeIcon');
-      const base = 'cursor-pointer select-none rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between shadow-sm transition-all';
-
-      if (rolesCard) {
-        if (productRolesOnly) {
-          rolesCard.className = `${base} bg-emerald-100/90 dark:bg-emerald-950/60 border border-emerald-500 dark:border-emerald-500 ring-1 ring-emerald-500 dark:ring-emerald-500`;
-        } else {
-          rolesCard.className = `${base} bg-emerald-50/70 dark:bg-slate-900/70 border border-emerald-200 dark:border-emerald-900/40 hover:border-emerald-300 dark:hover:border-emerald-800/60`;
-        }
-      }
 
       if (favCard && isLocal) {
         if (favouritesOnly) {
-          favCard.className = `${base} bg-amber-100/90 dark:bg-amber-950/60 border border-amber-500 dark:border-amber-500 ring-1 ring-amber-500 dark:ring-amber-500`;
+          favCard.className = 'cursor-pointer select-none text-left rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between shadow-sm transition-all bg-amber-100/90 dark:bg-amber-950/60 border border-amber-500 dark:border-amber-500 ring-1 ring-amber-500 dark:ring-amber-500';
         } else {
-          favCard.className = `${base} bg-amber-50/70 dark:bg-slate-900/70 border border-amber-200 dark:border-amber-900/30 hover:border-amber-300 dark:hover:border-amber-800/60`;
+          favCard.className = 'cursor-pointer select-none text-left rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between shadow-sm transition-all bg-amber-50/70 dark:bg-slate-900/70 border border-amber-200 dark:border-amber-900/30 hover:border-amber-300 dark:hover:border-amber-800/60';
         }
       }
 
       if (appCard && isLocal) {
         if (appliedOnly) {
-          appCard.className = `${base} bg-blue-100/90 dark:bg-blue-950/60 border border-blue-500 dark:border-blue-500 ring-1 ring-blue-500 dark:ring-blue-500`;
+          appCard.className = 'cursor-pointer select-none text-left rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between shadow-sm transition-all bg-blue-100/90 dark:bg-blue-950/60 border border-blue-500 dark:border-blue-500 ring-1 ring-blue-500 dark:ring-blue-500';
         } else {
-          appCard.className = `${base} bg-blue-50/70 dark:bg-slate-900/70 border border-blue-200 dark:border-blue-900/30 hover:border-blue-300 dark:hover:border-blue-800/60`;
+          appCard.className = 'cursor-pointer select-none text-left rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between shadow-sm transition-all bg-blue-50/70 dark:bg-slate-900/70 border border-blue-200 dark:border-blue-900/30 hover:border-blue-300 dark:hover:border-blue-800/60';
         }
       }
 
       if (viewCard) {
         if (currentViewMode === 'jobs') {
-          viewCard.className = `${base} bg-emerald-50/90 dark:bg-emerald-950/60 border border-emerald-500 dark:border-emerald-500 ring-1 ring-emerald-500 dark:ring-emerald-500`;
-          if (viewTitle) viewTitle.innerHTML = '<span class="text-emerald-700 dark:text-emerald-400">Jobs Mode</span>';
-          if (viewSubtext) viewSubtext.innerText = 'Role-first list • Click for companies';
-          if (viewIcon) viewIcon.className = 'fa-solid fa-repeat text-xs text-emerald-600 dark:text-emerald-400';
+          viewCard.className = 'cursor-pointer select-none text-left bg-emerald-500/10 dark:bg-emerald-950/40 hover:bg-emerald-500/15 dark:hover:bg-emerald-950/60 border border-emerald-500/40 dark:border-emerald-500/50 rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between shadow-sm transition-all group focus:outline-none focus:ring-2 focus:ring-emerald-500/50';
+          if (viewTitle) viewTitle.innerHTML = '<span class="text-emerald-700 dark:text-emerald-400">Role View</span>';
+          if (viewSubtext) viewSubtext.innerText = 'Role-first • Click for Companies';
+          if (viewIcon) viewIcon.className = 'fa-solid fa-repeat text-xs text-emerald-600 dark:text-emerald-400 group-hover:rotate-180 transition-transform duration-300';
         } else {
-          viewCard.className = `${base} bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 hover:border-emerald-300 dark:hover:border-emerald-800/60`;
-          if (viewTitle) viewTitle.innerHTML = '<span>Jobs View</span>';
-          if (viewSubtext) viewSubtext.innerText = 'Click for role-first list';
-          if (viewIcon) viewIcon.className = 'fa-solid fa-briefcase text-xs text-slate-400 dark:text-slate-500';
+          viewCard.className = 'cursor-pointer select-none text-left bg-white dark:bg-slate-900/70 hover:bg-slate-50 dark:hover:bg-slate-800/80 border border-slate-200 dark:border-slate-800 rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between shadow-sm transition-all group focus:outline-none focus:ring-2 focus:ring-emerald-500/50';
+          if (viewTitle) viewTitle.innerHTML = '<span>Company View</span>';
+          if (viewSubtext) viewSubtext.innerText = 'Directory • Click for Role View';
+          if (viewIcon) viewIcon.className = 'fa-solid fa-repeat text-xs text-slate-400 dark:text-slate-500 group-hover:rotate-180 transition-transform duration-300';
         }
       }
     }
@@ -1149,15 +1152,20 @@
         if (appCard) appCard.style.display = 'none';
         if (thStar) thStar.style.display = 'none';
 
-        // Adjust KPI grid for deployed view
+        // 4 cards in deployed mode: View Mode, Region, Total Companies, Live Roles
         if (kpiContainer) {
-          kpiContainer.className = 'grid grid-cols-3 gap-2 sm:gap-4';
+          kpiContainer.className = 'grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4';
         }
       } else {
         if (scanBtn) scanBtn.style.display = '';
         if (favCard) favCard.style.display = '';
         if (appCard) appCard.style.display = '';
         if (thStar) thStar.style.display = '';
+
+        // 6 cards in local mode
+        if (kpiContainer) {
+          kpiContainer.className = 'grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-4';
+        }
       }
     }
 
@@ -1203,25 +1211,21 @@
           : 'Scan live ATS portals for Northern Ireland product roles';
       }
 
-      const tabNi = document.getElementById('tabNi');
-      const tabCyber = document.getElementById('tabCyber');
-      const tabNiIcon = document.getElementById('tabNiIcon');
-      const tabCyberIcon = document.getElementById('tabCyberIcon');
-
-      const activeClass = 'flex-1 sm:flex-initial px-3.5 sm:px-4 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-2 shadow-sm bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200/80 dark:border-slate-700';
-      const inactiveClass = 'flex-1 sm:flex-initial px-3.5 sm:px-4 py-1.5 rounded-xl text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all flex items-center justify-center gap-2 border border-transparent';
-
-      if (tabNi && tabCyber) {
+      const regionCard = document.getElementById('regionCard');
+      const regionTitle = document.getElementById('regionTitle');
+      const regionSubtext = document.getElementById('regionSubtext');
+      const regionIcon = document.getElementById('regionIcon');
+      if (regionCard && regionTitle) {
         if (isCyber) {
-          tabNi.className = inactiveClass;
-          tabCyber.className = activeClass;
-          if (tabNiIcon) tabNiIcon.className = 'fa-solid fa-compass text-slate-400 dark:text-slate-500 text-xs sm:text-sm';
-          if (tabCyberIcon) tabCyberIcon.className = 'fa-solid fa-shield-halved text-cyan-600 dark:text-cyan-400 text-xs sm:text-sm';
+          regionTitle.innerHTML = '<span>UK Cyber</span>';
+          if (regionSubtext) regionSubtext.innerText = 'UK-wide • Click for NI Only';
+          if (regionIcon) regionIcon.className = 'fa-solid fa-shield-halved text-xs text-cyan-600 dark:text-cyan-400 group-hover:scale-110 transition-transform';
+          regionCard.className = 'cursor-pointer select-none text-left bg-cyan-500/10 dark:bg-cyan-950/40 hover:bg-cyan-500/15 dark:hover:bg-cyan-950/60 border border-cyan-500/40 dark:border-cyan-500/50 rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between shadow-sm transition-all group focus:outline-none focus:ring-2 focus:ring-cyan-500/50';
         } else {
-          tabNi.className = activeClass;
-          tabCyber.className = inactiveClass;
-          if (tabNiIcon) tabNiIcon.className = 'fa-solid fa-compass text-emerald-600 dark:text-emerald-400 text-xs sm:text-sm';
-          if (tabCyberIcon) tabCyberIcon.className = 'fa-solid fa-shield-halved text-slate-400 dark:text-slate-500 text-xs sm:text-sm';
+          regionTitle.innerHTML = '<span>NI Only</span>';
+          if (regionSubtext) regionSubtext.innerText = 'Default mode • Click for UK Cyber';
+          if (regionIcon) regionIcon.className = 'fa-solid fa-location-dot text-xs text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform';
+          regionCard.className = 'cursor-pointer select-none text-left bg-white dark:bg-slate-900/70 hover:bg-slate-50 dark:hover:bg-slate-800/80 border border-slate-200 dark:border-slate-800 rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between shadow-sm transition-all group focus:outline-none focus:ring-2 focus:ring-emerald-500/50';
         }
       }
     }
@@ -1300,10 +1304,6 @@
 
     async function loadCompanies() {
       initTheme();
-      // On mobile screens, default Live Roles to ON so users get straight to the point
-      if (window.innerWidth < 768) {
-        productRolesOnly = true;
-      }
       updateKPICardActiveStates();
       setupEnvironmentUI();
       updateDatasetUI(currentDataset);

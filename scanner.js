@@ -34,8 +34,6 @@ const PRODUCT_KEYWORDS = [
   'product owner',
   'product champion',
   'product specialist',
-  'product marketing manager',
-  'director, product marketing',
   'principal product consultant',
   'product consultant',
   'chief product officer',
@@ -45,6 +43,9 @@ const PRODUCT_KEYWORDS = [
 function isProductRole(title) {
   if (!title) return false;
   const lower = title.toLowerCase();
+  if (lower.includes('marketing') || lower.includes('pmm')) {
+    return false;
+  }
   return PRODUCT_KEYWORDS.some(keyword => lower.includes(keyword));
 }
 
