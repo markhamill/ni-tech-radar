@@ -169,6 +169,10 @@ const server = http.createServer(async (req, res) => {
       const body = await readJsonBody(req);
       const requestedDataset = body.dataset || url.searchParams.get('dataset') || 'ni';
 
+      // Always reload fresh scanner module
+      delete require.cache[require.resolve('./scanner')];
+      const { runScanner } = require('./scanner');
+
       if (requestedDataset === 'all') {
         await runScanner(DEFAULT_DB_PATH);
         await runScanner(CYBER_DB_PATH);
