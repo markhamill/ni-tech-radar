@@ -226,8 +226,8 @@
         <div id="statTotalSubtext" class="hidden sm:block text-xs text-slate-400 dark:text-slate-500 mt-1 truncate">Tracked across Northern Ireland</div>
       </div>
 
-      <!-- 4. Live Roles Data Point (Informational Card, Not a Button) -->
-      <div id="statProductRolesCard" class="select-none bg-emerald-50/70 dark:bg-slate-900/70 border border-emerald-200 dark:border-emerald-900/40 rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between shadow-sm">
+      <!-- 4. Live Roles (Informational in Role View, Filter in Companies View) -->
+      <div id="statProductRolesCard" onclick="toggleProductRoles()" class="select-none bg-emerald-50/70 dark:bg-slate-900/70 border border-emerald-200 dark:border-emerald-900/40 rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between shadow-sm transition-all" title="Verified product roles">
         <div class="text-[11px] sm:text-sm font-semibold text-emerald-700 dark:text-emerald-400 flex items-center justify-between leading-tight">
           <span>Live Roles</span>
           <span class="w-2 h-2 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse"></span>
@@ -1008,6 +1008,9 @@
 
     function toggleViewMode() {
       currentViewMode = (currentViewMode === 'jobs' ? 'companies' : 'jobs');
+      if (currentViewMode === 'jobs') {
+        productRolesOnly = false;
+      }
       currentSortColumn = null;
       currentSortDirection = null;
       const search = document.getElementById('searchInput');
@@ -1062,6 +1065,7 @@
     }
 
     function toggleProductRoles() {
+      if (currentViewMode !== 'companies') return;
       productRolesOnly = !productRolesOnly;
       updateKPICardActiveStates();
       applyFilters();
@@ -1105,6 +1109,27 @@
       const viewTitle = document.getElementById('viewModeTitle');
       const viewSubtext = document.getElementById('viewModeSubtext');
       const viewIcon = document.getElementById('viewModeIcon');
+      const prodCard = document.getElementById('statProductRolesCard');
+      const prodSubtext = document.getElementById('statProductRolesSubtext');
+
+      if (prodCard) {
+        if (currentViewMode === 'companies') {
+          if (productRolesOnly) {
+            prodCard.className = 'cursor-pointer select-none rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between shadow-sm transition-all bg-emerald-100/90 dark:bg-emerald-950/70 border border-emerald-500 dark:border-emerald-500 ring-2 ring-emerald-500/50 dark:ring-emerald-500/50';
+            prodCard.title = 'Click to show all companies';
+            if (prodSubtext) prodSubtext.innerText = 'Filtered: Live roles only • Click to reset';
+          } else {
+            prodCard.className = 'cursor-pointer select-none rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between shadow-sm transition-all bg-emerald-50/70 dark:bg-slate-900/70 border border-emerald-200 dark:border-emerald-900/40 hover:border-emerald-400 dark:hover:border-emerald-600 hover:bg-emerald-100/60 dark:hover:bg-slate-800/80';
+            prodCard.title = 'Click to filter companies with live roles';
+            if (prodSubtext) prodSubtext.innerText = 'Click to filter live roles';
+          }
+        } else {
+          // In Role View (jobs mode), this card is strictly an informational counter
+          prodCard.className = 'cursor-default select-none rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between shadow-sm transition-all bg-emerald-50/70 dark:bg-slate-900/70 border border-emerald-200 dark:border-emerald-900/40';
+          prodCard.title = 'Verified product roles';
+          if (prodSubtext) prodSubtext.innerText = 'Verified product roles';
+        }
+      }
 
       if (favCard && isLocal) {
         if (favouritesOnly) {
@@ -1288,6 +1313,7 @@
       updateDatasetUI(type);
 
       // Reset filter inputs when toggling dataset
+      productRolesOnly = false;
       const search = document.getElementById('searchInput');
       if (search) search.value = '';
       const scale = document.getElementById('filterScale');
